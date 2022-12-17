@@ -4,7 +4,7 @@ from JNetoProductions_pygame_game_engine.components.component_base_class.compone
 from JNetoProductions_pygame_game_engine.game_object_base_class import GameObject
 
 
-# sets the current animation in a animation list and the current frame of the animation according to a speed
+# sets the current animation in an animation list and the current frame of the animation according to a speed
 class AnimationControllerComponent(Component):
 
     def __init__(self, animation_clips, game_object_owner: GameObject):
@@ -26,7 +26,7 @@ class AnimationControllerComponent(Component):
         for animation in animations:
             self.animation_clips_list.remove(animation)
 
-    # doesnt change if it's the same clip as the one set to be animated
+    # doesn't change if it's the same clip as the one set to be animated
     def set_current_animation(self, animation_clip_name) -> None:
         for animation_clip in self.animation_clips_list:
             if animation_clip.name == animation_clip_name and self.current_animation_clip != animation_clip:
@@ -63,4 +63,3 @@ class AnimationControllerComponent(Component):
                f"animation speed: {self.animation_speed}\n" \
                f"animation clips in memory: [{in_memory_animation_clips_names}]\n" \
                f"list len: {len(self.current_animation_clip.images)}\n"
-

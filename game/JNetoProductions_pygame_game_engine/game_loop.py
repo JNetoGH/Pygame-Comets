@@ -3,7 +3,7 @@ import pygame
 from JNetoProductions_pygame_game_engine.systems._text_rendering_system import TextRenderOverlaySystem
 from JNetoProductions_pygame_game_engine.systems.inspector_debugging_canvas_system import InspectorDebuggingCanvas
 from JNetoProductions_pygame_game_engine.systems.input_manager_system import InputManager
-from JNetoProductions_pygame_game_engine.systems.scalable_game_screen_system import ScalableGameScreen
+from JNetoProductions_pygame_game_engine.systems.scalable_game_screen_system import GameScreen
 from JNetoProductions_pygame_game_engine.systems.game_time_system import GameTime
 from JNetoProductions_pygame_game_engine.scene import Scene
 
@@ -26,7 +26,7 @@ class GameLoop:
         RES_2K_QHD = [2560, 1440]
         RES_4K = [3840, 2160]
 
-        ScalableGameScreen.init_screens(RES_HD, RES_HD, RES_HD)
+        GameScreen.init_screens(RES_HD, RES_HD, RES_HD)
 
         # important stuff
         self.clock = pygame.time.Clock()
@@ -57,10 +57,10 @@ class GameLoop:
             # in case the is no scene set
             if self._running_scene is None:
                 # clears the screen
-                ScalableGameScreen.GameScreenDummySurface.fill("darkgreen")
+                GameScreen.GameScreenDummySurface.fill("darkgreen")
                 font = pygame.font.Font('JNetoProductions_pygame_game_engine/_engine_resources/fonts/JetBrainsMono-Medium.ttf', 50)  # create a text surface object,
-                TextRenderOverlaySystem.blit_text(ScalableGameScreen.GameScreenDummySurface, ScalableGameScreen.DummyScreenWidth, "no scene set", (600, 400), font, color="white")
-                ScalableGameScreen.render_final_scaled_result()
+                TextRenderOverlaySystem.blit_text(GameScreen.GameScreenDummySurface, GameScreen.DummyScreenWidth, "no scene set", (600, 400), font, color="white")
+                GameScreen.render_final_scaled_result()
                 continue
 
             self._running_scene.scene_update()
@@ -85,7 +85,7 @@ class GameLoop:
                 self.inspector_debugging_canvas.render_game_object_inspector_debugging_status(1, "white")  # GmObj info
 
             # render the final produced frame
-            ScalableGameScreen.render_final_scaled_result()
+            GameScreen.render_final_scaled_result()
 
     def set_current_scene(self, scene: Scene):
         self._running_scene = scene

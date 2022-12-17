@@ -35,4 +35,3 @@ class KeyTrackerComponent(Component):
                f"total times fired: {self.total_times_fired}\n" \
                f"this frame: (fired={self.has_key_been_fired_at_this_frame} | released={self.has_key_been_released_at_this_frame})\n" \
                f"is held down: {self.is_key_being_held_down}\n" \
-

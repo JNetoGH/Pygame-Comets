@@ -1,6 +1,7 @@
 import pygame
 import sys
 
+
 class InputManager:
 
     Horizontal_Axis = 0
@@ -52,4 +53,3 @@ class InputManager:
         return f"INPUT MANAGER SYSTEM\n" \
                f"horizontal: {InputManager.Horizontal_Axis}\n" \
                f"vertical:   {InputManager.Vertical_Axis}\n" \
-

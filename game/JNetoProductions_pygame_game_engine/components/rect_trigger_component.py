@@ -27,9 +27,9 @@ class RectTriggerComponent(Component):
     @property
     def world_position_get_only(self):
         world_pos = pygame.Vector2()
-        world_pos.x = self.game_object_owner.transform.world_position.x + self.offset_from_game_object_x
-        world_pos.y = self.game_object_owner.transform.world_position.y + self.offset_from_game_object_y
-        return world_pos
+        world_pos.x = self.game_object_owner.transform.world_position_read_only.x + self.offset_from_game_object_x
+        world_pos.y = self.game_object_owner.transform.world_position_read_only.y + self.offset_from_game_object_y
+        return world_pos.copy()
 
     def is_there_a_point_inside(self, point: pygame.Vector2):
         return self.trigger_inner_rectangle.collidepoint(point.x, point.y)
@@ -44,8 +44,8 @@ class RectTriggerComponent(Component):
         # so, a 50.9 position, would be truncate to 50, removing the decimal part completely,
         # by rounding it I make 4.8 = 5, 3.2 => 3, still not perfect, you can see little gaps
         # but is way better than if I haven't done anything
-        self.trigger_inner_rectangle.centerx = round(self.game_object_owner.transform.world_position.x + self.offset_from_game_object_x)
-        self.trigger_inner_rectangle.centery = round(self.game_object_owner.transform.world_position.y + self.offset_from_game_object_y)
+        self.trigger_inner_rectangle.centerx = round(self.game_object_owner.transform.world_position_read_only.x + self.offset_from_game_object_x)
+        self.trigger_inner_rectangle.centery = round(self.game_object_owner.transform.world_position_read_only.y + self.offset_from_game_object_y)
 
     def get_inspector_debugging_status(self) -> str:
         return "Component(Rect Trigger)"

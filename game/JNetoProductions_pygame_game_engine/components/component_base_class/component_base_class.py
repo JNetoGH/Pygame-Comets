@@ -1,3 +1,4 @@
+import copy
 from abc import abstractmethod
 
 
@@ -9,9 +10,9 @@ class Component:
 
     @property
     def game_object_owner_read_only(self):
-        return self.game_object_owner
+        return copy.copy(self.game_object_owner)
 
-    # called before the game_loop object update
+    # called before the GameObject update
     def component_update(self):
         pass
 

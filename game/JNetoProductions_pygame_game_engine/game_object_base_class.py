@@ -5,24 +5,24 @@ from abc import abstractmethod
 
 class GameObject(pygame.sprite.Sprite):
 
-    def __init__(self, name: str, scene, rendering_layer, should_be_rendered: bool = True):
+    def __init__(self, name: str, scene, rendering_layer):
         super().__init__()
 
         # yes, because why not?
         self.name = name
 
         # in case False the Camera won't render this GameObject
-        self.should__be_rendered: bool = True
+        self.should_be_rendered: bool = True
 
         # when a component is instantiated, it is automatically stored here
         self.components_list = []
 
-        # holds the scene that the game_loop object is part of, and adds itself in it
+        # holds the scene that the game object is part of, and adds itself in it
         self.scene = scene
         scene.all_game_obj.append(self)
 
         # sets the transform
-        # every game_loop object in JNeto Production GameLoop Engine must have a TransformComponent
+        # every game object in JNeto Production GameLoop Engine must have a TransformComponent
         self.transform = TransformComponent(self)
 
         # sets the rendering layer, and adds itself to it
@@ -39,19 +39,19 @@ class GameObject(pygame.sprite.Sprite):
         self.is_fixed_on_screen = False
         self.fixed_position_on_screen = pygame.Vector2(0, 0)
 
-        # - The rectangle that holds the game_loop object's image
+        # - The rectangle that holds the game object's image
         # - The center pos of the image_rect (a.k.a. screen position) is the same of the gm obj pos by default
         #   therefore, the at the start of the GameObject it's screen position is the same of its world position
-        # - This rect is mostly used to hold the game_loop object screen position (not world position)
+        # - This rect is mostly used to hold the game object screen position (not world position)
         #   so it's quite essential
-        self.image_rect = self.image.get_rect(center=self.transform.world_position)
+        self.image_rect = self.image.get_rect(center=self.transform.world_position_read_only)
 
-        # when a collider is added to the game_loop object it changes this field to True, used mainly for gizmos
+        # when a collider is added to the game object it changes this field to True, used mainly for gizmos
         self.has_collider = False
         # same but for rect trigger components
         self.has_rect_trigger = True
 
-    # pygame is stupid and has already an update method for sprites(a.k.a game_loop obj super class)
+    # pygame is stupid and has already an update method for sprites(a.k.a. game obj super class)
     # so I had to call it this way, this is the most important method of the entire engine
     # should be overriden by all GameObjects
     @abstractmethod
@@ -78,10 +78,10 @@ class GameObject(pygame.sprite.Sprite):
         self.is_fixed_on_screen = False
 
     def stop_rendering_this_game_object(self):
-        self.should__be_rendered = False
+        self.should_be_rendered = False
 
     def start_rendering_this_game_object(self):
-        self.should__be_rendered = True
+        self.should_be_rendered = True
 
     def remove_default_rect_image(self):
         self.image = pygame.Surface((0, 0))
@@ -126,9 +126,8 @@ class GameObject(pygame.sprite.Sprite):
         return f"GAME OBJECT INSPECTOR \n" \
                f"game object name: {self.name}\n" \
                f"class name: {type(self)} \n" \
-               f"should be rendered: {self.should__be_rendered}\n" \
+               f"should be rendered: {self.should_be_rendered}\n" \
                f"index in scene game objects list: {self.get_index_in_scene_all_game_objects_list()}\n" \
                f"rendering layer index: {self.get_this_game_object_rendering_layer_index_in_scene_rendering_layers_list()}\n" \
                f"components: [{components_names}]\n\n" \
                f"{components_inspector_debugging_status}"
-

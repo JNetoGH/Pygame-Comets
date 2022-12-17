@@ -1,23 +1,21 @@
 import pygame
 
-from JNetoProductions_pygame_game_engine.components.text_render_component import TextRenderComponent
-from JNetoProductions_pygame_game_engine.game_object_base_class import GameObject
-from JNetoProductions_pygame_game_engine.systems.scalable_game_screen_system import ScalableGameScreen
-import gc
+from JNetoProductions_pygame_game_engine.camera import Camera
+from JNetoProductions_pygame_game_engine.systems.scalable_game_screen_system import GameScreen
+
 
 class Scene:
 
     def __init__(self, camera):
 
-        # It holds all game_loop objects of the scene When a game_loop Obj is instantiated,
+        # It holds all game objects of the scene When a game obj is instantiated,
         # it's automatically stored here using the scene passed as parameter in  its constructor
         self.all_game_obj = []
         # main camera will render the rendering layers
-        self.main_camera = camera
+        self.main_camera: Camera = camera
         # they are here just to be accessed by the GameObjects
         self.all_rendering_layers = self.main_camera.rendering_layers_list
-
-        # called once if i want to start stuff in here
+        # called once if I want to start stuff in here
         self.scene_start()
 
     def get_game_object_by_name(self, name: str):
@@ -42,7 +40,7 @@ class Scene:
         pass
 
     def scene_update(self):
-        # first updates the components then the game_loop object itself
+        # first updates the components then the game object itself
         for gm in self.all_game_obj:
             for component in gm.components_list:
                 component.component_update()
@@ -52,7 +50,7 @@ class Scene:
         # updates just for easy access to the layers
         self.all_rendering_layers = self.main_camera.rendering_layers_list
         # clears the screen for rendering
-        ScalableGameScreen.GameScreenDummySurface.fill(pygame.Color(64,64,64))
+        GameScreen.GameScreenDummySurface.fill(pygame.Color(64, 64, 64))
         # renders all rendering layers
         self.main_camera.render_layers()
 
@@ -67,7 +65,7 @@ class Scene:
         info_about_each_layer = ""
 
         for render_layer in self.all_rendering_layers:
-            tot_in_this_layer = len(render_layer._game_objects_to_render)
+            tot_in_this_layer = len(render_layer.game_objects_to_render_read_only)
             tot_in_layers += tot_in_this_layer
             info_about_each_layer += f"{render_layer.name} tot objects: {tot_in_this_layer}\n"
 
@@ -75,6 +73,5 @@ class Scene:
                f"total rendering layers: {len(self.main_camera.rendering_layers_list)}\n" \
                f"total game objects in scene: {len(self.all_game_obj)}\n" \
                f"total game objects in rendering layers: {tot_in_layers}\n" \
-               f"{info_about_each_layer}" #\
-               #f"list of game objects: {game_obj_names}\n"
-
+               f"{info_about_each_layer}" \
+               f"list of game objects: {game_obj_names}\n"

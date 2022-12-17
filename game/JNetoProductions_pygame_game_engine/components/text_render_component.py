@@ -76,5 +76,5 @@ class TextRenderComponent(Component):
 
     def get_inspector_debugging_status(self) -> str:
         return f"COMPONENT(Text Render)\n" \
-               f"text: {self._text}\n" \
+               f"text: \"{self._text}\"\n" \
                f"screen position: {self.position_on_screen}"

@@ -20,7 +20,7 @@ class SingleSpriteComponent(Component):
 
     # scaled like 0.8 = 80%
     def scale_itself(self, scale):
-        _scaled_sprite_as_surface = SingleSpriteComponent._return_scaled_image_surface(self.sprite_img_as_surface, scale)
+        _scaled_sprite_as_surface = SingleSpriteComponent.return_scaled_image_surface(self.sprite_img_as_surface, scale)
         self.game_object_owner.image = _scaled_sprite_as_surface
 
     def component_update(self):
@@ -28,7 +28,7 @@ class SingleSpriteComponent(Component):
 
     # scaled like 0.8 = 80%
     @staticmethod
-    def _return_scaled_image_surface(surface_img, scale):
+    def return_scaled_image_surface(surface_img, scale):
         return pygame.transform.scale(surface_img, (surface_img.get_width() * scale, surface_img.get_height() * scale))
 
     def get_inspector_debugging_status(self) -> str:
