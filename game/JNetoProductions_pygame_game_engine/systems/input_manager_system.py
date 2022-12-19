@@ -24,23 +24,23 @@ class InputManager:
         keys = pygame.key.get_pressed()
 
         # HORIZONTAL RELEASE
-        if keys[pygame.K_a]:
+        if keys[pygame.K_a] or keys[pygame.K_LEFT]:
             InputManager.Horizontal_Axis = -1
-        elif keys[pygame.K_d]:
+        elif keys[pygame.K_d] or keys[pygame.K_RIGHT]:
             InputManager.Horizontal_Axis = 1
 
         # HORIZONTAL PRESS
-        if not (keys[pygame.K_a] or keys[pygame.K_d]):
+        if not (keys[pygame.K_a] or keys[pygame.K_LEFT] or keys[pygame.K_d] or keys[pygame.K_RIGHT]):
             InputManager.Horizontal_Axis = 0
 
         # VERTICAL PRESS
-        if keys[pygame.K_w]:
+        if keys[pygame.K_w] or keys[pygame.K_UP]:
             InputManager.Vertical_Axis = -1
-        elif keys[pygame.K_s]:
+        elif keys[pygame.K_s] or keys[pygame.K_DOWN]:
             InputManager.Vertical_Axis = 1
 
         # VERTICAL RELEASE
-        if not (keys[pygame.K_w] or keys[pygame.K_s]):
+        if not (keys[pygame.K_w] or keys[pygame.K_UP] or keys[pygame.K_s]) or keys[pygame.K_DOWN]:
             InputManager.Vertical_Axis = 0
 
     @staticmethod

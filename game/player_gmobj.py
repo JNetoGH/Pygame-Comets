@@ -14,7 +14,7 @@ class Player(GameObject):
         super().__init__("player", scene, scene.get_rendering_layer_by_name("player_layer"))
 
         # SPRITE
-        self.single_sprite = SingleSpriteComponent("res/test_player_sprite.png", self)
+        self.single_sprite = SingleSpriteComponent("res/ship.png", self)
         self.single_sprite.scale_itself(2)
 
         # MAKES CAMERA FOLLOW PLAYER
@@ -38,7 +38,7 @@ class Player(GameObject):
             self.rotate_player()
 
         # moves forward when W is pressed
-        if InputManager.is_key_pressed(pygame.K_w):
+        if InputManager.Vertical_Axis == -1:
             self.move_player_forward()
 
     def move_player_forward(self):
