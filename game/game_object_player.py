@@ -1,7 +1,6 @@
 import math
 import pygame.transform
 from JNetoProductions_pygame_game_engine.components.single_sprite_component import SingleSpriteComponent
-from JNetoProductions_pygame_game_engine.components.text_render_component import TextRenderComponent
 from JNetoProductions_pygame_game_engine.components.timer_component import TimerComponent
 from JNetoProductions_pygame_game_engine.game_object_base_class import GameObject
 from JNetoProductions_pygame_game_engine.systems.game_time_system import GameTime

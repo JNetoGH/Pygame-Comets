@@ -8,7 +8,7 @@ class TransformComponent(Component):
 
     def __init__(self, game_object_owner):
         super().__init__(game_object_owner)
-        self._world_position: pygame.Vector2 = pygame.Vector2(GameScreen.HalfDummyScreenWidth, GameScreen.HalfDummyScreenHeight)
+        self._world_position: pygame.Vector2 = pygame.Vector2(0, 0)
         self._screen_position: pygame.Vector2 = pygame.Vector2()
         # self._rotation: =
         self._is_center_point_appearing_on_screen = False
