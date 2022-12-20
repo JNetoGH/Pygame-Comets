@@ -22,7 +22,7 @@ class Meteor(GameObject):
         self.player = self.scene.get_game_object_by_name("player")
 
     def game_object_update(self) -> None:
-
+        return
         self.move_to_player_direction()
 
     def move_to_player_direction(self):

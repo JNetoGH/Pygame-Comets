@@ -3,7 +3,7 @@ JANELA
 
 MOVIMENTO DA NAVE
 - propulção na nave com acelereação até x, daí fica constante
-- eu acho q ele quis dizer q né para desacelar de uma vez mas ter uma desaceleração
+- eu acho q ele quis dizer q né para desacelar de uma vez mas ter uma desaceleração até chegar em 0
 
 DISPAROS
 - tiros em cadência de de 1 em 1 segundo, fácil com o timer component
