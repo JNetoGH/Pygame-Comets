@@ -2,6 +2,7 @@ import math
 import pygame.transform
 
 from JNetoProductions_pygame_game_engine.components.collider_component import ColliderComponent
+from JNetoProductions_pygame_game_engine.components.key_tracker_component import KeyTrackerComponent
 from JNetoProductions_pygame_game_engine.components.single_sprite_component import SingleSpriteComponent
 from JNetoProductions_pygame_game_engine.components.timer_component import TimerComponent
 from JNetoProductions_pygame_game_engine.game_object_base_class import GameObject
@@ -42,6 +43,9 @@ class Player(GameObject):
         # pygame não faz a rotação direito, a cada rotação a imagem perde um pouco de detalhe, então é preciso
         # armazenar a original, para sempre fazer a rotação com base nela, pois os detalhes não foram perdidos.
         self.buffered_original_image = self.image.copy()
+
+        self.keyp = KeyTrackerComponent(pygame.K_p, self)
+        self.is_followed = False
 
     def game_object_update(self) -> None:
 
