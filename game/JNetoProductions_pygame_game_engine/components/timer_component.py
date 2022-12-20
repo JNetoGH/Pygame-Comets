@@ -47,8 +47,14 @@ class TimerComponent(Component):
                 self.func()
 
     def get_inspector_debugging_status(self) -> str:
+
+        is_carrying_a_function = self.func is not None
+        text = f"is carrying a function: {is_carrying_a_function}"
+        if is_carrying_a_function:
+            text += f"function carried: {self.func.__name__}\n"
+
         return f"COMPONENT(TimerComponent)\n" \
-               f"function carried: {self.func.__name__}\n" \
+               f"{text}" \
                f"total elapsed time since game started: {self.tot_time_elapsed_since_game_started}ms\n" \
                f"duration: {self.duration_in_ms}ms\n" \
                f"timer start time: {self._start_time}ms\n" \

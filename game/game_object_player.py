@@ -1,5 +1,7 @@
 import math
 import pygame.transform
+
+from JNetoProductions_pygame_game_engine.components.collider_component import ColliderComponent
 from JNetoProductions_pygame_game_engine.components.single_sprite_component import SingleSpriteComponent
 from JNetoProductions_pygame_game_engine.components.timer_component import TimerComponent
 from JNetoProductions_pygame_game_engine.game_object_base_class import GameObject
@@ -16,6 +18,9 @@ class Player(GameObject):
         # SPRITE
         self.single_sprite = SingleSpriteComponent("res/ship.png", self)
         self.single_sprite.scale_itself(1.5)
+
+        # COLLIDER
+        self.player_collider = ColliderComponent(0, 0, 40, 40, self)
 
         # MAKES CAMERA FOLLOW PLAYER
         self.scene.main_camera.follow_game_object(self)
