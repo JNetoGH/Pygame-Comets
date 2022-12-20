@@ -7,7 +7,7 @@ from JNetoProductions_pygame_game_engine.game_object_base_class import GameObjec
 # sets the current animation in an animation list and the current frame of the animation according to a speed
 class AnimationControllerComponent(Component):
 
-    def __init__(self, animation_clips, game_object_owner: GameObject):
+    def __init__(self, animation_clips: list[AnimationClip], game_object_owner: GameObject):
         super().__init__(game_object_owner)
 
         self.animation_clips_list: list[AnimationClip] = animation_clips

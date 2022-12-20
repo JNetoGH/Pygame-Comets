@@ -26,7 +26,7 @@ class GameLoop:
         RES_2K_QHD = [2560, 1440]
         RES_4K = [3840, 2160]
 
-        GameScreen.init_screens([800, 600], [800*2, 600*2], [800*2, 600*2])
+        GameScreen.init_screens([800, 600], [800, 600], [800, 600])
 
         # important stuff
         self.clock = pygame.time.Clock()
@@ -54,7 +54,7 @@ class GameLoop:
             GameTime.DeltaTime = self.clock.tick() / 1000
             InputManager.update()
 
-            # in case the is no scene set
+            # in case the is no scene set makes a scene saying that there is no scene
             if self._running_scene is None:
                 # clears the screen
                 GameScreen.GameScreenDummySurface.fill("darkgreen")

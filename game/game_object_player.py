@@ -33,7 +33,7 @@ class Player(GameObject):
         # MOVEMENT
         self.BASE_MAX_MOVE_SPEED = 250
         self.ACCELERATION = 300
-        self.DECELERATION = 300
+        self.DECELERATION = 200
         self.current_speed = 1
         self.dir_from_angle = pygame.Vector2(0,0)
 
