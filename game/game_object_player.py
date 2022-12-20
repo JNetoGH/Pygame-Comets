@@ -1,14 +1,12 @@
 import math
 import pygame.transform
-from JNetoProductions_pygame_game_engine.components.collider_component import ColliderComponent
-from JNetoProductions_pygame_game_engine.components.key_tracker_component import KeyTrackerComponent
 from JNetoProductions_pygame_game_engine.components.single_sprite_component import SingleSpriteComponent
 from JNetoProductions_pygame_game_engine.components.text_render_component import TextRenderComponent
 from JNetoProductions_pygame_game_engine.components.timer_component import TimerComponent
 from JNetoProductions_pygame_game_engine.game_object_base_class import GameObject
 from JNetoProductions_pygame_game_engine.systems.game_time_system import GameTime
 from JNetoProductions_pygame_game_engine.systems.input_manager_system import InputManager
-from bullet import Bullet
+from game_object_bullet import Bullet
 
 
 class Player(GameObject):
@@ -33,11 +31,8 @@ class Player(GameObject):
         self.DECELERATION = 300
         self.current_speed = 1
         self.dir_from_angle = pygame.Vector2(0,0)
-        self.speed_text_render = TextRenderComponent("speed: 0 units/s", 15, pygame.Color(255, 255, 255), 0, -90, self)
-        self.speed_status_text_render = TextRenderComponent("status: stop", 15, pygame.Color(255, 255, 255), 0, -70, self)
 
         # ROTATION
-        self.angle_text_render = TextRenderComponent("angle: 0º", 15, pygame.Color(255, 255, 255), 0, -50, self)
         self.angle = 0
         self.angular_velocity = 200
         # pygame não faz a rotação direito, a cada rotação a imagem perde um pouco de detalhe, então é preciso
@@ -67,9 +62,6 @@ class Player(GameObject):
         # rotates player according to A, D, < adn >keys
         if InputManager.Horizontal_Axis != 0:
             self._rotate_player()
-
-        # UI TEXTS
-        self._update_speed_related_texts()
 
     def _instantiate_bullet(self):
         Bullet(self.transform.world_position_read_only, self.dir_from_angle, self.angle, self.scene)
@@ -108,27 +100,3 @@ class Player(GameObject):
 
         # rotates keeping the buffered image as it its
         self.image = pygame.transform.rotate(self.buffered_original_image, self.angle)
-
-        # updates the text
-        self.angle_text_render.change_text(f"angle: {self.angle:.2f}º")
-
-    # UI RELATED
-    def _update_speed_related_texts(self):
-
-        # speed text itself
-        self.speed_text_render.change_text(f"speed: {self.current_speed:.0f} units/s")
-
-        # speed status
-        if InputManager.Vertical_Axis == -1:
-            if self.current_speed >= self.BASE_MAX_MOVE_SPEED:
-                self.speed_status_text_render.change_text("status: MAX SPEED")
-                self.speed_status_text_render.change_color(pygame.Color(255, 255, 150))
-                return
-            self.speed_status_text_render.change_text("status: accelerating")
-            self.speed_status_text_render.change_color(pygame.Color(120, 225, 120))
-        elif self.current_speed > 0:
-            self.speed_status_text_render.change_text("status: decelerating")
-            self.speed_status_text_render.change_color(pygame.Color(255, 120, 120))
-        elif self.current_speed == 0:
-            self.speed_status_text_render.change_text("status: stop")
-            self.speed_status_text_render.change_color(pygame.Color(255, 255, 255))

@@ -26,7 +26,7 @@ class GameLoop:
         RES_2K_QHD = [2560, 1440]
         RES_4K = [3840, 2160]
 
-        GameScreen.init_screens((800, 600), (1600, 1200), (1600, 1200))
+        GameScreen.init_screens([800, 600], [800, 600], [800, 600])
 
         # important stuff
         self.clock = pygame.time.Clock()

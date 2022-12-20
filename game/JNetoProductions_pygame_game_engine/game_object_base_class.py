@@ -37,7 +37,7 @@ class GameObject(pygame.sprite.Sprite):
         # used by the camera to ignore the world position when rendering the GameObject,
         # by using the fixed_position_on_screen
         self.is_fixed_on_screen = False
-        self.fixed_position_on_screen = pygame.Vector2(0, 0)
+        self._fixed_position_on_screen = pygame.Vector2(0, 0)
 
         # - The rectangle that holds the game object's image
         # - The center pos of the image_rect (a.k.a. screen position) is the same of the gm obj pos by default
@@ -72,7 +72,7 @@ class GameObject(pygame.sprite.Sprite):
 
     def fix_game_object_on_screen(self, fixed_position_on_screen: pygame.Vector2):
         self.is_fixed_on_screen = True
-        self.fixed_position_on_screen = fixed_position_on_screen
+        self._fixed_position_on_screen = fixed_position_on_screen
 
     def unfix_game_object_on_screen(self):
         self.is_fixed_on_screen = False

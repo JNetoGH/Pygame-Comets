@@ -5,6 +5,7 @@ from JNetoProductions_pygame_game_engine.components.component_base_class.compone
 
 
 class TransformComponent(Component):
+
     def __init__(self, game_object_owner):
         super().__init__(game_object_owner)
         self._world_position: pygame.Vector2 = pygame.Vector2(GameScreen.HalfDummyScreenWidth, GameScreen.HalfDummyScreenHeight)
@@ -90,7 +91,9 @@ class TransformComponent(Component):
 
     def component_update(self):
         # updates the screen position  a.k.a. image_rect position
-        self._screen_position = pygame.Vector2(self.game_object_owner.image_rect.centerx, self.game_object_owner.image_rect.centery)
+        self._screen_position = pygame.Vector2(self.game_object_owner.image_rect.centerx,
+                                               self.game_object_owner.image_rect.centery)
+
         # updates _is_center_point_appearing_on_screen
         is_in_x = GameScreen.DummyScreenWidth > self._screen_position.x > 0
         is_in_y = GameScreen.DummyScreenHeight > self._screen_position.y > 0
