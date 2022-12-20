@@ -10,7 +10,11 @@ class Map(GameObject):
         self.single_sprite = SingleSpriteComponent("res/bg4.jpg", self)
         self.single_sprite.scale_itself(1)
 
-        self.collider_top = ColliderComponent(0, -800, 1000, 300, self)
+        self.collider_top = ColliderComponent(0, -800, 3000, 300, self)
+        self.collider_bottom = ColliderComponent(0, 800, 3000, 300, self)
+        self.collider_left = ColliderComponent(-1500, 0, 300, 3000, self)
+        self.collider_right = ColliderComponent(1500, 0, 300, 3000, self)
+
 
     def game_object_update(self) -> None:
         pass
