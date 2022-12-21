@@ -1,15 +1,14 @@
 import pygame
-
-from JNetoProductions_pygame_game_engine.components.single_sprite_component import SingleSpriteComponent
-from JNetoProductions_pygame_game_engine.components.timer_component import TimerComponent
-from JNetoProductions_pygame_game_engine.game_object_base_class import GameObject
-from JNetoProductions_pygame_game_engine.systems.game_time_system import GameTime
+from JNeto_Productions_Engine.components.single_sprite_component import SingleSpriteComponent
+from JNeto_Productions_Engine.components.timer_component import TimerComponent
+from JNeto_Productions_Engine.game_object_base_class import GameObject
+from JNeto_Productions_Engine.systems.game_time_system import GameTime
 
 
 class Bullet(GameObject):
 
     def __init__(self, initial_pos: pygame.Vector2, direction: pygame.Vector2, rotation_angle, scene):
-        super().__init__("bullet", scene, scene.get_rendering_layer_by_name("player_layer"))
+        super().__init__("bullet", scene, scene.camera.get_rendering_layer_by_name("player_layer"))
 
         # initial pos
         self.transform.move_world_position(initial_pos)

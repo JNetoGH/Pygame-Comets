@@ -1,15 +1,15 @@
 import pygame
 
-from JNetoProductions_pygame_game_engine.components.single_sprite_component import SingleSpriteComponent
-from JNetoProductions_pygame_game_engine.components.text_render_component import TextRenderComponent
-from JNetoProductions_pygame_game_engine.game_object_base_class import GameObject
-from JNetoProductions_pygame_game_engine.systems.game_time_system import GameTime
+from JNeto_Productions_Engine.components.single_sprite_component import SingleSpriteComponent
+from JNeto_Productions_Engine.components.text_render_component import TextRenderComponent
+from JNeto_Productions_Engine.game_object_base_class import GameObject
+from JNeto_Productions_Engine.systems.game_time_system import GameTime
 
 
 class Meteor(GameObject):
 
     def __init__(self, scene):
-        super().__init__("meteor", scene, scene.get_rendering_layer_by_name("over_player_layer"))
+        super().__init__("meteor", scene, scene.camera.get_rendering_layer_by_name("over_player_layer"))
         self.sigle_sprite = SingleSpriteComponent("res/meteor.png", self)
         self.sigle_sprite.scale_itself(0.1)
         self.transform.move_world_position(pygame.Vector2(300, 300))

@@ -1,13 +1,15 @@
-from JNetoProductions_pygame_game_engine.camera import Camera
-from JNetoProductions_pygame_game_engine.game_loop import GameLoop
-from JNetoProductions_pygame_game_engine.rendering_layer import RenderingLayer
-from JNetoProductions_pygame_game_engine.scene import Scene
+# ENGINE IMPORTS
+from JNeto_Productions_Engine.game_loop import GameLoop
+from JNeto_Productions_Engine.rendering_layer import RenderingLayer
+from JNeto_Productions_Engine.camera import Camera
+from JNeto_Productions_Engine.scene import Scene
+
+# GAME OBJECTS IMPORTS
 from game_object_cockpit import Cockpit
 from game_object_map_limits import MapLimits
 from game_object_meteor import Meteor
 from game_object_map import Map
 from game_object_player import Player
-
 
 # GAME LOOP
 game_loop = GameLoop()

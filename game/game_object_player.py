@@ -1,20 +1,21 @@
 import math
 import pygame.transform
 
-from JNetoProductions_pygame_game_engine.components.collider_component import ColliderComponent
-from JNetoProductions_pygame_game_engine.components.key_tracker_component import KeyTrackerComponent
-from JNetoProductions_pygame_game_engine.components.single_sprite_component import SingleSpriteComponent
-from JNetoProductions_pygame_game_engine.components.timer_component import TimerComponent
-from JNetoProductions_pygame_game_engine.game_object_base_class import GameObject
-from JNetoProductions_pygame_game_engine.systems.game_time_system import GameTime
-from JNetoProductions_pygame_game_engine.systems.input_manager_system import InputManager
+from JNeto_Productions_Engine.components.key_tracker_component import KeyTrackerComponent
+from JNeto_Productions_Engine.components.rect_collider_component import ColliderComponent
+from JNeto_Productions_Engine.components.rect_trigger_component import TriggerComponent
+from JNeto_Productions_Engine.components.single_sprite_component import SingleSpriteComponent
+from JNeto_Productions_Engine.components.timer_component import TimerComponent
+from JNeto_Productions_Engine.game_object_base_class import GameObject
+from JNeto_Productions_Engine.systems.game_time_system import GameTime
+from JNeto_Productions_Engine.systems.input_manager_system import InputManager
 from game_object_bullet import Bullet
 
 
 class Player(GameObject):
 
     def __init__(self, scene):
-        super().__init__("player", scene, scene.get_rendering_layer_by_name("player_layer"))
+        super().__init__("player", scene, scene.camera.get_rendering_layer_by_name("player_layer"))
 
         # SPRITE
         self.single_sprite = SingleSpriteComponent("res/ship.png", self)
@@ -22,9 +23,10 @@ class Player(GameObject):
 
         # COLLIDER
         self.player_collider = ColliderComponent(0, 0, 40, 40, self)
+        self.trigger = TriggerComponent(0,0,100,100,self)
 
         # MAKES CAMERA FOLLOW PLAYER
-        self.scene.main_camera.follow_game_object(self)
+        self.scene.camera.follow_game_object(self)
 
         # BULLET
         self.instantiation_cooldown_in_sec = 1
