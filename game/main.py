@@ -1,15 +1,15 @@
 # ENGINE IMPORTS
-from JNeto_Productions_Engine.game_loop import GameLoop
-from JNeto_Productions_Engine.rendering_layer import RenderingLayer
-from JNeto_Productions_Engine.camera import Camera
-from JNeto_Productions_Engine.scene import Scene
+from engine_JNeto_Productions.game_loop import GameLoop
+from engine_JNeto_Productions.rendering_layer import RenderingLayer
+from engine_JNeto_Productions.camera import Camera
+from engine_JNeto_Productions.scene import Scene
 
 # GAME OBJECTS IMPORTS
-from game_object_cockpit import Cockpit
-from game_object_map_limits import MapLimits
-from game_object_meteor import Meteor
-from game_object_map import Map
-from game_object_player import Player
+from game_objects.game_object_cockpit import Cockpit
+from game_objects.game_object_map_limits import MapLimits
+from game_objects.game_object_meteor import Meteor
+from game_objects.game_object_map import Map
+from game_objects.game_object_player import Player
 
 # GAME LOOP
 game_loop = GameLoop()
