@@ -86,6 +86,9 @@ class Meteor(GameObject):
             if managed_to_get_in_the_ranking_sheet:
                 ScoreRegistrationFloatingMenu.TotalPoints = self.score.score_points_read_only
                 ScoreRegistrationFloatingMenu.Show = True
+            else:
+                ScoreRegistrationFloatingMenu.TotalPoints = 0
+                ScoreRegistrationFloatingMenu.Show = False
 
             # sends to score scene
             Meteor.Game_loop.set_current_scene(Meteor.Score_scene)
