@@ -21,7 +21,7 @@ class MeteorManager(GameObject):
         self._instantiation_rect_list = [self._instantiation_rect_top, self._instantiation_rect_bottom,
                                          self._instantiation_rect_right, self._instantiation_rect_bottom]
 
-        self._inst_frequency_in_seg = 0.5
+        self._inst_frequency_in_seg = 1
         self._instantiation_timer = TimerComponent(self._inst_frequency_in_seg * 1000, self, self._instantiate_meteor)
 
     def game_object_update(self) -> None:
@@ -45,28 +45,31 @@ class MeteorManager(GameObject):
         initial_pos.y = random.randint(round(start_range_point_y), round(end_range_point_y))
 
         # direction
+
         if instantiation_rect == self._instantiation_rect_top or instantiation_rect == self._instantiation_rect_bottom:
             direction.y = 1 if instantiation_rect == self._instantiation_rect_top else direction.y
             direction.y = -1 if instantiation_rect == self._instantiation_rect_bottom else direction.y
-            direction.x = (random.randint(0, 10) / 10) * random.choice([1, -1])  # output is like x = 0.7 or -0.7
+            #                            x = 0.1 <=> 1                 sign + || -
+            direction.x = (random.randint(1, 10) / 10) * random.choice([1, -1])  # output is like x = 0.7 or -0.7
         else:
             direction.x = 1 if instantiation_rect == self._instantiation_rect_left else direction.x
             direction.x = -1 if instantiation_rect == self._instantiation_rect_right else direction.x
-            direction.y = (random.randint(0, 10) / 10) * random.choice([1, -1])  # output is like y = 0.4 or -0.4
+            #                          y = 0.1 <=> 1                 sign + || -
+            direction.y = (random.randint(1, 10) / 10) * random.choice([1, -1])  # output is like y = 0.4 or -0.4
 
         # rank
-        # 60% small, 30% mid, 10% big
+        # 50% small, 30% mid, 20% big
         rank = None
         rank_picker = random.randint(1, 10)
-        if 1 <= rank_picker <= 6:
+        if 1 <= rank_picker <= 5:
             rank = Meteor.MeteorRank.Small
-        elif 7 <= rank_picker <= 9:
+        elif 6 <= rank_picker <= 8:
             rank = Meteor.MeteorRank.Mid
-        elif rank_picker == 10:
+        elif rank_picker <= 10:
             rank = Meteor.MeteorRank.Big
 
         # ==============================================================================================================
 
         direction = direction.normalize()
-        #print(f"meteor init: {initial_pos}, dir: {direction}, rank: {rank}")
+        # print(f"meteor init: {initial_pos}, dir: {direction}, rank: {rank}")
         Meteor(self.scene, rank, initial_pos, direction)

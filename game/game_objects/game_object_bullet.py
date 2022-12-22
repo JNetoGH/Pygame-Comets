@@ -7,6 +7,8 @@ from engine_JNeto_Productions.systems.game_time_system import GameTime
 
 class Bullet(GameObject):
 
+    In_Scene_Bullets = []
+
     def __init__(self, initial_pos: pygame.Vector2, direction: pygame.Vector2, rotation_angle, scene):
         super().__init__("bullet", scene, scene.camera.get_rendering_layer_by_name("player_layer"))
 
@@ -15,7 +17,7 @@ class Bullet(GameObject):
 
         # destruction time
         self.time_to_destruction_in_seconds = 4
-        self.timer_to_destruction = TimerComponent(self.time_to_destruction_in_seconds * 1000, self, self._set_bullet_to_garbage_collection)
+        self.timer_to_destruction = TimerComponent(self.time_to_destruction_in_seconds * 1000, self, self.set_bullet_to_garbage_collection)
         self.timer_to_destruction.activate()
 
         # sprite
@@ -29,6 +31,8 @@ class Bullet(GameObject):
         # rotation
         self.image = pygame.transform.rotate(self.image, rotation_angle).convert_alpha()
 
+        Bullet.In_Scene_Bullets.append(self)
+
     def game_object_update(self) -> None:
         self._move_bullet_forward()
 
@@ -36,5 +40,6 @@ class Bullet(GameObject):
         new_pos = self.transform.world_position_read_only + self.direction * self.BULLET_SPEED * GameTime.DeltaTime
         self.transform.move_world_position(new_pos)
 
-    def _set_bullet_to_garbage_collection(self):
+    def set_bullet_to_garbage_collection(self):
         self.scene.remove_game_object(self)
+        Bullet.In_Scene_Bullets.remove(self)
