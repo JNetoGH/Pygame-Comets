@@ -1,6 +1,7 @@
 import math
 import pygame.transform
 
+from engine_JNeto_Productions.components.circle_trigger_component import CircleTriggerComponent
 from engine_JNeto_Productions.components.key_tracker_component import KeyTrackerComponent
 from engine_JNeto_Productions.components.rect_collider_component import ColliderComponent
 from engine_JNeto_Productions.components.rect_trigger_component import TriggerComponent
@@ -22,11 +23,15 @@ class Player(GameObject):
         self.single_sprite.scale_itself(1.5)
 
         # COLLIDER
-        self.player_collider = ColliderComponent(0, 0, 50, 50, self)
-        self.trigger = TriggerComponent(0, 0, 100, 100, self)
+        self.player_collider = ColliderComponent(0, 0, 40, 40, self)
+
+        print(f"{self.has_rect_trigger}")
+        self.circle_trigger = CircleTriggerComponent(0, 0, 100, self)
 
         # MAKES CAMERA FOLLOW PLAYER
         self.scene.camera.follow_game_object(self)
+        self.key_p = KeyTrackerComponent(pygame.K_p, self)
+        self.is_followed = True
 
         # BULLET
         self.instantiation_cooldown_in_sec = 1
@@ -46,11 +51,18 @@ class Player(GameObject):
         # armazenar a original, para sempre fazer a rotação com base nela, pois os detalhes não foram perdidos.
         self.buffered_original_image = self.image.copy()
 
-        self.keyp = KeyTrackerComponent(pygame.K_p, self)
-        self.is_followed = False
-
     def game_object_update(self) -> None:
 
+        # CAMERA CONTROL
+        if self.key_p.has_key_been_fired_at_this_frame_read_only:
+            if self.is_followed:
+                self.scene.camera.stop_following_current_set_game_object()
+                self.is_followed = False
+            else:
+                self.scene.camera.follow_game_object(self)
+                self.is_followed = True
+
+        # MOVE DIRECTION
         self._generate_direction_from_ship_angle()
 
         # SHOOTING
@@ -86,6 +98,7 @@ class Player(GameObject):
         # new position with acceleration or deceleration til its stop or on max speed
         new_position = self.transform.world_position_read_only + self.dir_from_angle * self.current_speed * GameTime.DeltaTime
         self.transform.move_world_position_with_collisions_calculations(new_position)
+        # self.transform.move_world_position(new_position)
 
     def _accelerate(self):
         self.current_speed = self.current_speed + (self.ACCELERATION * GameTime.DeltaTime)

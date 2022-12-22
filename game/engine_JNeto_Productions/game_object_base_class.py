@@ -49,7 +49,9 @@ class GameObject(pygame.sprite.Sprite):
         # when a collider is added to the game object it changes this field to True, used mainly for gizmos
         self.has_collider = False
         # same but for rect trigger components
-        self.has_rect_trigger = True
+        self.has_rect_trigger = False
+        # same but for circle trigger components
+        self.has_circle_trigger = False
 
     # pygame is stupid and has already an update method for sprites(a.k.a. game obj super class)
     # so I had to call it this way, this is the most important method of the entire engine_JNeto_Productions

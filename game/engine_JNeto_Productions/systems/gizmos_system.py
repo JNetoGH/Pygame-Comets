@@ -1,5 +1,7 @@
 from typing import Union
 import pygame
+
+from engine_JNeto_Productions.components.circle_trigger_component import CircleTriggerComponent
 from engine_JNeto_Productions.components.rect_collider_component import ColliderComponent
 from engine_JNeto_Productions.components.rect_trigger_component import TriggerComponent
 from engine_JNeto_Productions.systems.scalable_game_screen_system import GameScreen
@@ -26,12 +28,16 @@ class GizmosSystem:
     def render_scene_game_objects_gizmos(self):
         if self._current_scene is None:
             return
+
+        # game objects gizmos
         for gm_obj in self._current_scene.game_object_list:
             self._render_gizmos_of_game_obj_image_rect(gm_obj, pygame.Color("red"))
             if gm_obj.has_collider:
                 self._render_gizmos_of_game_obj_colliders(gm_obj, pygame.Color("yellow"))
             if gm_obj.has_rect_trigger:
                 self._render_gizmos_of_game_obj_rect_triggers(gm_obj, pygame.Color("green"))
+            if gm_obj.has_circle_trigger:
+                self._render_gizmos_of_game_obj_circle_triggers(gm_obj, pygame.Color("green"))
             if gm_obj.transform.is_center_point_appearing_on_screen_read_only:
                 self._render_gizmos_of_game_obj_transform(gm_obj, pygame.Color("white"))
 
@@ -79,7 +85,7 @@ class GizmosSystem:
         self._render_text(text, text_position, color)
 
     # ==================================================================================================================
-    #                                             TRIGGERS/COLLIDERS
+    #                                          RECTANGLE TRIGGERS/COLLIDERS
     # ==================================================================================================================
 
     def _render_gizmos_of_game_obj_colliders(self, game_obj, color: pygame.Color) -> None:
@@ -123,3 +129,24 @@ class GizmosSystem:
             text_position.y = representative_rect.centery + self._FONT_SIZE // 2
         self._render_text(text, text_position, color)
 
+    # ==================================================================================================================
+    #                                                   CIRCLE TRIGGERS
+    # ==================================================================================================================
+
+    def _render_gizmos_of_game_obj_circle_triggers(self, gm_obj, color):
+        for component in gm_obj.components_list:
+            if isinstance(component, CircleTriggerComponent):
+                # THE REPRESENTATION OF THE CIRCLE TRIGGER AT SCREEN POSITION
+                # the position of the trigger is at world position,
+                # so I have to treat its position for correct representation on screen
+                representative_circle_x = gm_obj.transform.screen_position_read_only.x + component.offset_from_game_object_x
+                representative_circle_y = gm_obj.transform.screen_position_read_only.y + component.offset_from_game_object_y
+                circle_center = pygame.Vector2(representative_circle_x, representative_circle_y)
+                pygame.draw.circle(GameScreen.GameScreenDummySurface, color, circle_center, component.radius, 1)
+
+                # render description
+                text = f"{gm_obj.name}'s {component.__class__.__name__}\n"
+                text_position = pygame.Vector2()
+                text_position.x = circle_center.x + 30
+                text_position.y = circle_center.y - self._FONT_SIZE * 2
+                self._render_text(text, text_position, color)

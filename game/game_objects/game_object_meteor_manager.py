@@ -1,8 +1,8 @@
 import random
 import pygame
+from engine_JNeto_Productions.components.rect_trigger_component import TriggerComponent
 from engine_JNeto_Productions.components.timer_component import TimerComponent
 from engine_JNeto_Productions.game_object_base_class import GameObject
-from engine_JNeto_Productions.systems.scalable_game_screen_system import GameScreen
 from game_objects.game_object_meteor import Meteor
 
 
@@ -13,6 +13,14 @@ class MeteorManager(GameObject):
 
         self.remove_default_rect_image()
         self.stop_rendering_this_game_object()
+
+        self._instantiation_rect_top = TriggerComponent(0, -470, 1000, 100, self)
+        self._instantiation_rect_bottom = TriggerComponent(0, 470, 1000, 100, self)
+        self._instantiation_rect_left = TriggerComponent(-550, 0, 100, 800, self)
+        self._instantiation_rect_right = TriggerComponent(550, 0, 100, 800, self)
+        self._instantiation_rect_list = [self._instantiation_rect_top, self._instantiation_rect_bottom,
+                                         self._instantiation_rect_right, self._instantiation_rect_bottom]
+
         self._inst_frequency_in_seg = 0.5
         self._instantiation_timer = TimerComponent(self._inst_frequency_in_seg * 1000, self, self._instantiate_meteor)
 
@@ -21,59 +29,44 @@ class MeteorManager(GameObject):
             self._instantiation_timer.activate()
 
     def _instantiate_meteor(self):
-        camera_pos = self.scene.camera.world_position_read_only
-        camera_width = GameScreen.DummyScreenWidth
-        camera_height = GameScreen.DummyScreenHeight
-        """
-        BASICALLY OUT OF THE FOV
-              corner *  up_side_pos                     
-                      |----------|
-        left_side_pos |  camera  | () meteor instantiation point
-                      |----------|
-                                () meteor instantiation point
-        """
-        camera_square_left_side_position = round(camera_pos.x - camera_width//2)
-        camera_square_up_side_position = round(camera_pos.y - camera_height//2)
-        camera_corner_pos = pygame.Vector2(camera_square_left_side_position, camera_square_up_side_position)
-        print(camera_corner_pos)
-
-        # needs to be the bigger than the size of the meteor
-        # will be added/sub of the x and y of the instantiation points
-        safe_dist = 700
 
         initial_pos = pygame.Vector2(0, 0)
-        initial_pos.x = random.choice([random.randrange(int(camera_corner_pos.x), camera_width-safe_dist), random.choice([-1 * safe_dist - 5, camera_height + 5])])
-        initial_pos.y = random.choice([random.choice([-1 * safe_dist - 5, camera_width + 5]), random.randrange(int(camera_corner_pos.y), camera_height + safe_dist)])
-
-        """
-        # ORINAL BUGGY WAY
-        # random.choice(
-        # [(random.randrange(0, sw-self.w), random.choice([-1*self.h - 5, sh + 5])),
-        # (random.choice([-1*self.w - 5, sw + 5]), random.randrange(0, sh - self.h))])
-        instantiation_point = random.choice([
-            (random.randrange(camera_square_left_side_position, camera_width-safe_dist), random.choice([-1 * safe_dist - 5, camera_height + 5])),
-            (random.choice([-1 * safe_dist - 5, camera_width + 5]), random.randrange(camera_square_up_side_position, camera_height - safe_dist))])
-       """
-
-
-        # ==============================================================================================================
-
         direction = pygame.Vector2(0, 0)
 
-        # left half
-        if initial_pos.x < camera_width//2:
-            direction.x = 1
-        # right half
+        # picked randomly
+        instantiation_rect = self._instantiation_rect_list[random.randint(0, len(self._instantiation_rect_list) - 1)]
+
+        # sets a random point inside the instantiation rect
+        start_range_point_x = instantiation_rect.world_position_read_only.x - instantiation_rect.width / 2
+        end_range_point_x = instantiation_rect.world_position_read_only.x + instantiation_rect.width / 2
+        start_range_point_y = instantiation_rect.world_position_read_only.y - instantiation_rect.height / 2
+        end_range_point_y = instantiation_rect.world_position_read_only.y + instantiation_rect.height / 2
+        initial_pos.x = random.randint(round(start_range_point_x), round(end_range_point_x))
+        initial_pos.y = random.randint(round(start_range_point_y), round(end_range_point_y))
+
+        # direction
+        if instantiation_rect == self._instantiation_rect_top or instantiation_rect == self._instantiation_rect_bottom:
+            direction.y = 1 if instantiation_rect == self._instantiation_rect_top else direction.y
+            direction.y = -1 if instantiation_rect == self._instantiation_rect_bottom else direction.y
+            direction.x = (random.randint(0, 10) / 10) * random.choice([1, -1])  # output is like x = 0.7 or -0.7
         else:
-            direction.x = -1
-        # upper half
-        if initial_pos.y < camera_height//2:
-            direction.y = 1
-        # bottom half
-        else:
-            direction.y = -1
+            direction.x = 1 if instantiation_rect == self._instantiation_rect_left else direction.x
+            direction.x = -1 if instantiation_rect == self._instantiation_rect_right else direction.x
+            direction.y = (random.randint(0, 10) / 10) * random.choice([1, -1])  # output is like y = 0.4 or -0.4
+
+        # rank
+        # 60% small, 30% mid, 10% big
+        rank = None
+        rank_picker = random.randint(1, 10)
+        if 1 <= rank_picker <= 6:
+            rank = Meteor.MeteorRank.Small
+        elif 7 <= rank_picker <= 9:
+            rank = Meteor.MeteorRank.Mid
+        elif rank_picker == 10:
+            rank = Meteor.MeteorRank.Big
 
         # ==============================================================================================================
 
-        print(f"meteor instantiated at {initial_pos}")
-        Meteor(self.scene, Meteor.MeteorRank.Big, initial_pos, direction)
+        direction = direction.normalize()
+        #print(f"meteor init: {initial_pos}, dir: {direction}, rank: {rank}")
+        Meteor(self.scene, rank, initial_pos, direction)

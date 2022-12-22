@@ -36,6 +36,10 @@ class Camera:
         world_position_in_y = self.followed_object_offset.y + GameScreen.HalfDummyScreenHeight
         return pygame.Vector2(world_position_in_x, world_position_in_y)
 
+    @property
+    def screen_position_read_only(self) -> pygame.Vector2:
+        return pygame.Vector2(GameScreen.HalfDummyScreenWidth, GameScreen.HalfDummyScreenHeight)
+
     # - Kinda fakes a game object position to artificially set the camera there
     # - I don't even have to say that it doesn't work if the camera is already following a game object
     def focus_camera_at_world_position(self, world_position: pygame.Vector2):
