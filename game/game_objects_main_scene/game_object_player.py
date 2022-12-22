@@ -8,7 +8,7 @@ from engine_JNeto_Productions.components.timer_component import TimerComponent
 from engine_JNeto_Productions.game_object_base_class import GameObject
 from engine_JNeto_Productions.systems.game_time_system import GameTime
 from engine_JNeto_Productions.systems.input_manager_system import InputManager
-from game_objects.game_object_bullet import Bullet
+from game_objects_main_scene.game_object_bullet import Bullet
 
 
 class Player(GameObject):

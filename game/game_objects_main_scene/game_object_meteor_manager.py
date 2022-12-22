@@ -3,7 +3,7 @@ import pygame
 from engine_JNeto_Productions.components.rect_trigger_component import RectTriggerComponent
 from engine_JNeto_Productions.components.timer_component import TimerComponent
 from engine_JNeto_Productions.game_object_base_class import GameObject
-from game_objects.game_object_meteor import Meteor
+from game_objects_main_scene.game_object_meteor import Meteor
 
 
 class MeteorManager(GameObject):
