@@ -74,7 +74,9 @@ class Meteor(GameObject):
             csv = FileManager.read_from_csv_file("game_data/score_sheet.csv")
 
             total_amount_registered = len(csv)
-            last_guy_index = 10 if total_amount_registered >= 10 else total_amount_registered-1
+            last_guy_index = (10-1) if total_amount_registered >= 10 else total_amount_registered-1
+
+            print(last_guy_index)
             pontuacao_do_ultimo = int(csv[last_guy_index][1])
 
             managed_to_get_in_the_ranking_sheet = self.score.score_points_read_only > pontuacao_do_ultimo
