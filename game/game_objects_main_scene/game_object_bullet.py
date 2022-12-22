@@ -42,4 +42,5 @@ class Bullet(GameObject):
 
     def set_bullet_to_garbage_collection(self):
         self.scene.remove_game_object(self)
-        Bullet.In_Scene_Bullets.remove(self)
+        if self in Bullet.In_Scene_Bullets:
+            Bullet.In_Scene_Bullets.remove(self)

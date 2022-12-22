@@ -1,4 +1,5 @@
 import pygame
+import gc
 
 from engine_JNeto_Productions.game_object_base_class import GameObject
 from game_objects_main_scene.game_object_bullet import Bullet
@@ -33,5 +34,5 @@ class MainSceneReseter(GameObject):
         # remove meteors in scene
         for gm in self.scene.game_object_list:
             if isinstance(gm, Meteor):
-                gm._set_to_garbage_collection()
                 self.scene.remove_game_object(gm)
+        gc.collect()

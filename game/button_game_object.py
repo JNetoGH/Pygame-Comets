@@ -27,7 +27,20 @@ class Button(GameObject):
 
         self.func = func
 
+        self._is_active = True
+
+    def deactivte(self):
+        self._is_active = False
+        self.stop_rendering_this_game_object()
+
+    def activate(self):
+        self._is_active = True
+        self.start_rendering_this_game_object()
+
     def game_object_update(self) -> None:
+
+        if not self._is_active:
+            return
 
         if self.rect_trigger.is_there_overlap_with_point(pygame.Vector2(pygame.mouse.get_pos())):
             self.single_sprite.change_image(self.path_active)
@@ -37,7 +50,4 @@ class Button(GameObject):
         else:
             self.single_sprite.change_image(self.path_normal)
             self.single_sprite.scale_itself(self.scale)
-
-
-
 
