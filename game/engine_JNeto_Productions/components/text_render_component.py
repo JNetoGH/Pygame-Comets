@@ -26,28 +26,28 @@ class TextRenderComponent(Component):
 
         self.should_be_rendered = True
 
-    def change_font_size(self, font_size):
+    def set_font_size(self, font_size):
         self._font = Font('engine_JNeto_Productions/_engine_resources/fonts/JetBrainsMono-Medium.ttf', font_size)
         # updates the text surface object, on which text is drawn on it by the camera.
         self.text_surface = self._font.render(self._text, True, self._color)
 
-    def change_color(self, color: pygame.Color):
+    def set_color(self, color: pygame.Color):
         self._color = color
         self.text_surface = self._font.render(self._text, True, self._color)
 
-    def change_text(self, text: str):
+    def set_text(self, text: str):
         self._text = text
         self.text_surface = self._font.render(self._text, True, self._color)
+
+    def set_off_set_from_game_object(self, offset_from_game_object_x, offset_from_game_object_y):
+        self.offset_from_game_object_x = offset_from_game_object_x
+        self.offset_from_game_object_y = offset_from_game_object_y
 
     def stop_rendering_text(self):
         self.should_be_rendered = False
 
     def start_rendering_text(self):
         self.should_be_rendered = True
-
-    def change_off_set_from_game_object(self, offset_from_game_object_x, offset_from_game_object_y):
-        self.offset_from_game_object_x = offset_from_game_object_x
-        self.offset_from_game_object_y = offset_from_game_object_y
 
     def _update_position(self):
         # UPDATES THE TEXT POSITION ON SCREEN

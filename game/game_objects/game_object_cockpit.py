@@ -27,34 +27,34 @@ class Cockpit(GameObject):
     def game_object_update(self) -> None:
 
         # angle
-        self.angle_text_render.change_text(f"{self.player.angle:.1f}º")
+        self.angle_text_render.set_text(f"{self.player.angle:.1f}º")
 
         # speed text itself
-        self.speed_text_render.change_text(f"{self.player.current_speed:.0f}u/s")
+        self.speed_text_render.set_text(f"{self.player.current_speed:.0f}u/s")
 
         # speed status
         if InputManager.Vertical_Axis == -1:
 
             if self.player.current_speed >= self.player.BASE_MAX_MOVE_SPEED:
-                self.speed_status_text_render.change_text("MAX SPEED")
-                self.speed_status_text_render.change_color(pygame.Color(255, 255, 150))
-                self.speed_status_text_render.change_font_size(15)
+                self.speed_status_text_render.set_text("MAX SPEED")
+                self.speed_status_text_render.set_color(pygame.Color(255, 255, 150))
+                self.speed_status_text_render.set_font_size(15)
                 self.speed_status_text_render.offset_from_game_object_y = 1
                 return
 
-            self.speed_status_text_render.change_text("accelerating")
-            self.speed_status_text_render.change_color(pygame.Color(120, 225, 120))
-            self.speed_status_text_render.change_font_size(12)
+            self.speed_status_text_render.set_text("accelerating")
+            self.speed_status_text_render.set_color(pygame.Color(120, 225, 120))
+            self.speed_status_text_render.set_font_size(12)
             self.speed_status_text_render.offset_from_game_object_y = 0
 
         elif self.player.current_speed > 0:
-            self.speed_status_text_render.change_text("decelerating")
-            self.speed_status_text_render.change_color(pygame.Color(255, 120, 120))
-            self.speed_status_text_render.change_font_size(12)
+            self.speed_status_text_render.set_text("decelerating")
+            self.speed_status_text_render.set_color(pygame.Color(255, 120, 120))
+            self.speed_status_text_render.set_font_size(12)
             self.speed_status_text_render.offset_from_game_object_y = 0
 
         elif self.player.current_speed == 0:
-            self.speed_status_text_render.change_text("stop")
-            self.speed_status_text_render.change_color(pygame.Color(255, 255, 255))
-            self.speed_status_text_render.change_font_size(15)
+            self.speed_status_text_render.set_text("stop")
+            self.speed_status_text_render.set_color(pygame.Color(255, 255, 255))
+            self.speed_status_text_render.set_font_size(15)
             self.speed_status_text_render.offset_from_game_object_y = 0

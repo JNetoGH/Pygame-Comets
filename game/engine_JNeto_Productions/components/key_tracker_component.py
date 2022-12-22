@@ -30,7 +30,7 @@ class KeyTrackerComponent(Component):
     def total_times_fired_read_only(self):
         return self._total_times_fired
 
-    def rest_total_times_fired(self):
+    def reset_total_times_fired(self):
         self._total_times_fired = 0
 
     def component_update(self):
