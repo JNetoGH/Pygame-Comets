@@ -77,35 +77,15 @@ class Meteor(GameObject):
             last_guy_index = 10 if total_amount_registered >= 10 else total_amount_registered-1
             pontuacao_do_ultimo = int(csv[last_guy_index][1])
 
-            managed_to_get_in_the_rank = self.score.score_points_read_only > pontuacao_do_ultimo
+            managed_to_get_in_the_ranking_sheet = self.score.score_points_read_only > pontuacao_do_ultimo
 
-            print(f"managed to get in the rank: {managed_to_get_in_the_rank}\n"
+            print(f"managed to get in the rank: {managed_to_get_in_the_ranking_sheet}\n"
                   f"points: {self.score.score_points_read_only}\n"
                   f"10th points: {pontuacao_do_ultimo}\n")
 
-            if managed_to_get_in_the_rank:
-
+            if managed_to_get_in_the_ranking_sheet:
                 ScoreRegistrationFloatingMenu.TotalPoints = self.score.score_points_read_only
-
-                print("Congrats! You have managed to get into the ranking")
-                print("Please, insert 3 characters to represent your score")
-
-                # validation
-                is_valid = False
-                name = ""
-                while not is_valid:
-                    print("insert 3 chars: ", end="")
-                    value = input()
-                    if len(value) != 3:
-                        print("invalid amount of char")
-                    else:
-                        is_valid = True
-                        name = value
-
-                # registration
-                print(f"{name} registered with {self.score.score_points_read_only} points\n")
-                FileManager.write_new_row_in_csv_file("game_data/score_sheet.csv", [name, self.score.score_points_read_only])
-                FileManager.sort_csv_file_by_column_values("game_data/score_sheet.csv", 1)
+                ScoreRegistrationFloatingMenu.Show = True
 
             # sends to score scene
             Meteor.Game_loop.set_current_scene(Meteor.Score_scene)

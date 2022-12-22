@@ -22,7 +22,7 @@ from game_objects_main_scene.game_object_score import Score
 from game_objects_main_scene.game_object_main_scene_reseter import MainSceneReseter
 from game_objects_menu_scene.banner_game_object import MenuBanner
 from game_objects_menu_scene.menu_background_game_object import MenuBackground
-from button_game_object import Button
+from game_object_button import Button
 
 # GAME LOOP
 game_loop = GameLoop()
@@ -107,6 +107,6 @@ menu_exit_button = Button("game_res/menu/menu_exit.png", "game_res/menu/menu_exi
                            func_exit_button, menu_scene, menu_layer2)
 
 # GAME LOOP
-game_loop.set_current_scene(score_scene)
+game_loop.set_current_scene(menu_scene)
 game_loop.run_game_loop()
 

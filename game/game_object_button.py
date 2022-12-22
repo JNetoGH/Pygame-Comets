@@ -29,7 +29,7 @@ class Button(GameObject):
 
         self._is_active = True
 
-    def deactivte(self):
+    def deactivate(self):
         self._is_active = False
         self.stop_rendering_this_game_object()
 
