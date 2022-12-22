@@ -19,7 +19,7 @@ class MeteorManager(GameObject):
         self._instantiation_rect_left = RectTriggerComponent(-550, 0, 100, 800, self)
         self._instantiation_rect_right = RectTriggerComponent(550, 0, 100, 800, self)
         self._instantiation_rect_list = [self._instantiation_rect_top, self._instantiation_rect_bottom,
-                                         self._instantiation_rect_right, self._instantiation_rect_bottom]
+                                         self._instantiation_rect_left, self._instantiation_rect_right]
 
         self._inst_frequency_in_seg = 0.75
         self._instantiation_timer = TimerComponent(self._inst_frequency_in_seg * 1000, self, self._instantiate_meteor)
@@ -34,7 +34,9 @@ class MeteorManager(GameObject):
         direction = pygame.Vector2(0, 0)
 
         # picked randomly
-        instantiation_rect = self._instantiation_rect_list[random.randint(0, len(self._instantiation_rect_list) - 1)]
+        random_index = random.randint(0, len(self._instantiation_rect_list) - 1)
+        instantiation_rect = self._instantiation_rect_list[random_index]
+        print(f"rando index {random_index}")
 
         # sets a random point inside the instantiation rect
         start_range_point_x = instantiation_rect.world_position_read_only.x - instantiation_rect.width / 2
