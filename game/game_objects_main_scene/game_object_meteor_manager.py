@@ -36,7 +36,7 @@ class MeteorManager(GameObject):
         # picked randomly
         random_index = random.randint(0, len(self._instantiation_rect_list) - 1)
         instantiation_rect = self._instantiation_rect_list[random_index]
-        print(f"rando index {random_index}")
+        #print(f"rando index {random_index}")
 
         # sets a random point inside the instantiation rect
         start_range_point_x = instantiation_rect.world_position_read_only.x - instantiation_rect.width / 2

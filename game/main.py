@@ -13,6 +13,7 @@ from game_object_score_scene.text_holder_game_object import TextHolder
 
 # GAME OBJECTS IMPORTS
 from game_objects_main_scene.game_object_cockpit import Cockpit
+from game_objects_main_scene.game_object_left_shoot_ui import LeftShootUi
 from game_objects_main_scene.game_object_map_limits import MapLimits
 from game_objects_main_scene.game_object_map import Map
 from game_objects_main_scene.game_object_meteor import Meteor
@@ -56,8 +57,9 @@ map_rendering_layer = RenderingLayer("map_layer")
 player_rendering_layer = RenderingLayer("player_layer")
 map_limits_layer = RenderingLayer("map_limits_layer")
 over_player_layer = RenderingLayer("over_player_layer")
+bars_layer = RenderingLayer("bars_layer")
 cockpit_layer = RenderingLayer("cockpit_layer")
-main_camera = Camera(map_rendering_layer, player_rendering_layer, over_player_layer, map_limits_layer, cockpit_layer)
+main_camera = Camera(map_rendering_layer, player_rendering_layer, over_player_layer, map_limits_layer, bars_layer,cockpit_layer)
 # MAIN SCENE
 main_scene = Scene(main_camera)
 # GAME OBJECTS
@@ -65,6 +67,7 @@ map = Map(main_scene)
 map_limits = MapLimits(main_scene)
 player = Player(main_scene)
 cockpit = Cockpit(main_scene, cockpit_layer)
+left_shoot_ui = LeftShootUi(main_scene)
 Meteor.Game_loop = game_loop
 Meteor.Score_scene = score_scene
 meteor_manager = MeteorManager(main_scene, map_rendering_layer)

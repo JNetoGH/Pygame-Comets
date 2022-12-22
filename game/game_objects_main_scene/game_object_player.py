@@ -9,6 +9,7 @@ from engine_JNeto_Productions.game_object_base_class import GameObject
 from engine_JNeto_Productions.systems.game_time_system import GameTime
 from engine_JNeto_Productions.systems.input_manager_system import InputManager
 from game_objects_main_scene.game_object_bullet import Bullet
+from game_objects_main_scene.game_object_left_shoot_ui import LeftShootUi
 
 
 class Player(GameObject):
@@ -64,7 +65,11 @@ class Player(GameObject):
         # shoos a bullet and then waits til the counter has finished counting to instantiate the nex bullet
         if InputManager.is_key_pressed(pygame.K_SPACE) and not self.bullet_instantiation_timer.is_timer_active_read_only:
             self.bullet_instantiation_timer.activate()
+            LeftShootUi.TotWaitTime = self.bullet_instantiation_timer.duration_in_ms_read_only
             self._instantiate_bullet()
+
+        # lateral shoot bar sync
+        LeftShootUi.ElapsedTime = self.bullet_instantiation_timer.elapsed_time_read_only
 
         # MOVEMENT
         # moves forward when W or UP arrow is pressed
