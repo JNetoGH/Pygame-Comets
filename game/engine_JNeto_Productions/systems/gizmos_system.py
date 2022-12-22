@@ -3,7 +3,7 @@ import pygame
 
 from engine_JNeto_Productions.components.circle_trigger_component import CircleTriggerComponent
 from engine_JNeto_Productions.components.rect_collider_component import ColliderComponent
-from engine_JNeto_Productions.components.rect_trigger_component import TriggerComponent
+from engine_JNeto_Productions.components.rect_trigger_component import RectTriggerComponent
 from engine_JNeto_Productions.systems.scalable_game_screen_system import GameScreen
 
 
@@ -98,11 +98,11 @@ class GizmosSystem:
     def _render_gizmos_of_game_obj_rect_triggers(self, game_obj, color: pygame.Color):
         # RECT TRIGGER GIZMOS
         for component in game_obj.components_list:
-            if isinstance(component, TriggerComponent) and not isinstance(component, ColliderComponent):
+            if isinstance(component, RectTriggerComponent) and not isinstance(component, ColliderComponent):
                 # render component
                 self._render_rect_of_rect_based_component(component, color)
 
-    def _render_rect_of_rect_based_component(self, component: Union[ColliderComponent, TriggerComponent], color: pygame.Color):
+    def _render_rect_of_rect_based_component(self, component: Union[ColliderComponent, RectTriggerComponent], color: pygame.Color):
 
         game_obj = component.game_object_owner_read_only
 
@@ -123,7 +123,7 @@ class GizmosSystem:
         text = f"{game_obj.name}'s {component.__class__.__name__}\n"
         text_position = pygame.Vector2()
         text_position.x = representative_rect.centerx + 30
-        if isinstance(component, TriggerComponent) and not isinstance(component, ColliderComponent):
+        if isinstance(component, RectTriggerComponent) and not isinstance(component, ColliderComponent):
             text_position.y = representative_rect.centery - self._FONT_SIZE * 2
         else:
             text_position.y = representative_rect.centery + self._FONT_SIZE // 2

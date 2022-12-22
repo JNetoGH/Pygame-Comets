@@ -7,6 +7,7 @@ from engine_JNeto_Productions.game_object_base_class import GameObject
 from engine_JNeto_Productions.systems.game_time_system import GameTime
 from game_objects.game_object_bullet import Bullet
 from game_objects.game_object_player import Player
+from game_objects.game_object_score import Score
 
 
 class Meteor(GameObject):
@@ -27,6 +28,7 @@ class Meteor(GameObject):
         self.circle_trigger = CircleTriggerComponent(0,0, self.image.get_width()//2, self)
 
         # lifetime
+        # 20
         self.life_time_is_seg = 20
         self.life_time_timer = TimerComponent(self.life_time_is_seg*1000, self, self._set_to_garbage_collection)
         self.life_time_timer.activate()
@@ -35,10 +37,16 @@ class Meteor(GameObject):
         self.transform.move_world_position(initial_position)
 
         # move and direction
+        # 100
         self.move_speed = 100
         self.direction = direction
 
+        # rank: related to size and instantiation of other meteors post-death
         self.rank = rank
+
+        # player and score
+        self.player: Player = self.scene.get_game_object_by_name("player")
+        self.score: Score = self.scene.get_game_object_by_name("score")
 
     def game_object_update(self) -> None:
         # move
@@ -46,7 +54,9 @@ class Meteor(GameObject):
 
         # checks for collisions with bullets, if killed, create the lower rank ones
         for bullet in Bullet.In_Scene_Bullets:
-            if self.circle_trigger.is_there_a_point_inside(bullet.transform.world_position_read_only):
+            if self.circle_trigger.is_there_overlap_with_point(bullet.transform.world_position_read_only):
+
+
 
                 # removes bullet from scene
                 bullet.set_bullet_to_garbage_collection()
@@ -54,22 +64,26 @@ class Meteor(GameObject):
                 # instantiates the sub rank comets
                 if self.rank == Meteor.MeteorRank.Big:
 
+                    # adds points to score
+                    self.score.add_to_score(10)
+
                     dir1, dir2, dir3 = self.direction.copy(), self.direction.copy(), self.direction.copy()
                     dir2.x = dir2.x + (dir2.x / 10 * 4)
                     dir2.y = dir2.y - (dir2.y / 10 * 4)
                     dir3.x = dir3.x - (dir3.x / 10 * 4)
                     dir3.y = dir3.y + (dir3.y / 10 * 4)
-
-                    print(f"dir1: {dir1} \ndir2: {dir2.normalize()}\ndir3: {dir3.normalize()}\n")
+                    #print(f"dir1: {dir1} \ndir2: {dir2.normalize()}\ndir3: {dir3.normalize()}\n")
                     Meteor(self.scene, Meteor.MeteorRank.Mid, self.transform.world_position_read_only+dir1*10, dir1)
                     Meteor(self.scene, Meteor.MeteorRank.Mid, self.transform.world_position_read_only+dir2*10, dir2.normalize())
                     Meteor(self.scene, Meteor.MeteorRank.Mid, self.transform.world_position_read_only+dir3*10, dir3.normalize())
 
                 elif self.rank == Meteor.MeteorRank.Mid:
 
+                    # adds points to score
+                    self.score.add_to_score(20)
+
                     dir1, dir2, dir3, dir4, dir5 = self.direction.copy(), self.direction.copy(), self.direction.copy(),\
                                                    self.direction.copy(), self.direction.copy()
-
                     dir2.x = dir2.x + (dir2.x / 10 * 4)
                     dir2.y = dir2.y - (dir2.y / 10 * 4)
                     dir3.x = dir3.x - (dir3.x / 10 * 4)
@@ -78,16 +92,24 @@ class Meteor(GameObject):
                     dir4.y = dir4.y - (dir4.y / 10 * 8)
                     dir5.x = dir5.x - (dir5.x / 10 * 8)
                     dir5.y = dir5.y + (dir5.y / 10 * 8)
-
-                    print(f"dir1: {dir1} \ndir2: {dir2.normalize()}\ndir3: {dir3.normalize()}\n dir4: {dir4.normalize()}\n dir5: {dir5.normalize()}\n")
+                    #print(f"dir1: {dir1} \ndir2: {dir2.normalize()}\ndir3: {dir3.normalize()}\ndir4: {dir4.normalize()}\ndir5: {dir5.normalize()}\n")
                     Meteor(self.scene, Meteor.MeteorRank.Small, self.transform.world_position_read_only, dir1)
                     Meteor(self.scene, Meteor.MeteorRank.Small, self.transform.world_position_read_only, dir2.normalize())
                     Meteor(self.scene, Meteor.MeteorRank.Small, self.transform.world_position_read_only, dir3.normalize())
                     Meteor(self.scene, Meteor.MeteorRank.Small, self.transform.world_position_read_only, dir4.normalize())
                     Meteor(self.scene, Meteor.MeteorRank.Small, self.transform.world_position_read_only, dir5.normalize())
 
+                elif self.rank == Meteor.MeteorRank.Small:
+                    # adds points to score
+                    self.score.add_to_score(30)
+
+
                 # removes itself from scene
                 self._set_to_garbage_collection()
+
+        # player hit
+        if self.circle_trigger.is_there_overlap_with_rect(self.player.player_collider.inner_rect_read_only):
+            print("player dentro")
 
     def move_to_direction(self):
         pos_increment = pygame.Vector2(self.direction * self.move_speed * GameTime.DeltaTime)

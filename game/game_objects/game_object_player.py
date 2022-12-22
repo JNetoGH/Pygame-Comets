@@ -1,10 +1,8 @@
 import math
 import pygame.transform
 
-from engine_JNeto_Productions.components.circle_trigger_component import CircleTriggerComponent
 from engine_JNeto_Productions.components.key_tracker_component import KeyTrackerComponent
 from engine_JNeto_Productions.components.rect_collider_component import ColliderComponent
-from engine_JNeto_Productions.components.rect_trigger_component import TriggerComponent
 from engine_JNeto_Productions.components.single_sprite_component import SingleSpriteComponent
 from engine_JNeto_Productions.components.timer_component import TimerComponent
 from engine_JNeto_Productions.game_object_base_class import GameObject
@@ -24,9 +22,6 @@ class Player(GameObject):
 
         # COLLIDER
         self.player_collider = ColliderComponent(0, 0, 40, 40, self)
-
-        print(f"{self.has_rect_trigger}")
-        self.circle_trigger = CircleTriggerComponent(0, 0, 100, self)
 
         # MAKES CAMERA FOLLOW PLAYER
         self.scene.camera.follow_game_object(self)

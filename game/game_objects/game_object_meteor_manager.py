@@ -1,6 +1,6 @@
 import random
 import pygame
-from engine_JNeto_Productions.components.rect_trigger_component import TriggerComponent
+from engine_JNeto_Productions.components.rect_trigger_component import RectTriggerComponent
 from engine_JNeto_Productions.components.timer_component import TimerComponent
 from engine_JNeto_Productions.game_object_base_class import GameObject
 from game_objects.game_object_meteor import Meteor
@@ -14,14 +14,14 @@ class MeteorManager(GameObject):
         self.remove_default_rect_image()
         self.stop_rendering_this_game_object()
 
-        self._instantiation_rect_top = TriggerComponent(0, -470, 1000, 100, self)
-        self._instantiation_rect_bottom = TriggerComponent(0, 470, 1000, 100, self)
-        self._instantiation_rect_left = TriggerComponent(-550, 0, 100, 800, self)
-        self._instantiation_rect_right = TriggerComponent(550, 0, 100, 800, self)
+        self._instantiation_rect_top = RectTriggerComponent(0, -470, 1000, 100, self)
+        self._instantiation_rect_bottom = RectTriggerComponent(0, 470, 1000, 100, self)
+        self._instantiation_rect_left = RectTriggerComponent(-550, 0, 100, 800, self)
+        self._instantiation_rect_right = RectTriggerComponent(550, 0, 100, 800, self)
         self._instantiation_rect_list = [self._instantiation_rect_top, self._instantiation_rect_bottom,
                                          self._instantiation_rect_right, self._instantiation_rect_bottom]
 
-        self._inst_frequency_in_seg = 1
+        self._inst_frequency_in_seg = 0.75
         self._instantiation_timer = TimerComponent(self._inst_frequency_in_seg * 1000, self, self._instantiate_meteor)
 
     def game_object_update(self) -> None:
@@ -45,7 +45,6 @@ class MeteorManager(GameObject):
         initial_pos.y = random.randint(round(start_range_point_y), round(end_range_point_y))
 
         # direction
-
         if instantiation_rect == self._instantiation_rect_top or instantiation_rect == self._instantiation_rect_bottom:
             direction.y = 1 if instantiation_rect == self._instantiation_rect_top else direction.y
             direction.y = -1 if instantiation_rect == self._instantiation_rect_bottom else direction.y

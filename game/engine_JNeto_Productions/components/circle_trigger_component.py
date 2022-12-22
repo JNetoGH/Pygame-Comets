@@ -22,10 +22,42 @@ class CircleTriggerComponent(Component):
         world_pos.y = self.game_object_owner.transform.world_position_read_only.y + self.offset_from_game_object_y
         return world_pos.copy()
 
-    def is_there_a_point_inside(self, point: pygame.Vector2):
+    def is_there_overlap_with_point(self, point: pygame.Vector2):
         circle_pos = self.world_position_read_only
         squared_dist = (circle_pos.x - point.x) ** 2 + (circle_pos.y - point.y) ** 2
         return squared_dist <= self.radius ** 2
+
+    def is_there_overlap_with_rect(self, rect: pygame.Rect):
+
+        """          (X2, Y2)
+            |-------|
+            |       |
+            |-------|
+         (X1, Y1)
+        """
+
+        X1 = rect.x
+        X2 = rect.x + rect.width
+        Y1 = rect.y
+        Y2 = rect.y + rect.height
+
+        # Find the nearest point on the
+        # rectangle to the center of
+        # the circle
+        # rounding is mandatory
+        Xn = max(X1, min(round(self.world_position_read_only.x), X2))
+        Yn = max(Y1, min(round(self.world_position_read_only.y), Y2))
+
+        # Find the distance between the
+        # nearest point and the center
+        # of the circle
+        # Distance between 2 points,
+        # (x1, y1) & (x2, y2) in
+        # 2D Euclidean space is
+        # ((x1-x2)**2 + (y1-y2)**2)**0.5
+        Dx = Xn - self.world_position_read_only.x
+        Dy = Yn - self.world_position_read_only.y
+        return (Dx ** 2 + Dy ** 2) <= self.radius ** 2
 
     def component_update(self):
        pass

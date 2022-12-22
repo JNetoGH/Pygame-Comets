@@ -2,7 +2,7 @@ from typing import Union
 import pygame
 
 from engine_JNeto_Productions.components.rect_collider_component import ColliderComponent
-from engine_JNeto_Productions.components.rect_trigger_component import TriggerComponent
+from engine_JNeto_Productions.components.rect_trigger_component import RectTriggerComponent
 from engine_JNeto_Productions.systems.input_manager_system import InputManager
 from engine_JNeto_Productions.systems.scalable_game_screen_system import GameScreen
 from engine_JNeto_Productions.systems.game_time_system import GameTime

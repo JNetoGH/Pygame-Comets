@@ -2,7 +2,7 @@ import pygame
 from engine_JNeto_Productions.components.component_base_class.component_base_class import Component
 
 
-class TriggerComponent(Component):
+class RectTriggerComponent(Component):
     def __init__(self, offset_from_game_object_x, offset_from_game_object_y, width, height, game_object_owner):
         super().__init__(game_object_owner)
 
@@ -35,7 +35,7 @@ class TriggerComponent(Component):
     def inner_rect_read_only(self):
         return self._trigger_inner_rect.copy()
 
-    def is_there_a_point_inside(self, point: pygame.Vector2):
+    def is_there_overlap_with_point(self, point: pygame.Vector2):
         return self._trigger_inner_rect.collidepoint(point.x, point.y)
 
     # every frame it realigns it-self with its owner, so it moves along with the owner
