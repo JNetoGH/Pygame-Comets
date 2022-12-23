@@ -64,6 +64,9 @@ class MeteorManager(GameObject):
 
     def game_object_scene_set_start(self) -> None:
         self.can_instantiate = False
+
+        self.count_down_ui.start_rendering_this_game_object()
+
         self.sound_count_down.play()
 
         # remove all remaining meteors from scene
