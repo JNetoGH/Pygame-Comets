@@ -1,11 +1,6 @@
 # COMETS
+
 link: https://github.com/JNetoGH/comets
-
-<br>
-
-<br>
-
-<br>
 
 ## ALUNOS
 João Neto (a22200558):
@@ -84,6 +79,7 @@ A nave não sai de 0 a valocidade máxima instantaneamente, uma força de é apl
 
 ````
 def game_object_update(self) -> None:
+
     # GENERATES THE FORWARD MOVE DIRECTION
     self._generate_direction_from_ship_angle()
 
