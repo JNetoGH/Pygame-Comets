@@ -126,6 +126,7 @@ def game_object_update(self) -> None:
 - A quantidade máxima de cometas na scene depende da dificuldade atual (é progressiva, varia de acordo com a altura da gameplay)
 - A direção do spawn de um Meteor é decidida pleo MeteorManager de forma a que o meteoro sempre passe pelo mapa
 - Os cometas possuem uma vida útil de mais ou menos meio minuto, ao fim da vida útil, aquele cometa é manejado para garbage collection.
+- Quando o CircleTriggerComponent colide com o player ou um disparo, este cometa é manejado para garbage collection.
 
 - Quando o MeteorManager spawna um cometa, o mesmo tem as seguintes chances de ser um:
     
