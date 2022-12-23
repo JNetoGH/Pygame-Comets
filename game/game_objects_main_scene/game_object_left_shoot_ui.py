@@ -51,29 +51,15 @@ class LeftShootUi(GameObject):
         # incremeto
         # 90 * tantosporcento = x * 100
         # x = 90 * tantosporcento / 100
-
-        self.black_bar.fix_game_object_on_screen(pygame.Vector2(self.black_bar_x, self.black_bar_y_full_cover))
+        self.black_bar.fix_game_object_on_screen(pygame.Vector2(self.black_bar_x, self.black_bar_y_full_hidden))
 
 
     def game_object_update(self) -> None:
-
         if LeftShootUi.TotWaitTime != 0 and LeftShootUi.ElapsedTime != 0:
             percentage = 100 * LeftShootUi.ElapsedTime / LeftShootUi.TotWaitTime
-
             #print(f"tot time to wait: {LeftShootUi.TotWaitTime}")
             #print(f"elapsed time: {LeftShootUi.ElapsedTime}")
             #print(f"percentage: {percentage}%")
-
             increment = (self.PATH_LENGTH * percentage / 100)
             new_pos_y = self.black_bar_y_full_cover - increment
-
             self.black_bar.fix_game_object_on_screen(pygame.Vector2(self.black_bar_x, new_pos_y ))
-
-
-        """
-        speed = 20
-        increment = speed * GameTime.DeltaTime
-        self.black_bar_y += increment
-        self.black_bar.fix_game_object_on_screen(pygame.Vector2(self.black_bar_x, self.black_bar_y))
-        """
-

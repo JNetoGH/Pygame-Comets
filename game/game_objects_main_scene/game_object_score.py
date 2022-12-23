@@ -6,7 +6,7 @@ from engine_JNeto_Productions.game_object_base_class import GameObject
 from engine_JNeto_Productions.systems.scalable_game_screen_system import GameScreen
 
 
-class Score(GameObject):
+class ScoreUi(GameObject):
 
     def __init__(self, scene):
         super().__init__("score", scene, scene.camera.get_rendering_layer_by_name("cockpit_layer"))

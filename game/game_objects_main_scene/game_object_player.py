@@ -32,6 +32,7 @@ class Player(GameObject):
         # BULLET
         self.instantiation_cooldown_in_sec = 1
         self.bullet_instantiation_timer = TimerComponent(self.instantiation_cooldown_in_sec*1000, self)
+        self.bullet_sound_effect = pygame.mixer.Sound("game_res/audio/shot.wav")
 
         # MOVEMENT
         self.BASE_MAX_MOVE_SPEED = 250
@@ -62,11 +63,13 @@ class Player(GameObject):
         self._generate_direction_from_ship_angle()
 
         # SHOOTING
-        # shoos a bullet and then waits til the counter has finished counting to instantiate the nex bullet
+        # shoots a bullet and then waits til the counter has finished counting to instantiate the nex bullet
         if InputManager.is_key_pressed(pygame.K_SPACE) and not self.bullet_instantiation_timer.is_timer_active_read_only:
             self.bullet_instantiation_timer.activate()
-            LeftShootUi.TotWaitTime = self.bullet_instantiation_timer.duration_in_ms_read_only
             self._instantiate_bullet()
+            pygame.mixer.Sound.play(self.bullet_sound_effect)
+            # lateral shoot bar sync
+            LeftShootUi.TotWaitTime = self.bullet_instantiation_timer.duration_in_ms_read_only
 
         # lateral shoot bar sync
         LeftShootUi.ElapsedTime = self.bullet_instantiation_timer.elapsed_time_read_only

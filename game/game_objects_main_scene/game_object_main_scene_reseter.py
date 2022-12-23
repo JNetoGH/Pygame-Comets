@@ -5,7 +5,7 @@ from engine_JNeto_Productions.game_object_base_class import GameObject
 from game_objects_main_scene.game_object_bullet import Bullet
 from game_objects_main_scene.game_object_meteor import Meteor
 from game_objects_main_scene.game_object_player import Player
-from game_objects_main_scene.game_object_score import Score
+from game_objects_main_scene.game_object_score import ScoreUi
 
 
 class MainSceneReseter(GameObject):
@@ -15,7 +15,7 @@ class MainSceneReseter(GameObject):
 
         self.remove_default_rect_image()
         self.player: Player = self.scene.get_game_object_by_name("player")
-        self.score: Score = self.scene.get_game_object_by_name("score")
+        self.score: ScoreUi = self.scene.get_game_object_by_name("score")
 
     def game_object_update(self) -> None:
         pass

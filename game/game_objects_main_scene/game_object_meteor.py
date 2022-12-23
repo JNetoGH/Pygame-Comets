@@ -9,13 +9,13 @@ from engine_JNeto_Productions.systems.game_time_system import GameTime
 from game_object_score_scene.score_registration_floating_menu import ScoreRegistrationFloatingMenu
 from game_objects_main_scene.game_object_bullet import Bullet
 from game_objects_main_scene.game_object_player import Player
-from game_objects_main_scene.game_object_score import Score
+from game_objects_main_scene.game_object_score import ScoreUi
 
 
 class Meteor(GameObject):
 
     Game_loop = None
-    Score_scene = None
+    Game_Over_manager = None
 
     class MeteorRank(enum.Enum):
         Small = 1
@@ -51,16 +51,27 @@ class Meteor(GameObject):
 
         # player and score
         self.player: Player = self.scene.get_game_object_by_name("player")
-        self.score: Score = self.scene.get_game_object_by_name("score")
+        self.score: ScoreUi = self.scene.get_game_object_by_name("score")
+
+        self.explosion_audio = pygame.mixer.Sound("game_res/audio/explosion.wav")
+        if self.rank == Meteor.MeteorRank.Small:
+            self.explosion_audio.set_volume(0.3)
+        elif self.rank == Meteor.MeteorRank.Mid:
+            self.explosion_audio.set_volume(0.6)
+        elif self.rank == Meteor.MeteorRank.Mid:
+            self.explosion_audio.set_volume(0.9)
+
 
     def game_object_update(self) -> None:
 
         # move
         self.move_to_direction()
 
+        # BULLET HIT
         # checks for collisions with bullets, if killed, create the lower rank ones
         for bullet in Bullet.In_Scene_Bullets:
             if self.circle_trigger.is_there_overlap_with_point(bullet.transform.world_position_read_only):
+                pygame.mixer.Sound.play(self.explosion_audio)
                 # removes bullet from scene
                 bullet.set_bullet_to_garbage_collection()
                 # instantiates the sub ranks and gives the points to the player
@@ -68,7 +79,7 @@ class Meteor(GameObject):
                 # removes itself from scene
                 self._set_to_garbage_collection()
 
-        # player hit
+        # PLAYER HIT
         if self.circle_trigger.is_there_overlap_with_rect(self.player.player_collider.inner_rect_read_only):
 
             csv = FileManager.read_from_csv_file("game_data/score_sheet.csv")
@@ -76,14 +87,19 @@ class Meteor(GameObject):
             total_amount_registered = len(csv)
             last_guy_index = (10-1) if total_amount_registered >= 10 else total_amount_registered-1
 
-            print(last_guy_index)
             pontuacao_do_ultimo = int(csv[last_guy_index][1])
 
-            managed_to_get_in_the_ranking_sheet = self.score.score_points_read_only > pontuacao_do_ultimo
+            managed_to_get_in_the_ranking_sheet = False
+            if last_guy_index < 9 and self.score.score_points_read_only > 0:
+                # simplesmente tem menos q 10 pessoas
+                managed_to_get_in_the_ranking_sheet = True
+            else:
+                managed_to_get_in_the_ranking_sheet = self.score.score_points_read_only > pontuacao_do_ultimo
 
-            print(f"managed to get in the rank: {managed_to_get_in_the_ranking_sheet}\n"
+            print(f"\nmanaged to get in the ranking: {managed_to_get_in_the_ranking_sheet}\n"
                   f"points: {self.score.score_points_read_only}\n"
-                  f"10th points: {pontuacao_do_ultimo}\n")
+                  f"last guy points: {pontuacao_do_ultimo}\n"
+                  f"las guy index: {last_guy_index}\n")
 
             if managed_to_get_in_the_ranking_sheet:
                 ScoreRegistrationFloatingMenu.TotalPoints = self.score.score_points_read_only
@@ -92,8 +108,9 @@ class Meteor(GameObject):
                 ScoreRegistrationFloatingMenu.TotalPoints = 0
                 ScoreRegistrationFloatingMenu.Show = False
 
-            # sends to score scene
-            Meteor.Game_loop.set_current_scene(Meteor.Score_scene)
+            # sends to game over scene
+            Meteor.Game_Over_manager.set_up(self.score.score_points_read_only)
+            Meteor.Game_loop.set_current_scene(Meteor.Game_Over_manager.scene)
 
     def _instantiate_sub_ranks_if_possible(self):
         # instantiates the sub rank comets

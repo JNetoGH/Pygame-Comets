@@ -1,13 +1,13 @@
 import pygame
 
-from game_object_button import Button
+from engine_JNeto_Productions.prefabs.game_object_button import Button
 
 from engine_JNeto_Productions.components.text_render_component import TextRenderComponent
 from engine_JNeto_Productions.game_object_base_class import GameObject
 from engine_JNeto_Productions.systems.file_manager_system import FileManager
 from engine_JNeto_Productions.systems.scalable_game_screen_system import GameScreen
-from game_object_score_scene.black_filte_game_object import BlackFilter
-from game_object_text_input_box import TextInputBox
+from game_object_score_scene.black_filter_game_object import BlackFilter
+from engine_JNeto_Productions.prefabs.game_object_text_input_box import TextInputBox
 
 
 class ScoreRegistrationFloatingMenu(GameObject):
