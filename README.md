@@ -78,7 +78,11 @@ A câmera da scene principal do game possui 2 estados, fixa ou seguindo jogador,
 <br>
 
 ## ROTATION, MOVEMENT, DIRECTION AND SHIP INERTIA
+Não exite freio automático, a nave possuí inércia, uma força contrária é feita para desacelerar o player, esta força leva um certo tempo até deixar a nave e ponto morto:
 
+![movement](https://user-images.githubusercontent.com/24737993/209372490-d6d0fff4-32ab-48f9-84e7-95176e360a47.gif)
+
+#### CODES
 - ROTATION: a Rotatção é simples de se entender, uma angular_velocity é responsável por determinar o quanto de incremento/decremento o ângulos usado pra rotacionar a nave terá naquele frame, consoante aos inputs do player: (`<`, `>`) ou (`A`, `D`)
     ```
     def _rotate_player(self):
