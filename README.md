@@ -1,5 +1,5 @@
 # COMETS
-link: https://github.com/JNetoGH/Farm-Game
+link: https://github.com/JNetoGH/comets
 
 <br>
 
@@ -123,9 +123,7 @@ Quando o jogador é morto, a scene atual é setada para a game_over_scene, esta 
 Uma vez na score_scene, a scene é capaz de entender em que contexto foi setada, e ao perceber que um GameOver a setou como a current_scene no GameLoop, verifica os pontos marcados do player, e caso ele se qualifique, um ScoreRegistrationFloatingMenu é mostrado na scene, onde o player por ele, poderá ter sua pontuação registrada na score sheet juntamente com um nome de até 3 characteres.
 
 #### PREVIEW
-
 https://user-images.githubusercontent.com/24737993/209350149-feb5d8c9-b841-4544-bcb5-ef5e334f81c1.mp4
-
 
 #### DETALHES DE IMPLEMENTAÇÃO
 * são mostrados apenas os 10 primeiros elementos do arquivo CSV que guarda os nomes e os scores.
