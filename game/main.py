@@ -87,8 +87,9 @@ class GameOverManager(GameObject):
         self.timer_comp = TimerComponent(self.duration_in_seg * 1000, self, self.change_scene)
 
     def game_object_update(self) -> None:
-        print(f"timer elapsed time: {self.timer_comp.elapsed_time_read_only} ms")
-        print(f"timer is activate: {self.timer_comp.is_timer_active_read_only}\n")
+
+        # print(f"timer elapsed time: {self.timer_comp.elapsed_time_read_only} ms")
+        # print(f"timer is activate: {self.timer_comp.is_timer_active_read_only}\n")
 
         if GameOverManager.Count:
             GameOverManager.Count = False
