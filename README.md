@@ -78,7 +78,7 @@ A câmera da scene principal do game possui 2 estados, fixa ou seguindo jogador,
 <br>
 
 ## ROTATION, MOVEMENT, DIRECTION AND SHIP INERTIA
-Não exite freio automático, a nave possuí inércia, uma força contrária é feita para desacelerar o player, esta força leva um certo tempo até deixar a nave e ponto morto.
+Não existe freio automático, a nave possuí inércia, uma força contrária é feita para desacelerar o player, esta força leva um certo tempo até deixar a nave e ponto morto.
 
 A nave não sai de 0 a valocidade máxima instantaneamente, uma força de é aplicada na direção em que a nave esta "facing", causando aceleração, esta força leva um certo tempo para acelerar a nave até a sua velocidade máxima.
 
