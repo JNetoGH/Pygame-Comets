@@ -83,22 +83,23 @@ Não existe freio automático, a nave possuí inércia, uma força contrária é
 A nave não sai de 0 a valocidade máxima instantaneamente, uma força de é aplicada na direção em que a nave esta "facing", causando aceleração, esta força leva um certo tempo para acelerar a nave até a sua velocidade máxima.
 
 ````
-# MOVE DIRECTION
-self._generate_direction_from_ship_angle()
+def game_object_update(self) -> None:
+    # GENERATES THE FORWARD MOVE DIRECTION
+    self._generate_direction_from_ship_angle()
 
-# MOVEMENT
-# moves forward when W or UP arrow is pressed
-if InputManager.Vertical_Axis == -1:
-    self._accelerate()
-    self._move_player_forward()
-elif self.current_speed > 0:
-    self._decelerate()
-    self._move_player_forward()
+    # MOVEMENT
+    # moves forward when W or UP arrow is pressed
+    if InputManager.Vertical_Axis == -1:
+        self._accelerate()
+        self._move_player_forward()
+    elif self.current_speed > 0:
+        self._decelerate()
+        self._move_player_forward()
 
-# ROTATION
-# rotates player according to A, D, < adn >keys
-if InputManager.Horizontal_Axis != 0:
-    self._rotate_player()
+    # ROTATION
+    # rotates player according to A, D, < adn >keys
+    if InputManager.Horizontal_Axis != 0:
+        self._rotate_player()
 ````
 ![movement](https://user-images.githubusercontent.com/24737993/209372490-d6d0fff4-32ab-48f9-84e7-95176e360a47.gif)
 
