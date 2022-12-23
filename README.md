@@ -4,7 +4,7 @@ link: https://github.com/JNetoGH/comets
 
 ## ALUNOS
 João Neto (a22200558):
-- desenvolvimento da game  engine
+- desenvolvimento da game engine
 - arquitetura do game
 - desenvolvimento do controle de fluxo do game
 - desenvolvimento geral dos GameObjects
@@ -25,7 +25,7 @@ Margarida Teles (a22204247):
 ## GAME-ENGINE (quick overview)
 
 #### ENGINE VS JOGO EM MINHA ARQUITETURA
-O jogo está separado em pastas, há pastas exclusivas da JNeto Productions Game Engine, esta é uma ferramenta discreta, o jogo em si é composto por GameObjects, os quais não ficam localizados juntamente da engine, porém, acessam seus recursos, tais quais, Systems, GameLoop, Components, Scenes, Prefabs, RenderingLayers e Cameras.
+O jogo está separado em pastas, há pastas exclusivas da JNeto Productions Game Engine, esta é uma ferramenta discreta, o jogo em si, é composto por GameObjects, os quais não ficam localizados juntamente da engine, porém, acessam seus recursos, tais quais, Systems, GameLoop, Components, Scenes, Prefabs, RenderingLayers e Cameras.
 
 Com isso em mente, eu considero tudo aquilo que não está na pasta da engine, como sendo de fato a lógica do game.
 
@@ -34,7 +34,7 @@ Para rodar o game é simples, basta executar o comando para o script main.py ou 
 ```
 python main.py
 ```
-desde que o main.py estaja na maior hierarquia dos scripts, o jogo deve rodar sem maiores problemas, `pygame` package é necessário.
+desde que o main.py esteja na maior hierarquia dos scripts, o jogo deve rodar sem maiores problemas, `pygame` package é necessário.
 
 <br>
 
@@ -75,7 +75,7 @@ A câmera da scene principal do game possui 2 estados, fixa ou seguindo jogador,
 ## ROTATION, MOVEMENT, DIRECTION AND SHIP INERTIA
 Não existe freio automático, a nave possuí inércia, uma força contrária é feita para desacelerar o player, esta força leva um certo tempo até deixar a nave e ponto morto.
 
-A nave não sai de 0 a valocidade máxima instantaneamente, uma força de é aplicada na direção em que a nave esta "facing", causando aceleração, esta força leva um certo tempo para acelerar a nave até a sua velocidade máxima.
+A nave não sai de 0 a velocidade máxima instantaneamente, uma força de é aplicada na direção em que a nave esta "facing", causando aceleração, esta força leva um certo tempo para acelerar a nave até a sua velocidade máxima.
 
 ````
 def game_object_update(self) -> None:
@@ -106,7 +106,7 @@ def game_object_update(self) -> None:
 <br>
 
 ## SHOOTING
-- um diparo é gerado ao pressionar `SPACE`, tendo este a mesma direção em que o player estava rotacionado.
+- um disparo é gerado ao pressionar `SPACE`, tendo este a mesma direção em que o player estava rotacionado.
 - os disparos possuem uma cadência com 1 segundo de intervalo (obrigatório pelo professor).
 - há uma barra lateral que indica o tempo do intervalo, quando cheia, pode-se disparar novamente.
 - cada disparo tem uma vida útil de 4 segundos (obrigatório pelo professor), após esse período, o disparo é manejado para garbage collection.
@@ -131,7 +131,7 @@ def game_object_update(self) -> None:
 - Quando o MeteorManager spawna um cometa, o mesmo tem as seguintes chances de ser um:
     
     - Cometa Grande -> 20%
-    - Cometa Medio -> 30%
+    - Cometa Médio -> 30%
     - Cometa Pequeno -> 50%
 
     ```
@@ -148,13 +148,13 @@ def game_object_update(self) -> None:
 - Cada cometa destruído dá uma pontuação diferente:
 
     - Cometa Grande -> 10 pontos
-    - Cometa Medio -> 20 pontos
+    - Cometa Médio -> 20 pontos
     - Cometa Pequeno -> 30 pontos
 
 - Quando um cometa é atingido por uma bala dependendo do seu tipo, pode multiplicar-se em cometas de um tipo abaixo, ou seja:
 
     - Cometa Grande -> 3 x Cometa Medio
-    - Cometa Medio -> 5 x Cometa Pequeno
+    - Cometa Médio -> 5 x Cometa Pequeno
     - Cometa Pequeno -> Destroy
 
 <br>
@@ -204,7 +204,7 @@ Uma solução simples e elegante para uma dificuldade progressiva neste jogo foi
 <br>
 
 ## SOUNDS
-O game possui som para todos os lados, eu utilizei uma coleção de efeitos sonoros, um asset pessoal que comprei na Unity Asset Store, não havendo asssim nenhum problema legal de copyright.
+O game possui som para todos os lados, eu utilizei uma coleção de efeitos sonoros, um asset pessoal que comprei na Unity Asset Store, não havendo assim nenhum problema legal de copyright.
 
 #### SONS USADOS
 
