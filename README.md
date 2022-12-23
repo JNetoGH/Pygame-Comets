@@ -36,4 +36,27 @@ desde que o main.py estaja na maior hierarquia dos scripts, o jogo deve rodar se
 <br>
 
 ## START SCREEN
+Há um fun fact interessante, apesar do repositório ser chamado de Comets, o título do jogo ser Comets, dentro do código, estes corpos rochosos sempre foram tratados com o nome de Meteor.
 ![menu](https://user-images.githubusercontent.com/24737993/209238918-09eef8db-9879-4f26-9f18-8bad728e03f1.gif)
+
+<br>
+
+## GAME OVER SCENE & SCORE SCENE
+Quando o jogador é morto, a scene atual é setada para a game_over_scene, esta por sua vez, conta alguns segundo para setar a cena atual como sendo a score_scene
+
+Uma vez na score_scene, a scene é capaz de entender em que contexto foi setada, e ao perceber que um GameOver a setou como a current_scene no GameLoop, verifica os pontos marcados do player, e caso ele se qualifique, um ScoreRegistrationFloatingMenu é mostrado na scene, onde o player por ele, poderá ter sua pontuação registrada na score sheet juntamente com um nome de até 3 characteres.
+
+### OVERVIEW
+aikdujnasnd
+
+### DETALHES DE IMPLEMENTAÇÃO
+* são mostrados apenas os 10 primeiros elementos do arquivo CSV que guarda os nomes e os scores.
+* este CSV é sorted toda vez que a score_scene é setada como a current_scene.
+* toda a manipulação do CVS é feita com um sistema na engine chamado FileManager.
+
+### VALIDAÇÃO DE REGISTRO:
+* pontuação maior que 0.
+* pontuação maior que o 10º elemento ou último elemento caso o CSV possua menos de 10 elementos.
+* o nome inserido obrigatoriamente deve possuir 3 caracteres
+
+
