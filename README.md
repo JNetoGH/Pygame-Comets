@@ -1,7 +1,11 @@
 # COMETS
 link: https://github.com/JNetoGH/Farm-Game
 
+
+
 <br>
+
+
 
 ## ALUNOS
 João Neto (a22200558):
@@ -17,7 +21,11 @@ Margarida Teles (a22204247):
 - assistência nas layers
 - assistência na criação do mapa
 
+
+
 <br>
+
+
 
 ## GAME-ENGINE (quick overview)
 
@@ -33,18 +41,41 @@ python main.py
 ```
 desde que o main.py estaja na maior hierarquia dos scripts, o jogo deve rodar sem maiores problemas, `pygame` package é necessário.
 
+
+
 <br>
+
+
 
 ## GAMEPLAY
 https://user-images.githubusercontent.com/24737993/209355125-e6550c08-7325-4419-949c-bf7fe69db374.mp4
 
+
+
 <br>
+
+
 
 ## START SCREEN
 Há um fun fact interessante, apesar do repositório ser chamado de Comets, o título do jogo ser Comets, dentro do código, estes corpos rochosos sempre foram tratados com o nome de Meteor.
 ![menu](https://user-images.githubusercontent.com/24737993/209238918-09eef8db-9879-4f26-9f18-8bad728e03f1.gif)
 
+
+
 <br>
+
+
+
+## CÂMERA
+A câmera da scene principal do game possui 2 estados, fixa ou seguindo jogador, o player pode mudar o estado pressionando a tecla `P`.
+
+![camera](https://user-images.githubusercontent.com/24737993/209357547-23e83e27-829d-4834-8f2f-7f433586a8fe.gif)
+
+
+
+<br>
+
+
 
 ## GAME OVER SCENE & SCORE SCENE
 Quando o jogador é morto, a scene atual é setada para a game_over_scene, esta por sua vez, conta alguns segundo para setar a cena atual como sendo a score_scene
