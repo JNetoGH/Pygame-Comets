@@ -9,6 +9,8 @@ from game_objects_main_scene.game_object_score import ScoreUi
 
 class MeteorManager(GameObject):
 
+    DifficultyInSeconds = 0
+
     def __init__(self, scene, rendering_layer):
         super().__init__("MeteorManager", scene, rendering_layer)
 
@@ -35,12 +37,11 @@ class MeteorManager(GameObject):
         difficulty_in_sec = self._inst_frequency_in_sec - progressive_difficulty
         if difficulty_in_sec < self.difficulty_cap:
             difficulty_in_sec = self.difficulty_cap
-        print(difficulty_in_sec)
+        MeteorManager.DifficultyInSeconds = difficulty_in_sec
 
         if not self._instantiation_timer.is_timer_active_read_only:
             self._instantiation_timer.set_duration_in_ms(difficulty_in_sec*1000)
             self._instantiation_timer.activate()
-
 
 
     def _instantiate_meteor(self):

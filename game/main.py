@@ -16,7 +16,8 @@ from engine_JNeto_Productions.components.timer_component import TimerComponent
 
 # GAME OBJECTS IMPORTS
 from game_objects_main_scene.game_object_cockpit import Cockpit
-from game_objects_main_scene.game_object_left_shoot_ui import RightShootUi
+from game_objects_main_scene.game_object_difficulty_ui import DifficultyUi
+from game_objects_main_scene.game_object_right_shoot_ui import RightShootUi
 from game_objects_main_scene.game_object_map_limits import MapLimits
 from game_objects_main_scene.game_object_map import Map
 from game_objects_main_scene.game_object_meteor import Meteor
@@ -136,6 +137,7 @@ player = Player(main_scene)
 cockpit = Cockpit(main_scene, cockpit_layer)
 right_shoot_ui = RightShootUi(main_scene)
 score_ui = ScoreUi(main_scene)
+difficulty_ui = DifficultyUi(main_scene, cockpit_layer)
 
 Meteor.Game_loop = game_loop
 Meteor.Game_Over_manager = game_over_manager_obj
