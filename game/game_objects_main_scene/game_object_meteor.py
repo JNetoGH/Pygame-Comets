@@ -1,4 +1,6 @@
 import enum
+import random
+
 import pygame
 from engine_JNeto_Productions.components.circle_trigger_component import CircleTriggerComponent
 from engine_JNeto_Productions.components.single_sprite_component import SingleSpriteComponent
@@ -53,13 +55,18 @@ class Meteor(GameObject):
         self.player: Player = self.scene.get_game_object_by_name("player")
         self.score: ScoreUi = self.scene.get_game_object_by_name("score")
 
-        self.explosion_audio = pygame.mixer.Sound("game_res/audio/explosion.wav")
+        # gets a random available explosion sound and adjusts the volume according to its rank
+        paths = ["game_res/audio/explosions/Explosion Small 1.wav", "game_res/audio/explosions/Explosion Small 2.wav",
+                 "game_res/audio/explosions/Explosion Small 3.wav",  "game_res/audio/explosions/Explosion Small 4.wav",]
+        chosen_sound = paths[random.randint(0,3)]
+        self.explosion_audio = pygame.mixer.Sound(chosen_sound)
         if self.rank == Meteor.MeteorRank.Small:
             self.explosion_audio.set_volume(0.3)
         elif self.rank == Meteor.MeteorRank.Mid:
             self.explosion_audio.set_volume(0.6)
         elif self.rank == Meteor.MeteorRank.Mid:
             self.explosion_audio.set_volume(0.9)
+
 
 
     def game_object_update(self) -> None:
@@ -81,6 +88,11 @@ class Meteor(GameObject):
 
         # PLAYER HIT
         if self.circle_trigger.is_there_overlap_with_rect(self.player.player_collider.inner_rect_read_only):
+
+            # player explosion sound
+            player_sound = pygame.mixer.Sound("game_res/audio/explosions/Explosion Small 1.wav")
+            player_sound.set_volume(1)
+            player_sound.play()
 
             csv = FileManager.read_from_csv_file("game_data/score_sheet.csv")
 

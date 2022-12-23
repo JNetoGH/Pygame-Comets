@@ -16,7 +16,7 @@ from engine_JNeto_Productions.components.timer_component import TimerComponent
 
 # GAME OBJECTS IMPORTS
 from game_objects_main_scene.game_object_cockpit import Cockpit
-from game_objects_main_scene.game_object_left_shoot_ui import LeftShootUi
+from game_objects_main_scene.game_object_left_shoot_ui import RightShootUi
 from game_objects_main_scene.game_object_map_limits import MapLimits
 from game_objects_main_scene.game_object_map import Map
 from game_objects_main_scene.game_object_meteor import Meteor
@@ -78,6 +78,8 @@ class GameOverManager(GameObject):
     def __init__(self, scene, rendering_layer):
         super().__init__("game_over", scene, rendering_layer)
 
+        self.game_over_sound = pygame.mixer.Sound("game_res/audio/annauncer/Game over 1.wav")
+
         self.remove_default_rect_image()
         self.fix_game_object_on_screen(pygame.Vector2(GameScreen.HalfDummyScreenWidth, GameScreen.HalfDummyScreenHeight))
         self.header = TextRenderComponent("GAME OVER", 70, pygame.Color("white"), 0, 0, self)
@@ -93,6 +95,7 @@ class GameOverManager(GameObject):
 
         if GameOverManager.Count:
             GameOverManager.Count = False
+            self.game_over_sound.play()
             self.score_text.set_text(f"SCORE: {GameOverManager.Score}")
             self.timer_comp.activate()
 
@@ -131,7 +134,7 @@ map = Map(main_scene)
 map_limits = MapLimits(main_scene)
 player = Player(main_scene)
 cockpit = Cockpit(main_scene, cockpit_layer)
-left_shoot_ui = LeftShootUi(main_scene)
+right_shoot_ui = RightShootUi(main_scene)
 score_ui = ScoreUi(main_scene)
 
 Meteor.Game_loop = game_loop
@@ -182,6 +185,9 @@ menu_exit_button = Button("game_res/menu/menu_exit.png", "game_res/menu/menu_exi
 # ======================================================================================================================
 
 # GAME LOOP
+pygame.mixer.Sound("game_res/audio/annauncer/Welcome back 2.wav").play()
+pygame.mixer.music.load("game_res/music/Sci Fi Ambiences - Heaven.wav")
+pygame.mixer.music.play(-1)
 game_loop.set_current_scene(menu_scene)
 game_loop.run_game_loop()
 

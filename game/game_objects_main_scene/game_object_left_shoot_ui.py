@@ -13,13 +13,13 @@ class ShootBar(GameObject):
         self.fix_game_object_on_screen(pygame.Vector2(x, y))
 
 
-class LeftShootUi(GameObject):
+class RightShootUi(GameObject):
 
     TotWaitTime = 0
     ElapsedTime = 0
 
     def __init__(self, scene):
-        super().__init__("left_shoot_ui", scene, scene.camera.get_rendering_layer_by_name("cockpit_layer"))
+        super().__init__("right_shoot_ui", scene, scene.camera.get_rendering_layer_by_name("cockpit_layer"))
         self.single_sprite = SingleSpriteComponent("game_res/main_game_shoot_ui.png", self)
         self.single_sprite.scale_itself(1.5)
         self.fix_game_object_on_screen(pygame.Vector2(GameScreen.DummyScreenWidth-self.image.get_width()/2+4, GameScreen.HalfDummyScreenHeight))
@@ -55,11 +55,13 @@ class LeftShootUi(GameObject):
 
 
     def game_object_update(self) -> None:
-        if LeftShootUi.TotWaitTime != 0 and LeftShootUi.ElapsedTime != 0:
-            percentage = 100 * LeftShootUi.ElapsedTime / LeftShootUi.TotWaitTime
+        if RightShootUi.TotWaitTime != 0 and RightShootUi.ElapsedTime != 0:
+            percentage = 100 * RightShootUi.ElapsedTime / RightShootUi.TotWaitTime
             #print(f"tot time to wait: {LeftShootUi.TotWaitTime}")
             #print(f"elapsed time: {LeftShootUi.ElapsedTime}")
             #print(f"percentage: {percentage}%")
             increment = (self.PATH_LENGTH * percentage / 100)
+            if increment < 0:
+                increment = increment * -1
             new_pos_y = self.black_bar_y_full_cover - increment
             self.black_bar.fix_game_object_on_screen(pygame.Vector2(self.black_bar_x, new_pos_y ))

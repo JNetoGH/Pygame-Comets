@@ -9,7 +9,7 @@ from engine_JNeto_Productions.game_object_base_class import GameObject
 from engine_JNeto_Productions.systems.game_time_system import GameTime
 from engine_JNeto_Productions.systems.input_manager_system import InputManager
 from game_objects_main_scene.game_object_bullet import Bullet
-from game_objects_main_scene.game_object_left_shoot_ui import LeftShootUi
+from game_objects_main_scene.game_object_left_shoot_ui import RightShootUi
 
 
 class Player(GameObject):
@@ -69,10 +69,10 @@ class Player(GameObject):
             self._instantiate_bullet()
             pygame.mixer.Sound.play(self.bullet_sound_effect)
             # lateral shoot bar sync
-            LeftShootUi.TotWaitTime = self.bullet_instantiation_timer.duration_in_ms_read_only
+            RightShootUi.TotWaitTime = self.bullet_instantiation_timer.duration_in_ms_read_only
 
         # lateral shoot bar sync
-        LeftShootUi.ElapsedTime = self.bullet_instantiation_timer.elapsed_time_read_only
+        RightShootUi.ElapsedTime = self.bullet_instantiation_timer.elapsed_time_read_only
 
         # MOVEMENT
         # moves forward when W or UP arrow is pressed

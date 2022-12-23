@@ -9,6 +9,6 @@ class Map(GameObject):
         self.single_sprite = SingleSpriteComponent("game_res/bg4.jpg", self)
         self.single_sprite.scale_itself(1)
 
-
     def game_object_update(self) -> None:
         pass
+

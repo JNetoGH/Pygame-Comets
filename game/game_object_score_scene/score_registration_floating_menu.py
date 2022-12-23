@@ -17,6 +17,9 @@ class ScoreRegistrationFloatingMenu(GameObject):
 
     def __init__(self, scene, rendering_layer):
         super().__init__("score_registration_menu", scene, rendering_layer)
+
+        self.cant_do_his_sound = pygame.mixer.Sound("game_res/audio/annauncer/Cant do this 1.wav")
+
         self.remove_default_rect_image()
         self.fix_game_object_on_screen(pygame.Vector2(GameScreen.HalfDummyScreenWidth, GameScreen.HalfDummyScreenHeight))
 
@@ -39,7 +42,7 @@ class ScoreRegistrationFloatingMenu(GameObject):
         self.text_input_box = TextInputBox(GameScreen.HalfDummyScreenWidth, GameScreen.HalfDummyScreenHeight+50, 100,
                                            self.scene, self.scene.camera.get_rendering_layer_by_name("score_layer4"))
 
-        # tem q ficar desativado por padao
+        # tem q ficar desativado por padrao
         self.deactivate()
 
     # press the button
@@ -55,6 +58,7 @@ class ScoreRegistrationFloatingMenu(GameObject):
             is_valid = True
             name = value
         if not is_valid:
+            self.cant_do_his_sound.play()
             return
 
         # when is valid
@@ -86,7 +90,6 @@ class ScoreRegistrationFloatingMenu(GameObject):
         self.text3_render.start_rendering_text()
         self.save_button.activate()
         self.text_input_box.activate()
-
 
     def deactivate(self):
         ScoreRegistrationFloatingMenu.Show = False
