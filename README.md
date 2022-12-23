@@ -79,37 +79,52 @@ A câmera da scene principal do game possui 2 estados, fixa ou seguindo jogador,
 
 ## ROTATION, MOVEMENT, DIRECTION AND SHIP INERTIA
 
-#### ROTATION
-A Rotatção é simples de se entender, uma angular_velocity é responsável por determinar o quanto de incremento/decremento o ângulos usado pra rotacionar a nave terá naquele frame, consoante aos inputs do player: (`<`, `>`) ou (`A`, `D`)
+- ROTATION: a Rotatção é simples de se entender, uma angular_velocity é responsável por determinar o quanto de incremento/decremento o ângulos usado pra rotacionar a nave terá naquele frame, consoante aos inputs do player: (`<`, `>`) ou (`A`, `D`)
+    ```
+    def _rotate_player(self):
 
-```
-def _rotate_player(self):
+        # increments(A/<)/decrements(D/>) the angle according to angular speed
+        self.angle = self.angle + self.angular_velocity * GameTime.DeltaTime if InputManager.Horizontal_Axis == -1 else self.angle
+        self.angle = self.angle - self.angular_velocity * GameTime.DeltaTime if InputManager.Horizontal_Axis == 1 else self.angle
 
-    # increments(A/<)/decrements(D/>) the angle according to angular speed
-    self.angle = self.angle + self.angular_velocity * GameTime.DeltaTime if InputManager.Horizontal_Axis == -1 else self.angle
-    self.angle = self.angle - self.angular_velocity * GameTime.DeltaTime if InputManager.Horizontal_Axis == 1 else self.angle
+        # it's not really necessary, it works with a 7232º, but I prefer keeping it in the ]0º, 360º] for visualization
+        self.angle = self.angle = 0 + (self.angle - 360) if self.angle > 360 else self.angle  # 0   + oq passou de 360
+        self.angle = self.angle = 360 - (self.angle * -1) if self.angle < 0 else self.angle   # 360 - oq passou de 0
 
-    # it's not really necessary, it works with a 7232º, but I prefer keeping it in the ]0º, 360º] for visualization
-    self.angle = self.angle = 0 + (self.angle - 360) if self.angle > 360 else self.angle  # 0   + oq passou de 360
-    self.angle = self.angle = 360 - (self.angle * -1) if self.angle < 0 else self.angle   # 360 - oq passou de 0
+        # rotates keeping the buffered image as it its
+        self.image = pygame.transform.rotate(self.buffered_original_image, self.angle)
+    ```
 
-    # rotates keeping the buffered image as it its
-    self.image = pygame.transform.rotate(self.buffered_original_image, self.angle)
-```
-#### MOVEMENT AND DIRECTION
-O movimento é o clássico: `nova posição = atual posição + direção * speed * delta_time`
+- DIRECTION: a direção, é feita a partir do angulo atual do player:
+    ````
+    def _generate_direction_from_ship_angle(self):
 
-Já a direção, é feita a partir do angulo atual do player:
+        # I need to add/sub more 180 because my default orientation for 0 is ↑ sited of 0º aiming ↓ by default
+        angle_in_rad = math.radians(self.angle-180)
 
-````
-def _generate_direction_from_ship_angle(self):
+        # makes the direction, normalizing can't throw a division by 0 exception, because a (0,0) direction is impossible
+        self.dir_from_angle = pygame.Vector2(math.sin(angle_in_rad), math.cos(angle_in_rad)).normalize()
+    ````
 
-    # I need to add/sub more 180 because my default orientation for 0 is ↑ sited of 0º aiming ↓ by default
-    angle_in_rad = math.radians(self.angle-180)
-    
-    # makes the direction, normalizing can't throw a division by 0 exception, because a (0,0) direction is impossible
-    self.dir_from_angle = pygame.Vector2(math.sin(angle_in_rad), math.cos(angle_in_rad)).normalize()
-````
+- INERTIA: eu usei como base o que já conhecia para desaceleração com resistência do ar, como no espaço não existe ar, podemos chamar de "força contrária dos motores dianteiros" ou algo do gênero XD, ela atua diretamente na velocidade do objeto, incrementando/decrementando:
+    ````
+    def _accelerate(self):
+        self.current_speed = self.current_speed + (self.ACCELERATION * GameTime.DeltaTime)
+        if self.current_speed > self.BASE_MAX_MOVE_SPEED:
+            self.current_speed = self.BASE_MAX_MOVE_SPEED
+
+    def _decelerate(self):
+        self.current_speed = self.current_speed - (self.DECELERATION * GameTime.DeltaTime)
+        if self.current_speed < 0:
+            self.current_speed = 0
+    ````
+
+- MOVEMENT: O movimento é o clássico:
+    ```
+        def _move_player_forward(self):
+            new_position = self.transform.world_position_read_only + self.dir_from_angle * self.current_speed * GameTime.DeltaTime
+            self.transform.move_world_position_with_collisions_calculations(new_position)
+    ```
 
 <br>
 
