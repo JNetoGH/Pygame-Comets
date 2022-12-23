@@ -35,6 +35,11 @@ desde que o main.py estaja na maior hierarquia dos scripts, o jogo deve rodar se
 
 <br>
 
+## GAMEPLAY
+https://user-images.githubusercontent.com/24737993/209355125-e6550c08-7325-4419-949c-bf7fe69db374.mp4
+
+<br>
+
 ## START SCREEN
 Há um fun fact interessante, apesar do repositório ser chamado de Comets, o título do jogo ser Comets, dentro do código, estes corpos rochosos sempre foram tratados com o nome de Meteor.
 ![menu](https://user-images.githubusercontent.com/24737993/209238918-09eef8db-9879-4f26-9f18-8bad728e03f1.gif)
