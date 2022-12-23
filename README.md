@@ -197,3 +197,19 @@ Uma solução simples e elegante para uma dificuldade progressiva neste jogo foi
 ![dificuldades](https://user-images.githubusercontent.com/24737993/209385988-618fe309-4684-44d3-8b66-0dcfad977fe0.png)
 
 
+<br>
+
+<br>
+
+<br>
+
+## SOUNDS
+O game possui som para todos os lados, eu utilizei uma coleção de efeitos sonoros, um asset pessoal que comprei na Unity Asset Store, não havendo asssim nenhum problema legal de copyright.
+
+#### SONS USADOS
+
+![image](https://user-images.githubusercontent.com/24737993/209388309-89931976-ea66-46ad-bc0e-6c50a2716288.png)
+
+
+#### ASSET 
+https://assetstore.unity.com/packages/audio/music/orchestral/total-music-collection-89126
