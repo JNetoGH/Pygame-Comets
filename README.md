@@ -122,9 +122,9 @@ def game_object_update(self) -> None:
 
 ## COMETS or METEORS or ASTEROIDS
 
-- Os Cometas são manejados por um GameObject chamdo MeteorManager
-- A quantidade máxima de cometas na scene depende da dificuldade atual (é progressiva, varia de acordo com a altura da gameplay)
-- A direção do spawn de um Meteor é decidida pleo MeteorManager de forma a que o meteoro sempre passe pelo mapa
+- Os Cometas são manejados por um GameObject chamdo MeteorManager.
+- A quantidade máxima de cometas na scene depende da dificuldade atual (é progressiva, varia de acordo com a altura da gameplay).
+- A direção do spawn de um Meteor é decidida pleo MeteorManager de forma a que o meteoro sempre passe pelo mapa.
 - Os cometas possuem uma vida útil de mais ou menos meio minuto, ao fim da vida útil, aquele cometa é manejado para garbage collection.
 - Quando o CircleTriggerComponent colide com o player ou um disparo, este cometa é manejado para garbage collection.
 
@@ -164,7 +164,7 @@ def game_object_update(self) -> None:
 <br>
 
 ## GAME OVER SCENE & SCORE SCENE
-Quando o jogador é morto, a scene atual é setada para a game_over_scene, esta por sua vez, conta alguns segundo para setar a cena atual como sendo a score_scene
+Quando o jogador é morto, a scene atual é setada para a game_over_scene, esta por sua vez, conta alguns segundo para setar a cena atual como sendo a score_scene.
 
 Uma vez na score_scene, a scene é capaz de entender em que contexto foi setada, e ao perceber que um GameOver a setou como a current_scene no GameLoop, verifica os pontos marcados do player, e caso ele se qualifique, um ScoreRegistrationFloatingMenu é mostrado na scene, onde o player por ele, poderá ter sua pontuação registrada na score sheet juntamente com um nome de até 3 characteres.
 
@@ -179,6 +179,21 @@ https://user-images.githubusercontent.com/24737993/209350149-feb5d8c9-b841-4544-
 #### VALIDAÇÃO DE REGISTRO:
 * pontuação maior que 0.
 * pontuação maior que o 10º elemento ou último elemento caso o CSV possua menos de 10 elementos.
-* o nome inserido obrigatoriamente deve possuir 3 caracteres
+* o nome inserido obrigatoriamente deve possuir 3 caracteres.
+
+<br>
+
+<br>
+
+<br>
+
+## PROGRESSIVE DIFFICULTY
+Uma solução simples e elegante para uma dificuldade progressiva neste jogo foi, diminuir a duração do intervalo com que o MeteorManager instancia os meteoros com base na pontuação atual do player.
+
+- o tempo de intervalo inicial é de 0.75 sec.
+- há um cap de 0.3 sec de tempo de intervalo mínimo (a.k.a. dificuldade máxima), quando chega nele, a dificuldade para de aumentar.
+- há uma barra lateral na direita que indica a dificuldade atual do jogo:
+
+![dificuldades](https://user-images.githubusercontent.com/24737993/209385988-618fe309-4684-44d3-8b66-0dcfad977fe0.png)
 
 
