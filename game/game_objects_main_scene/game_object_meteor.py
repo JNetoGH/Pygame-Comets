@@ -53,7 +53,7 @@ class Meteor(GameObject):
 
         # player and score
         self.player: Player = self.scene.get_game_object_by_name("player")
-        self.score: ScoreUi = self.scene.get_game_object_by_name("score")
+        self.score_ui: ScoreUi = self.scene.get_game_object_by_name("score")
 
         # gets a random available explosion sound and adjusts the volume according to its rank
         paths = ["game_res/audio/explosions/Explosion Small 1.wav", "game_res/audio/explosions/Explosion Small 2.wav",
@@ -102,26 +102,26 @@ class Meteor(GameObject):
             pontuacao_do_ultimo = int(csv[last_guy_index][1])
 
             managed_to_get_in_the_ranking_sheet = False
-            if last_guy_index < 9 and self.score.score_points_read_only > 0:
+            if last_guy_index < 9 and self.score_ui.score_points_read_only > 0:
                 # simplesmente tem menos q 10 pessoas
                 managed_to_get_in_the_ranking_sheet = True
             else:
-                managed_to_get_in_the_ranking_sheet = self.score.score_points_read_only > pontuacao_do_ultimo
+                managed_to_get_in_the_ranking_sheet = self.score_ui.score_points_read_only > pontuacao_do_ultimo
 
             print(f"\nmanaged to get in the ranking: {managed_to_get_in_the_ranking_sheet}\n"
-                  f"points: {self.score.score_points_read_only}\n"
+                  f"points: {self.score_ui.score_points_read_only}\n"
                   f"last guy points: {pontuacao_do_ultimo}\n"
                   f"las guy index: {last_guy_index}\n")
 
             if managed_to_get_in_the_ranking_sheet:
-                ScoreRegistrationFloatingMenu.TotalPoints = self.score.score_points_read_only
+                ScoreRegistrationFloatingMenu.TotalPoints = self.score_ui.score_points_read_only
                 ScoreRegistrationFloatingMenu.Show = True
             else:
                 ScoreRegistrationFloatingMenu.TotalPoints = 0
                 ScoreRegistrationFloatingMenu.Show = False
 
             # sends to game over scene
-            Meteor.Game_Over_manager.set_up(self.score.score_points_read_only)
+            Meteor.Game_Over_manager.set_up(self.score_ui.score_points_read_only)
             Meteor.Game_loop.set_current_scene(Meteor.Game_Over_manager.scene)
 
     def _instantiate_sub_ranks_if_possible(self):
@@ -129,7 +129,7 @@ class Meteor(GameObject):
         if self.rank == Meteor.MeteorRank.Big:
 
             # adds points to score
-            self.score.add_to_score(10)
+            self.score_ui.add_to_score(10)
 
             dir1, dir2, dir3 = self.direction.copy(), self.direction.copy(), self.direction.copy()
             dir2.x = dir2.x + (dir2.x / 10 * 4)
@@ -146,7 +146,7 @@ class Meteor(GameObject):
         elif self.rank == Meteor.MeteorRank.Mid:
 
             # adds points to score
-            self.score.add_to_score(20)
+            self.score_ui.add_to_score(20)
 
             dir1, dir2, dir3, dir4, dir5 = self.direction.copy(), self.direction.copy(), self.direction.copy(), \
                                            self.direction.copy(), self.direction.copy()
@@ -167,7 +167,7 @@ class Meteor(GameObject):
 
         elif self.rank == Meteor.MeteorRank.Small:
             # adds points to score
-            self.score.add_to_score(30)
+            self.score_ui.add_to_score(30)
 
     def move_to_direction(self):
         pos_increment = pygame.Vector2(self.direction * self.move_speed * GameTime.DeltaTime)
