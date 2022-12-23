@@ -105,6 +105,21 @@ def game_object_update(self) -> None:
 
 <br>
 
+## SHOOTING
+- um diparo é gerado ao pressionar `SPACE`, tendo este a mesma direção em que o player estava rotacionado.
+- os disparos possuem uma cadência com 1 segundo de intervalo (obrigatório pelo professor).
+- há uma barra lateral que indica o tempo do intervalo, quando cheia, pode-se disparar novamente.
+- cada disparo tem uma vida útil de 4 segundos (obrigatório pelo professor), após esse período, o disparo é manejado para garbage collection.
+- caso o CircleTriggerComponent de um Meteor colida com um disparo, o disparo é manejado para garbage collection.
+
+![shooting](https://user-images.githubusercontent.com/24737993/209375643-bf780ed4-157b-4544-8758-982bcd41a552.gif)
+
+<br>
+
+<br>
+
+<br>
+
 ## GAME OVER SCENE & SCORE SCENE
 Quando o jogador é morto, a scene atual é setada para a game_over_scene, esta por sua vez, conta alguns segundo para setar a cena atual como sendo a score_scene
 
