@@ -47,7 +47,9 @@ Quando o jogador é morto, a scene atual é setada para a game_over_scene, esta 
 Uma vez na score_scene, a scene é capaz de entender em que contexto foi setada, e ao perceber que um GameOver a setou como a current_scene no GameLoop, verifica os pontos marcados do player, e caso ele se qualifique, um ScoreRegistrationFloatingMenu é mostrado na scene, onde o player por ele, poderá ter sua pontuação registrada na score sheet juntamente com um nome de até 3 characteres.
 
 ### OVERVIEW
-aikdujnasnd
+https://user-images.githubusercontent.com/24737993/209347898-8d21a9ab-fd46-4725-89ee-cf925f615d9e.mp4
+
+
 
 ### DETALHES DE IMPLEMENTAÇÃO
 * são mostrados apenas os 10 primeiros elementos do arquivo CSV que guarda os nomes e os scores.
