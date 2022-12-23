@@ -120,6 +120,48 @@ def game_object_update(self) -> None:
 
 <br>
 
+## COMETS or METEORS or ASTEROIDS
+
+- Os Cometas são manejados por um GameObject chamdo MeteorManager
+- A quantidade máxima de cometas na scene depende da dificuldade atual (é progressiva, varia de acordo com a altura da gameplay)
+- A direção do spawn de um Meteor é decidida pleo MeteorManager de forma a que o meteoro sempre passe pelo mapa
+- Os cometas possuem uma vida útil de mais ou menos meio minuto, ao fim da vida útil, aquele cometa é manejado para garbage collection.
+
+- Quando o MeteorManager spawna um cometa, o mesmo tem as seguintes chances de ser um:
+    
+    - Cometa Grande -> 20%
+    - Cometa Medio -> 30%
+    - Cometa Pequeno -> 50%
+
+    ```
+    rank = None
+    rank_picker = random.randint(1, 10)
+    if 1 <= rank_picker <= 5:
+        rank = Meteor.MeteorRank.Small
+    elif 6 <= rank_picker <= 8:
+        rank = Meteor.MeteorRank.Mid
+    elif rank_picker <= 10:
+        rank = Meteor.MeteorRank.Big
+    ```
+
+- Cada cometa destruído dá uma pontuação diferente:
+
+    - Cometa Grande -> 10 pontos
+    - Cometa Medio -> 20 pontos
+    - Cometa Pequeno -> 30 pontos
+
+- Quando um cometa é atingido por uma bala dependendo do seu tipo, pode multiplicar-se em cometas de um tipo abaixo, ou seja:
+
+    - Cometa Grande -> 3 x Cometa Medio
+    - Cometa Medio -> 5 x Cometa Pequeno
+    - Cometa Pequeno -> Destroy
+
+<br>
+
+<br>
+
+<br>
+
 ## GAME OVER SCENE & SCORE SCENE
 Quando o jogador é morto, a scene atual é setada para a game_over_scene, esta por sua vez, conta alguns segundo para setar a cena atual como sendo a score_scene
 
