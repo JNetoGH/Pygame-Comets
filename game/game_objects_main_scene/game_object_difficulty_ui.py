@@ -21,7 +21,7 @@ class Emoji(GameObject):
         self.transform.move_world_position(pygame.Vector2(self.image.get_width() / 2-25, GameScreen.HalfDummyScreenHeight - 63))
         self.fix_game_object_on_screen(pygame.Vector2(self.image.get_width() / 2-27, GameScreen.HalfDummyScreenHeight - 63))
         self.single_sprite = SingleSpriteComponent("game_res/emojis/smile.png", self)
-        self.single_sprite.scale_itself(0.5)
+        self.single_sprite.scale_itself(0.4)
 
 
 class DifficultyUi(GameObject):
@@ -51,7 +51,7 @@ class DifficultyUi(GameObject):
             return
 
         #print(f"difficulty: {self.difficulty}seconds")
-        
+
         if self.difficulty >= 0.65:
             self.check_if_is_already_using_a_emoji_case_not_change_it(Emoji.AvailableEmojis["smile"])
         elif 0.65 > self.difficulty >= 0.55:

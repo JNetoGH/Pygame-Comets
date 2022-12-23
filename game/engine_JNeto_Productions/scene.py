@@ -30,7 +30,8 @@ class Scene:
                 gm.rendering_layer.remove_game_object(gm)
 
     def scene_start(self):
-        pass
+        for gm in self.game_object_list:
+            gm.game_object_scene_set_start()
 
     def scene_update(self):
         # first updates the components then the game object itself

@@ -68,7 +68,6 @@ class Meteor(GameObject):
             self.explosion_audio.set_volume(0.9)
 
 
-
     def game_object_update(self) -> None:
 
         # move
@@ -93,6 +92,15 @@ class Meteor(GameObject):
             player_sound = pygame.mixer.Sound("game_res/audio/explosions/Explosion Small 1.wav")
             player_sound.set_volume(1)
             player_sound.play()
+
+            self.player.is_alive = False
+
+            # remove all remaining meteors from scene
+            for meteor in self.scene.game_object_list:
+                if isinstance(meteor, Meteor):
+                    #print("meteor removido pleo meteoro q bateu no player")
+                    meteor.transform.move_world_position(pygame.Vector2(10000000, 10000000))
+                    meteor._set_to_garbage_collection()
 
             csv = FileManager.read_from_csv_file("game_data/score_sheet.csv")
 

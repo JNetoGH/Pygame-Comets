@@ -36,6 +36,7 @@ class GameLoop:
         self._current_scene = scene
         self.inspector_debugging_canvas = InspectorDebuggingCanvas(self, self._current_scene, font_size=15)
         self.gizmos_system.set_current_scene(self._current_scene)
+        self._current_scene.scene_start()
 
     def run_game_loop(self):
         while True:
@@ -66,7 +67,7 @@ class GameLoop:
                 self.show_inspector_debugging_canvas = False
             if self.show_inspector_debugging_canvas:
                 self.inspector_debugging_canvas.render_inspector_debugging_text()
-                self.inspector_debugging_canvas.render_game_object_inspector_debugging_status(1, "white")  # GmObj info
+                #self.inspector_debugging_canvas.render_game_object_inspector_debugging_status(1, "white")  # GmObj info
 
             # ==========================================================================================================
 

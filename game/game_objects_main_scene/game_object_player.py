@@ -17,6 +17,8 @@ class Player(GameObject):
     def __init__(self, scene):
         super().__init__("player", scene, scene.camera.get_rendering_layer_by_name("player_layer"))
 
+        self.is_alive = True
+
         # SPRITE
         self.single_sprite = SingleSpriteComponent("game_res/ship.png", self)
         self.single_sprite.scale_itself(1.5)
@@ -115,7 +117,6 @@ class Player(GameObject):
             self.current_speed = 0
 
     def _rotate_player(self):
-
         # increments(A)/decrements(D) the angle according to angular speed
         self.angle = self.angle + self.angular_velocity * GameTime.DeltaTime if InputManager.Horizontal_Axis == -1 else self.angle
         self.angle = self.angle - self.angular_velocity * GameTime.DeltaTime if InputManager.Horizontal_Axis == 1 else self.angle

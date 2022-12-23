@@ -163,7 +163,15 @@ setinha_score_button = Button("game_res/setinha.png", "game_res/setinha_active.p
 
 def func_start_button():
     main_scene_reseter.reset_phase()
+    # rmove all meteors from scene
+    for meteor in main_scene.game_object_list:
+        if isinstance(meteor, Meteor):
+            #print("meteoro removido pelo botao de start")
+            meteor.transform.move_world_position(pygame.Vector2(10000000, 10000000))
+            meteor._set_to_garbage_collection()
+    player.is_alive = True
     game_loop.set_current_scene(main_scene)
+
     print("menu => main scene")
 menu_start_button = Button("game_res/menu/menu_start.png", "game_res/menu/menu_start_active.png",
                            pygame.Vector2(GameScreen.HalfDummyScreenWidth, GameScreen.HalfRealScreenHeight-40), 2,

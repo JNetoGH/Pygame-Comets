@@ -60,6 +60,10 @@ class GameObject(pygame.sprite.Sprite):
     def game_object_update(self) -> None:
         pass
 
+    @abstractmethod
+    def game_object_scene_set_start(self) -> None:
+        pass
+
     def remove_component(self, component):
         if isinstance(component, TransformComponent):
             return
