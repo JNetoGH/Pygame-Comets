@@ -77,6 +77,30 @@ A câmera da scene principal do game possui 2 estados, fixa ou seguindo jogador,
 
 
 
+## ROTATION, MOVEMENT AND SHIP INERTIA
+
+### ROTATION
+A Rotatção é simples de se entender, uma angular_velocity é responsável por determinar o quanto de incremento/decremento o ângulos usado pra rotacionar a nave terá naquele frame, consoante aos inputs do player: (`<`, `>`) ou (`A`, `D`)
+
+```
+def _rotate_player(self):
+    # increments(A/<)/decrements(D/>) the angle according to angular speed
+    self.angle = self.angle + self.angular_velocity * GameTime.DeltaTime if InputManager.Horizontal_Axis == -1 else self.angle
+    self.angle = self.angle - self.angular_velocity * GameTime.DeltaTime if InputManager.Horizontal_Axis == 1 else self.angle
+
+    # it's not really necessary, it works with a 7232º, but I prefer keeping it in the ]0º, 360º] for visualization
+    self.angle = self.angle = 0 + (self.angle - 360) if self.angle > 360 else self.angle  # 0   + oq passou de 360
+    self.angle = self.angle = 360 - (self.angle * -1) if self.angle < 0 else self.angle   # 360 - oq passou de 0
+
+    # rotates keeping the buffered image as it its
+    self.image = pygame.transform.rotate(self.buffered_original_image, self.angle)
+```
+
+
+<br>
+
+
+
 ## GAME OVER SCENE & SCORE SCENE
 Quando o jogador é morto, a scene atual é setada para a game_over_scene, esta por sua vez, conta alguns segundo para setar a cena atual como sendo a score_scene
 
