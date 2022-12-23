@@ -1,6 +1,6 @@
 # COMETS
 
-link: https://github.com/JNetoGH/comets
+link: https://github.com/JNetoGH/Comets
 
 ## ALUNOS
 João Neto (a22200558):
