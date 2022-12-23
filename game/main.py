@@ -154,7 +154,7 @@ main_scene_reseter = MainSceneReseter(main_scene)
 def func_setinha_back_to_menu():
     main_scene_reseter.reset_phase()
     game_loop.set_current_scene(menu_scene)
-    print("main scene => menu")
+    print("main scene/score scene => menu")
 setinha_main_game_button = Button("game_res/setinha.png", "game_res/setinha_active.png",
                                    pygame.Vector2(40, 40), 1.5, func_setinha_back_to_menu, main_scene, cockpit_layer)
 
@@ -172,13 +172,13 @@ def func_start_button():
     player.is_alive = True
     game_loop.set_current_scene(main_scene)
 
-    print("menu => main scene")
+    print("menu scene => main scene")
 menu_start_button = Button("game_res/menu/menu_start.png", "game_res/menu/menu_start_active.png",
                            pygame.Vector2(GameScreen.HalfDummyScreenWidth, GameScreen.HalfRealScreenHeight-40), 2,
                            func_start_button, menu_scene, menu_layer2)
 
 def func_score_button():
-    print("menu => scores")
+    print("menu scene => score scene")
     game_loop.set_current_scene(score_scene)
 menu_scores_button = Button("game_res/menu/menu_score_button.png", "game_res/menu/menu_score_button_active.png",
                            pygame.Vector2(GameScreen.HalfDummyScreenWidth, GameScreen.HalfRealScreenHeight+50), 2,
