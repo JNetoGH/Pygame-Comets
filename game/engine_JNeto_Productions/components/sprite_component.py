@@ -8,6 +8,7 @@ class SingleSpriteComponent(Component):
         super().__init__(game_object_owner)
         self._img_path = img_path
         self.sprite_as_surface = pygame.image.load(self._img_path).convert_alpha()
+
         self.game_object_owner.image = self.sprite_as_surface
 
     def get_img_path(self):
