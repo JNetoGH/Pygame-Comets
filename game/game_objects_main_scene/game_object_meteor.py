@@ -67,7 +67,6 @@ class Meteor(GameObject):
         elif self.rank == Meteor.MeteorRank.Mid:
             self.explosion_audio.set_volume(0.9)
 
-
     def game_object_update(self) -> None:
 
         # move

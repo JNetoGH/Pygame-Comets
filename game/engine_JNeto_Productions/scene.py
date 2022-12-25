@@ -1,6 +1,6 @@
 import pygame
 
-from engine_JNeto_Productions.camera.camera import Camera
+from engine_JNeto_Productions.scene_camera import SceneCamera
 from engine_JNeto_Productions.systems.scalable_game_screen_system import GameScreen
 
 
@@ -12,7 +12,7 @@ class Scene:
         # it's automatically stored here using the scene passed as parameter in  its constructor
         self.game_object_list = []
         # main camera will render the rendering layers
-        self.camera: Camera = camera
+        self.camera: SceneCamera = camera
         # called once everytime the scene is set if I want to start stuff and game objects in here
         self.scene_start()
 

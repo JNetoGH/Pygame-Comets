@@ -3,6 +3,7 @@ from engine_JNeto_Productions.components._component_base_class import Component
 
 
 class CircleTriggerComponent(Component):
+
     def __init__(self, offset_from_game_object_x, offset_from_game_object_y, radius, game_object_owner):
         super().__init__(game_object_owner)
 
@@ -27,11 +28,11 @@ class CircleTriggerComponent(Component):
 
     def is_there_overlap_with_rect(self, rect: pygame.Rect):
 
-        """          (X2, Y2)
-            |-------|
-            |       |
-            |-------|
-         (X1, Y1)
+        """                  (X2, Y2)
+                    |-------|
+                    |       |
+                    |-------|
+            (X1, Y1)
         """
 
         X1 = rect.x
@@ -39,26 +40,25 @@ class CircleTriggerComponent(Component):
         Y1 = rect.y
         Y2 = rect.y + rect.height
 
-        # Find the nearest point on the
-        # rectangle to the center of
-        # the circle
-        # rounding is mandatory
-        Xn = max(X1, min(round(self.world_position_read_only.x), X2))
-        Yn = max(Y1, min(round(self.world_position_read_only.y), Y2))
+        def smaller(a, b):
+            if a < b:
+                return a
+            return b
 
-        # Find the distance between the
-        # nearest point and the center
-        # of the circle
-        # Distance between 2 points,
-        # (x1, y1) & (x2, y2) in
-        # 2D Euclidean space is
-        # ((x1-x2)**2 + (y1-y2)**2)**0.5
+        def bigger(a, b):
+            if a > b:
+                return a
+            return b
+
+        # - Finds the nearest point on the rectangle to the center of the circle
+        Xn = bigger(X1, smaller(self.world_position_read_only.x, X2))
+        Yn = bigger(Y1, smaller(self.world_position_read_only.y, Y2))
+
+        # - Finds the distance between the nearest point and the center of the circle
+        # - Distance between 2 points, (x1, y1) & (x2, y2) in 2D Euclidean space is ((x1-x2)**2 + (y1-y2)**2)**0.5
         Dx = Xn - self.world_position_read_only.x
         Dy = Yn - self.world_position_read_only.y
         return (Dx ** 2 + Dy ** 2) <= self.radius ** 2
-
-    def component_update(self):
-       pass
 
     def get_inspector_debugging_status(self) -> str:
         return "Component(Circle Trigger)"

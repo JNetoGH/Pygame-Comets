@@ -1,6 +1,5 @@
 import pygame
 from engine_JNeto_Productions.constants.pre_definied_screen_resolutions import *
-from engine_JNeto_Productions.systems.special_text import TextRenderOverlaySystem
 from engine_JNeto_Productions.systems.gizmos_system import GizmosSystem
 from engine_JNeto_Productions.systems.inspector_debugging_canvas_system import InspectorDebuggingCanvas
 from engine_JNeto_Productions.systems.input_manager_system import InputManager

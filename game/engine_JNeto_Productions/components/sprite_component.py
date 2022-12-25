@@ -26,7 +26,7 @@ class SpriteComponent(Component):
     # syncs the rotation with the transform rotation angle
     def component_update(self):
         # used for performance assurance, only rotates when the angle changes
-        current_angle = self.game_object_owner.transform.rotation_angle
+        current_angle = self.game_object_owner.transform._rotation_angle
         if self._last_angle == current_angle:
             return
         self._last_angle = current_angle

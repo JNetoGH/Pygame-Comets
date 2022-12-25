@@ -56,9 +56,6 @@ class Player(GameObject):
         if self.key_p.has_key_been_fired_at_this_frame_read_only:
             self.scene.camera.follow_game_object(self if self.scene.camera.get_followed_game_object() != self else None)
 
-        # MOVE DIRECTION GENERATION
-        self._generate_direction_from_ship_angle()
-
         # SHOOTING
         # shoots a bullet and then waits til the counter has finished counting to instantiate the nex bullet
         if InputManager.is_key_pressed(pygame.K_SPACE) and not self.bullet_instantiation_timer.is_timer_active_read_only:
@@ -91,23 +88,14 @@ class Player(GameObject):
         RightShootUi.TotWaitTime = self.bullet_instantiation_timer.duration_in_ms_read_only
 
     def _instantiate_bullet(self):
-        Bullet(self.transform.world_position_read_only, self.dir_from_angle, self.transform.rotation_angle, self.scene)
-
-    # ------------------------------------------------------------------------------------------------------------------
-
-    # DIRECTION FROM ANGLE
-    def _generate_direction_from_ship_angle(self):
-        # I need to add/sub more 180 because my default orientation for 0 is ↑ sited of 0º aiming ↓ by default
-        angle_in_rad = math.radians(self.transform.rotation_angle - 180)
-        # makes the direction, normalizing can't throw a division by 0 exception, because a (0,0) direction is impossible
-        self.dir_from_angle = pygame.Vector2(math.sin(angle_in_rad), math.cos(angle_in_rad)).normalize()
+        Bullet(self.transform.world_position_read_only, self.transform.forward_direction, self.transform._rotation_angle, self.scene)
 
     # ------------------------------------------------------------------------------------------------------------------
 
     # MOVEMENT
     def _move_player_forward(self):
         # new position with acceleration or deceleration til its stop or on max speed
-        new_pos = self.transform.world_position_read_only + self.dir_from_angle * self.current_speed * GameTime.DeltaTime
+        new_pos = self.transform.world_position_read_only + self.transform.forward_direction * self.current_speed * GameTime.DeltaTime
         self.transform.move_world_position_with_collisions_calculations(new_pos)
         # self.transform.move_world_position(new_pos)
 
@@ -126,9 +114,9 @@ class Player(GameObject):
     # ROTATION
     def _rotate_player(self):
         # increments(A)/decrements(D) the angle according to angular speed
-        new_rotation = self.transform.rotation_angle
+        new_rotation = self.transform._rotation_angle
         if InputManager.Horizontal_Axis == -1:
-            new_rotation = self.transform.rotation_angle + self.angular_velocity * GameTime.DeltaTime
+            new_rotation = self.transform._rotation_angle + self.angular_velocity * GameTime.DeltaTime
         if InputManager.Horizontal_Axis == 1:
-            new_rotation = self.transform.rotation_angle - self.angular_velocity * GameTime.DeltaTime
-        self.transform.rotation_angle = new_rotation
+            new_rotation = self.transform._rotation_angle - self.angular_velocity * GameTime.DeltaTime
+        self.transform.set_rotation(new_rotation)

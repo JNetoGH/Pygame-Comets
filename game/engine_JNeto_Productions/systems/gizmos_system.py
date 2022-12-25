@@ -1,3 +1,4 @@
+import math
 from typing import Union
 import pygame
 
@@ -40,7 +41,7 @@ class GizmosSystem:
             if gm_obj.has_circle_trigger:
                 self._render_gizmos_of_game_obj_circle_triggers(gm_obj, pygame.Color("green"))
             if gm_obj.transform.is_center_point_appearing_on_screen_read_only:
-                self._render_gizmos_of_game_obj_transform(gm_obj, pygame.Color("white"))
+                self._render_gizmos_of_game_obj_transform(gm_obj, pygame.Color("cyan"))
 
     def _get_cached_surface_or_cache_new_one(self, msg, color: pygame.Color) -> pygame.Surface:
         if msg not in self._cached_text_surfaces:
@@ -62,17 +63,42 @@ class GizmosSystem:
         # render the point
         pygame.draw.circle(GameScreen.GameScreenDummySurface, color, object_screen_pos, 5)
 
-        # forward line
-        length = 30
-        pos_initial = object_screen_pos
-        pos_final = pos_initial.copy()
-        pos_final.y -= length
-        pygame.draw.line(GameScreen.GameScreenDummySurface, color, pos_initial, pos_final, 3)
+        # forward line render
+        width = 1
 
+        length = 40
+        pos_initial: pygame.Vector2 = object_screen_pos
+        pos_final: pygame.Vector2 = pos_initial + gm_obj.transform.forward_direction * length
+        pygame.draw.line(GameScreen.GameScreenDummySurface, color, pos_initial, pos_final, width)
+
+
+
+        length_linhas_desviadas = length/3*2
+        desvio_degrees = 20
+
+        # I need to add/sub more 180 because my default orientation for 0 is ↑ sited of 0º aiming ↓ by default
+        rad_desvio1 = math.radians(gm_obj.transform._rotation_angle + desvio_degrees - 180)
+        rad_desvio2 = math.radians(gm_obj.transform._rotation_angle - desvio_degrees - 180)
+        # makes the direction: normalizing can't throw a division by 0 exception, cuz a (0,0) direction is impossible
+        dir_desvio1 = pygame.Vector2(math.sin(rad_desvio1), math.cos(rad_desvio1)).normalize()
+        dir_desvio2 = pygame.Vector2(math.sin(rad_desvio2), math.cos(rad_desvio2)).normalize()
+        # os pontos gerados dos desvios
+        ponto_desvio1 = pos_initial + dir_desvio1 * length_linhas_desviadas
+        ponto_desvio2 = pos_initial + dir_desvio2 * length_linhas_desviadas
+
+        pygame.draw.line(GameScreen.GameScreenDummySurface, color, pos_final, ponto_desvio2, width)
+        pygame.draw.line(GameScreen.GameScreenDummySurface, color, pos_final, ponto_desvio1, width)
+
+        if gm_obj.name == "player":
+            print(gm_obj.transform.forward_direction)
+
+
+        """
         # render description
         text = f"{gm_obj.name}'s TransformComponent"
         text_position = pygame.Vector2(object_screen_pos.x + 30, object_screen_pos.y - self._FONT_SIZE + 3)
         self._render_text(text, text_position, color)
+        """
 
     # ==================================================================================================================
     #                                             IMAGE RECTANGLE
@@ -85,12 +111,14 @@ class GizmosSystem:
         # render the rect
         pygame.draw.rect(GameScreen.GameScreenDummySurface, color, game_obj.image_rect, 1)
 
+        """
         # render description
         text = f"{game_obj.name}'s image_rect"
         text_position = pygame.Vector2(0, 0)
         text_position.x = object_screen_pos[0] - game_obj.image_rect.width // 2
         text_position.y = object_screen_pos[1] - game_obj.image_rect.height // 2 - self._FONT_SIZE * 2
         self._render_text(text, text_position, color)
+        """
 
     # ==================================================================================================================
     #                                          RECTANGLE TRIGGERS/COLLIDERS
@@ -127,6 +155,7 @@ class GizmosSystem:
         # renders the middle circle
         pygame.draw.circle(GameScreen.GameScreenDummySurface, color, representative_rect.center, 5)
 
+        """
         # render description
         text = f"{game_obj.name}'s {component.__class__.__name__}\n"
         text_position = pygame.Vector2()
@@ -136,6 +165,7 @@ class GizmosSystem:
         else:
             text_position.y = representative_rect.centery + self._FONT_SIZE // 2
         self._render_text(text, text_position, color)
+        """
 
     # ==================================================================================================================
     #                                                   CIRCLE TRIGGERS
@@ -152,9 +182,11 @@ class GizmosSystem:
                 circle_center = pygame.Vector2(representative_circle_x, representative_circle_y)
                 pygame.draw.circle(GameScreen.GameScreenDummySurface, color, circle_center, component.radius, 1)
 
+                """
                 # render description
                 text = f"{gm_obj.name}'s {component.__class__.__name__}\n"
                 text_position = pygame.Vector2()
                 text_position.x = circle_center.x + 30
                 text_position.y = circle_center.y - self._FONT_SIZE * 2
                 self._render_text(text, text_position, color)
+                """

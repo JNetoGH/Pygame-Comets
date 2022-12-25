@@ -11,7 +11,7 @@ class GameObject(pygame.sprite.Sprite):
         # yes, because why not? It's useful in many situations
         self.name = name
 
-        # in case False the Camera won't render this GameObject
+        # in case False the SceneCamera won't render this GameObject
         self.should_be_rendered: bool = True
 
         # when a component is instantiated, it is automatically stored here

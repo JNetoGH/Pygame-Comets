@@ -1,5 +1,5 @@
+import math
 import pygame
-
 from engine_JNeto_Productions.components.rect_collider_component import ColliderComponent
 from engine_JNeto_Productions.systems.scalable_game_screen_system import GameScreen
 from engine_JNeto_Productions.components._component_base_class import Component
@@ -12,7 +12,29 @@ class TransformComponent(Component):
         self._world_position: pygame.Vector2 = pygame.Vector2(0, 0)
         self._screen_position: pygame.Vector2 = pygame.Vector2()
         self._is_center_point_appearing_on_screen = False
-        self.rotation_angle = 0
+        self._rotation_angle = 0
+
+    # ------------------------------------------------------------------------------------------------------------------
+
+    def component_update(self):
+        # updates the screen position  a.k.a. image_rect position
+        self._screen_position = pygame.Vector2(self.game_object_owner.image_rect.centerx,
+                                               self.game_object_owner.image_rect.centery)
+
+        # updates _is_center_point_appearing_on_screen
+        is_in_x = GameScreen.DummyScreenWidth > self._screen_position.x > 0
+        is_in_y = GameScreen.DummyScreenHeight > self._screen_position.y > 0
+        self._is_center_point_appearing_on_screen = is_in_x and is_in_y
+
+    # ------------------------------------------------------------------------------------------------------------------
+
+    @property
+    def forward_direction(self):
+        # I need to add/sub more 180 because my default orientation for 0 is ↑ sited of 0º aiming ↓ by default
+        angle_in_rad = math.radians(self._rotation_angle - 180)
+        # makes the direction: normalizing can't throw a division by 0 exception, cuz a (0,0) direction is impossible
+        dir_from_angle = pygame.Vector2(math.sin(angle_in_rad), math.cos(angle_in_rad)).normalize()
+        return dir_from_angle
 
     @property
     def screen_position_read_only(self):
@@ -26,12 +48,20 @@ class TransformComponent(Component):
     def is_center_point_appearing_on_screen_read_only(self):
         return self._is_center_point_appearing_on_screen
 
-    def rotate_game_object(self, new_angle):
-        # increments(A)/decrements(D) the angle according to angular speed
-        self.rotation_angle = new_angle
+    # ------------------------------------------------------------------------------------------------------------------
+
+    def set_rotation(self, new_angle):
+        self._rotation_angle = new_angle
+        self.__keep_rotation_angle_inside_0_to_360()
+
+    def __keep_rotation_angle_inside_0_to_360(self):
         # it's not really necessary, it works with a 7232º, but I prefer keeping it in the ]0º, 360º] for visualization
-        self.rotation_angle = self.rotation_angle = 0 + (self.rotation_angle - 360) if self.rotation_angle > 360 else self.rotation_angle  # 0 + what passed from 360
-        self.rotation_angle = self.rotation_angle = 360 - (self.rotation_angle * -1) if self.rotation_angle < 0 else self.rotation_angle   # 360 - what passed from 0
+        if self._rotation_angle > 360:
+            self._rotation_angle = self._rotation_angle = 0 + (self._rotation_angle - 360)   # 0 + what passed from 360
+        elif self._rotation_angle < 0:
+            self._rotation_angle = self._rotation_angle = 360 - (self._rotation_angle * -1)  # 360 - what passed from 0
+
+    # ------------------------------------------------------------------------------------------------------------------
 
     def translate_world_position(self, direction: pygame.Vector2):
         new_pos = pygame.Vector2(self._world_position.x + direction.x, self._world_position.y + direction.y)
@@ -85,24 +115,16 @@ class TransformComponent(Component):
                     projection_of_current_collider_rect_to_new_position.centery = round(new_position.y + this_game_object_collider.offset_from_game_object_y)
 
                     for other_game_obj_collider in other_game_object_colliders_list:
-
                         if projection_of_current_collider_rect_to_new_position.colliderect(other_game_obj_collider.inner_rect_read_only):
                             is_next_position_colliding = True
 
         if not is_next_position_colliding:
             self._world_position = new_position
 
+    # ------------------------------------------------------------------------------------------------------------------
+
     def get_inspector_debugging_status(self) -> str:
         return f"COMPONENT(TransformComponent)\n" \
                f"world position:  {self._world_position}\n" \
-               f"screen position: {self._screen_position}\n"
-
-    def component_update(self):
-        # updates the screen position  a.k.a. image_rect position
-        self._screen_position = pygame.Vector2(self.game_object_owner.image_rect.centerx,
-                                               self.game_object_owner.image_rect.centery)
-
-        # updates _is_center_point_appearing_on_screen
-        is_in_x = GameScreen.DummyScreenWidth > self._screen_position.x > 0
-        is_in_y = GameScreen.DummyScreenHeight > self._screen_position.y > 0
-        self._is_center_point_appearing_on_screen = is_in_x and is_in_y
+               f"screen position: {self._screen_position}\n" \
+               f"rotation angle:  {self._rotation_angle}ª"
