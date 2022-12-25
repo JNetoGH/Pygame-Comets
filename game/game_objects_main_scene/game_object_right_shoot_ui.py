@@ -1,6 +1,6 @@
 import pygame
 
-from engine_JNeto_Productions.components.single_sprite_component import SingleSpriteComponent
+from engine_JNeto_Productions.components.sprite_component import SingleSpriteComponent
 from engine_JNeto_Productions.game_object_base_class import GameObject
 from engine_JNeto_Productions.systems.scalable_game_screen_system import GameScreen
 

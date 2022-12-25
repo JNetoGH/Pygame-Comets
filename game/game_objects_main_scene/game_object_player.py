@@ -2,8 +2,8 @@ import math
 import pygame.transform
 
 from engine_JNeto_Productions.components.key_tracker_component import KeyTrackerComponent
-from engine_JNeto_Productions.components.rect_collider_component import ColliderComponent
-from engine_JNeto_Productions.components.single_sprite_component import SingleSpriteComponent
+from engine_JNeto_Productions.components.triggers_and_colliders.rect_collider_component import ColliderComponent
+from engine_JNeto_Productions.components.sprite_component import SingleSpriteComponent
 from engine_JNeto_Productions.components.timer_component import TimerComponent
 from engine_JNeto_Productions.game_object_base_class import GameObject
 from engine_JNeto_Productions.systems.game_time_system import GameTime

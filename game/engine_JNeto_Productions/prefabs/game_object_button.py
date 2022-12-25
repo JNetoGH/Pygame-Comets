@@ -1,7 +1,7 @@
 import pygame
 
-from engine_JNeto_Productions.components.rect_trigger_component import RectTriggerComponent
-from engine_JNeto_Productions.components.single_sprite_component import SingleSpriteComponent
+from engine_JNeto_Productions.components.triggers_and_colliders.rect_trigger_component import RectTriggerComponent
+from engine_JNeto_Productions.components.sprite_component import SingleSpriteComponent
 from engine_JNeto_Productions.game_object_base_class import GameObject
 
 
@@ -11,7 +11,7 @@ class Button(GameObject):
         super().__init__("menu_button", scene, rendering_layer)
         self.remove_default_rect_image()
 
-        self.button_pressing_sound = pygame.mixer.Sound("engine_JNeto_Productions/_engine_resources/sounds/button.wav")
+        self.button_pressing_sound = pygame.mixer.Sound("engine_JNeto_Productions/_engine_resources/sounds/button_click.wav")
 
         self.transform.move_world_position(position)
         self.fix_game_object_on_screen(position)

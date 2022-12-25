@@ -1,7 +1,7 @@
 import pygame
 
 from engine_JNeto_Productions.components.key_tracker_component import KeyTrackerComponent
-from engine_JNeto_Productions.components.rect_trigger_component import RectTriggerComponent
+from engine_JNeto_Productions.components.triggers_and_colliders.rect_trigger_component import RectTriggerComponent
 from engine_JNeto_Productions.game_object_base_class import GameObject
 from engine_JNeto_Productions.systems.scalable_game_screen_system import GameScreen
 

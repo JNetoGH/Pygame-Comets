@@ -1,7 +1,7 @@
 from os import walk   # allow us to walk through folders
 import pygame
 
-from engine_JNeto_Productions.components.single_sprite_component import SingleSpriteComponent
+from engine_JNeto_Productions.components.sprite_component import SingleSpriteComponent
 
 
 # it's basically a list of images

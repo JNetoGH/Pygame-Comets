@@ -1,6 +1,6 @@
 import pygame
 from pygame.font import Font
-from engine_JNeto_Productions.components.component_base_class.component_base_class import Component
+from engine_JNeto_Productions.components._component_base_class.component_base_class import Component
 
 
 # its rendered straight by the camera, there is a spacial part inside the camera for thi component

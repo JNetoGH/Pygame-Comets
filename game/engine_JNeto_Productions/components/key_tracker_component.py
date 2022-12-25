@@ -1,5 +1,5 @@
 from engine_JNeto_Productions.systems.input_manager_system import InputManager
-from engine_JNeto_Productions.components.component_base_class.component_base_class import Component
+from engine_JNeto_Productions.components._component_base_class.component_base_class import Component
 
 
 class KeyTrackerComponent(Component):

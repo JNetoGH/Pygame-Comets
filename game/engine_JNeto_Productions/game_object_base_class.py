@@ -8,7 +8,7 @@ class GameObject(pygame.sprite.Sprite):
     def __init__(self, name: str, scene, rendering_layer):
         super().__init__()
 
-        # yes, because why not?
+        # yes, because why not? It's useful in many situations
         self.name = name
 
         # in case False the Camera won't render this GameObject
@@ -33,18 +33,17 @@ class GameObject(pygame.sprite.Sprite):
         # sprites or animation override it
         self.image = pygame.Surface((100, 100))
         self.image.fill("white")
-
-        # used by the camera to ignore the world position when rendering the GameObject,
-        # by using the fixed_position_on_screen
-        self.is_fixed_on_screen = False
-        self._fixed_position_on_screen = pygame.Vector2(0, 0)
-
         # - The rectangle that holds the game object's image
         # - The center pos of the image_rect (a.k.a. screen position) is the same of the gm obj pos by default
         #   therefore, the at the start of the GameObject it's screen position is the same of its world position
         # - This rect is mostly used to hold the game object screen position (not world position)
         #   so it's quite essential
         self.image_rect = self.image.get_rect(center=self.transform.world_position_read_only)
+
+        # used by the camera to ignore the world position when rendering the GameObject,
+        # by using the fixed_position_on_screen
+        self.is_fixed_on_screen = False
+        self._fixed_position_on_screen = pygame.Vector2(0, 0)
 
         # when a collider is added to the game object it changes this field to True, used mainly for gizmos
         self.has_collider = False
