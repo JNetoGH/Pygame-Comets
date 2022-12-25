@@ -1,6 +1,6 @@
 import pygame
-
 from engine_JNeto_Productions.components.text_render_component import TextRenderComponent
+from engine_JNeto_Productions.game_object_base_class import GameObject
 from engine_JNeto_Productions.systems.scalable_game_screen_system import GameScreen
 
 
@@ -8,7 +8,7 @@ class Camera:
 
     def __init__(self, *rendering_layers):
 
-        self.rendering_layers_list = rendering_layers
+        self._rendering_layers_list = rendering_layers
         self._followed_game_object = None
 
         # - The movement off-set base on the followed game object
@@ -20,12 +20,22 @@ class Camera:
         self.followed_object_offset = pygame.Vector2()
 
     def get_rendering_layer_by_name(self, name: str):
-        for r_layer in self.rendering_layers_list:
+        for r_layer in self._rendering_layers_list:
             if r_layer.name == name:
                 return r_layer
 
-    def follow_game_object(self, game_object):
-        self._followed_game_object = game_object
+    def get_followed_game_object(self) -> GameObject:
+        return self._followed_game_object
+
+    def follow_game_object(self, game_object: GameObject) -> None:
+        for rendering_layer in self._rendering_layers_list:
+            for gm in rendering_layer.game_objects_to_render_read_only:
+                if gm == game_object:
+                    self._followed_game_object = game_object
+                    print(f"_followed_game_object set to {self._followed_game_object.name}")
+                    return
+        print("game_object not found in any rendering layer, impossible to follow, _followed_game_object set to None")
+        self._followed_game_object = None
 
     def stop_following_current_set_game_object(self):
         self._followed_game_object = None
@@ -60,7 +70,7 @@ class Camera:
             self.followed_object_offset.x = self._followed_game_object.transform.world_position_read_only.x - GameScreen.HalfDummyScreenWidth
             self.followed_object_offset.y = self._followed_game_object.transform.world_position_read_only.y - GameScreen.HalfDummyScreenHeight
 
-        for r_layer in self.rendering_layers_list:
+        for r_layer in self._rendering_layers_list:
             for game_obj in r_layer.game_objects_to_render_read_only:
 
                 # the final result of the render takes in consideration the game object world position

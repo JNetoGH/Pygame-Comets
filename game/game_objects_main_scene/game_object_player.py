@@ -29,7 +29,6 @@ class Player(GameObject):
         # MAKES CAMERA FOLLOW PLAYER
         self.scene.camera.follow_game_object(self)
         self.key_p = KeyTrackerComponent(pygame.K_p, self)
-        self.is_followed = True
 
         # BULLET
         self.instantiation_cooldown_in_sec = 1
@@ -52,14 +51,9 @@ class Player(GameObject):
 
     def game_object_update(self) -> None:
 
-        # CAMERA CONTROL
+        # CAMERA FOCUS
         if self.key_p.has_key_been_fired_at_this_frame_read_only:
-            if self.is_followed:
-                self.scene.camera.stop_following_current_set_game_object()
-                self.is_followed = False
-            else:
-                self.scene.camera.follow_game_object(self)
-                self.is_followed = True
+            self.scene.camera.follow_game_object(self if self.scene.camera.get_followed_game_object() != self else None)
 
         # MOVE DIRECTION
         self._generate_direction_from_ship_angle()
@@ -111,7 +105,6 @@ class Player(GameObject):
             self.current_speed = self.BASE_MAX_MOVE_SPEED
 
     def _decelerate(self):
-        # new position with acceleration
         self.current_speed = self.current_speed - (self.DECELERATION * GameTime.DeltaTime)
         if self.current_speed < 0:
             self.current_speed = 0

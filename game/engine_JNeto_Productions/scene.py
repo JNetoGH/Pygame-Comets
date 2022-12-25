@@ -13,7 +13,7 @@ class Scene:
         self.game_object_list = []
         # main camera will render the rendering layers
         self.camera: Camera = camera
-        # called once if I want to start stuff in here
+        # called once everytime the scene is set if I want to start stuff and game objects in here
         self.scene_start()
 
     def get_game_object_by_name(self, name: str):
@@ -56,13 +56,13 @@ class Scene:
         # rendering layers debugging
         tot_in_layers = 0
         info_about_each_layer = ""
-        for render_layer in self.camera.rendering_layers_list:
+        for render_layer in self.camera._rendering_layers_list:
             tot_in_this_layer = len(render_layer.game_objects_to_render_read_only)
             tot_in_layers += tot_in_this_layer
             info_about_each_layer += f"{render_layer.name} tot objects: {tot_in_this_layer}\n"
 
         return f"SCENE DEBUGGING STATUS\n" \
-               f"total rendering layers: {len(self.camera.rendering_layers_list)}\n" \
+               f"total rendering layers: {len(self.camera._rendering_layers_list)}\n" \
                f"total game objects in scene: {len(self.game_object_list)}\n" \
                f"total game objects in rendering layers: {tot_in_layers}\n" \
                f"{info_about_each_layer}" \

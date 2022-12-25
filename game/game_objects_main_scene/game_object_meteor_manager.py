@@ -14,9 +14,9 @@ class CountDownUi(GameObject):
         super().__init__("count_down_ui", scene, scene.camera.get_rendering_layer_by_name("cockpit_layer"))
         self.remove_default_rect_image()
 
-        self.transform.move_world_position(pygame.Vector2(GameScreen.HalfDummyScreenWidth, GameScreen.HalfDummyScreenHeight))
-        self.fix_game_object_on_screen(pygame.Vector2(GameScreen.HalfDummyScreenWidth, GameScreen.HalfDummyScreenHeight))
-        self.count_text = TextRenderComponent("3", 150, pygame.Color("white"), 0, -130, self)
+        self.transform.move_world_position(pygame.Vector2(GameScreen.HalfDummyScreenWidth, GameScreen.HalfDummyScreenHeight-130))
+        self.fix_game_object_on_screen(pygame.Vector2(GameScreen.HalfDummyScreenWidth, GameScreen.HalfDummyScreenHeight-130))
+        self.count_text = TextRenderComponent("3", 150, pygame.Color("white"), 0, 0, self)
         self.count_text.text_surface.set_alpha(180)
 
 class InSceneMeteorCounter(GameObject):

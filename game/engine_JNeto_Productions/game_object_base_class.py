@@ -99,8 +99,8 @@ class GameObject(pygame.sprite.Sprite):
         return -1
 
     def get_this_game_object_rendering_layer_index_in_scene_rendering_layers_list(self) -> int:
-        for i in range(0, len(self.scene.camera.rendering_layers_list)):
-            if self.scene.camera.rendering_layers_list[i] == self.rendering_layer:
+        for i in range(0, len(self.scene.camera._rendering_layers_list)):
+            if self.scene.camera._rendering_layers_list[i] == self.rendering_layer:
                 return i
         return -1
 
