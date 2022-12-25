@@ -32,9 +32,9 @@ class Camera:
             for gm in rendering_layer.game_objects_to_render_read_only:
                 if gm == game_object:
                     self._followed_game_object = game_object
-                    print(f"_followed_game_object set to {self._followed_game_object.name}")
+                    print(f"__followed_game_object set to {self._followed_game_object.name}")
                     return
-        print("game_object not found in any rendering layer, impossible to follow, _followed_game_object set to None")
+        print("game_object not found in any rendering layer, impossible to follow, __followed_game_object set to None")
         self._followed_game_object = None
 
     def stop_following_current_set_game_object(self):

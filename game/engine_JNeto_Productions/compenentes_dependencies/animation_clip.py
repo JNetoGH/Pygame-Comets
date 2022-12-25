@@ -1,6 +1,5 @@
-from os import walk   # allow us to walk through folders
 import pygame
-
+from os import walk   # allow us to walk through folders
 from engine_JNeto_Productions.components.sprite_component import SpriteComponent
 
 
@@ -11,10 +10,10 @@ class AnimationClip:
         self.name = name
         self.images = []
         self.animation_speed = animation_speed
-        self.import_images_from_folder(folder_path)
+        self.__import_images_from_folder(folder_path)
 
     # imports every image inside a folder
-    def import_images_from_folder(self, folder_path) -> None:
+    def __import_images_from_folder(self, folder_path) -> None:
         surface_list = []
         print("importing ", end="")
         for folder_name, sub_folder, img_files_list in walk(folder_path):
@@ -28,7 +27,7 @@ class AnimationClip:
         for surface_img in surface_list:
             self.images.append(surface_img)
 
-    def add_unitary_and_manually(self, image_path) -> None:
+    def add_frame(self, image_path) -> None:
         image_surface = pygame.image.load(image_path).convert_alpha()
         self.images.append(image_surface)
 

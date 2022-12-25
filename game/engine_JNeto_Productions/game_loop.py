@@ -48,7 +48,7 @@ class GameLoop:
 
             # in case the is no scene set makes a screen saying that there is no scene, and skip the rest of the loop
             if self._current_scene is None:
-                GameLoop._run_with_no_scene_set()
+                GameLoop.__run_with_no_scene_set()
                 continue
 
             # ==========================================================================================================
@@ -83,7 +83,7 @@ class GameLoop:
             GameScreen.render_final_scaled_result()
 
     @staticmethod
-    def _run_with_no_scene_set():
+    def __run_with_no_scene_set():
         # clears the screen
         GameScreen.GameScreenDummySurface.fill("darkgreen")
 

@@ -33,13 +33,13 @@ class GizmosSystem:
 
         # game objects gizmos
         for gm_obj in self._current_scene.game_object_list:
-            self._render_gizmos_of_game_obj_image_rect(gm_obj, pygame.Color("red"))
+            self.__render_gizmos_of_game_obj_image_rect(gm_obj, pygame.Color("red"))
             if gm_obj.has_collider:
-                self._render_gizmos_of_game_obj_colliders(gm_obj, pygame.Color("yellow"))
+                self.__render_gizmos_of_game_obj_colliders(gm_obj, pygame.Color("yellow"))
             if gm_obj.has_rect_trigger:
-                self._render_gizmos_of_game_obj_rect_triggers(gm_obj, pygame.Color("green"))
+                self.__render_gizmos_of_game_obj_rect_triggers(gm_obj, pygame.Color("green"))
             if gm_obj.has_circle_trigger:
-                self._render_gizmos_of_game_obj_circle_triggers(gm_obj, pygame.Color("green"))
+                self.__render_gizmos_of_game_obj_circle_triggers(gm_obj, pygame.Color("green"))
             if gm_obj.transform.is_center_point_appearing_on_screen_read_only:
                 self._render_gizmos_of_game_obj_transform(gm_obj, pygame.Color("cyan"))
 
@@ -71,21 +71,18 @@ class GizmosSystem:
         pos_final: pygame.Vector2 = pos_initial + gm_obj.transform.forward_direction * length
         pygame.draw.line(GameScreen.GameScreenDummySurface, color, pos_initial, pos_final, width)
 
-
-
         length_linhas_desviadas = length/3*2
         desvio_degrees = 20
-
         # I need to add/sub more 180 because my default orientation for 0 is ↑ sited of 0º aiming ↓ by default
-        rad_desvio1 = math.radians(gm_obj.transform._rotation_angle + desvio_degrees - 180)
-        rad_desvio2 = math.radians(gm_obj.transform._rotation_angle - desvio_degrees - 180)
+        rad_desvio1 = math.radians(gm_obj.transform.rotation_angle_read_only + desvio_degrees - 180)
+        rad_desvio2 = math.radians(gm_obj.transform.rotation_angle_read_only - desvio_degrees - 180)
         # makes the direction: normalizing can't throw a division by 0 exception, cuz a (0,0) direction is impossible
         dir_desvio1 = pygame.Vector2(math.sin(rad_desvio1), math.cos(rad_desvio1)).normalize()
         dir_desvio2 = pygame.Vector2(math.sin(rad_desvio2), math.cos(rad_desvio2)).normalize()
         # os pontos gerados dos desvios
         ponto_desvio1 = pos_initial + dir_desvio1 * length_linhas_desviadas
         ponto_desvio2 = pos_initial + dir_desvio2 * length_linhas_desviadas
-
+        # desnha com pygame
         pygame.draw.line(GameScreen.GameScreenDummySurface, color, pos_final, ponto_desvio2, width)
         pygame.draw.line(GameScreen.GameScreenDummySurface, color, pos_final, ponto_desvio1, width)
 
@@ -104,7 +101,7 @@ class GizmosSystem:
     #                                             IMAGE RECTANGLE
     # ==================================================================================================================
 
-    def _render_gizmos_of_game_obj_image_rect(self, game_obj, color: pygame.Color) -> None:
+    def __render_gizmos_of_game_obj_image_rect(self, game_obj, color: pygame.Color) -> None:
 
         object_screen_pos = game_obj.transform.screen_position_read_only  # it's a copy
 
@@ -124,21 +121,21 @@ class GizmosSystem:
     #                                          RECTANGLE TRIGGERS/COLLIDERS
     # ==================================================================================================================
 
-    def _render_gizmos_of_game_obj_colliders(self, game_obj, color: pygame.Color) -> None:
+    def __render_gizmos_of_game_obj_colliders(self, game_obj, color: pygame.Color) -> None:
         # COLLIDERS GIZMOS
         for component in game_obj.components_list:
             if isinstance(component, ColliderComponent):
                 # render component
-                self._render_rect_of_rect_based_component(component, color)
+                self.__render_rect_of_rect_based_component(component, color)
 
-    def _render_gizmos_of_game_obj_rect_triggers(self, game_obj, color: pygame.Color):
+    def __render_gizmos_of_game_obj_rect_triggers(self, game_obj, color: pygame.Color):
         # RECT TRIGGER GIZMOS
         for component in game_obj.components_list:
             if isinstance(component, RectTriggerComponent) and not isinstance(component, ColliderComponent):
                 # render component
-                self._render_rect_of_rect_based_component(component, color)
+                self.__render_rect_of_rect_based_component(component, color)
 
-    def _render_rect_of_rect_based_component(self, component: Union[ColliderComponent, RectTriggerComponent], color: pygame.Color):
+    def __render_rect_of_rect_based_component(self, component: Union[ColliderComponent, RectTriggerComponent], color: pygame.Color):
 
         game_obj = component.game_object_owner_read_only  # it's a copy
 
@@ -171,7 +168,7 @@ class GizmosSystem:
     #                                                   CIRCLE TRIGGERS
     # ==================================================================================================================
 
-    def _render_gizmos_of_game_obj_circle_triggers(self, gm_obj, color):
+    def __render_gizmos_of_game_obj_circle_triggers(self, gm_obj, color):
         for component in gm_obj.components_list:
             if isinstance(component, CircleTriggerComponent):
                 # THE REPRESENTATION OF THE CIRCLE TRIGGER AT SCREEN POSITION

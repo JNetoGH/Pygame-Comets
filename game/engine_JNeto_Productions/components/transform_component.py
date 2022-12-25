@@ -9,77 +9,81 @@ class TransformComponent(Component):
 
     def __init__(self, game_object_owner):
         super().__init__(game_object_owner)
-        self._world_position: pygame.Vector2 = pygame.Vector2(0, 0)
-        self._screen_position: pygame.Vector2 = pygame.Vector2()
-        self._is_center_point_appearing_on_screen = False
-        self._rotation_angle = 0
+        self.__world_position: pygame.Vector2 = pygame.Vector2(0, 0)
+        self.__screen_position: pygame.Vector2 = pygame.Vector2()
+        self.__is_center_point_appearing_on_screen = False
+        self.__rotation_angle = 0
 
     # ------------------------------------------------------------------------------------------------------------------
 
     def component_update(self):
         # updates the screen position  a.k.a. image_rect position
-        self._screen_position = pygame.Vector2(self.game_object_owner.image_rect.centerx,
-                                               self.game_object_owner.image_rect.centery)
+        self.__screen_position = pygame.Vector2(self.game_object_owner.image_rect.centerx,
+                                                self.game_object_owner.image_rect.centery)
 
-        # updates _is_center_point_appearing_on_screen
-        is_in_x = GameScreen.DummyScreenWidth > self._screen_position.x > 0
-        is_in_y = GameScreen.DummyScreenHeight > self._screen_position.y > 0
-        self._is_center_point_appearing_on_screen = is_in_x and is_in_y
+        # updates __is_center_point_appearing_on_screen
+        is_in_x = GameScreen.DummyScreenWidth > self.__screen_position.x > 0
+        is_in_y = GameScreen.DummyScreenHeight > self.__screen_position.y > 0
+        self.__is_center_point_appearing_on_screen = is_in_x and is_in_y
 
     # ------------------------------------------------------------------------------------------------------------------
 
     @property
     def forward_direction(self):
         # I need to add/sub more 180 because my default orientation for 0 is ↑ sited of 0º aiming ↓ by default
-        angle_in_rad = math.radians(self._rotation_angle - 180)
+        angle_in_rad = math.radians(self.__rotation_angle - 180)
         # makes the direction: normalizing can't throw a division by 0 exception, cuz a (0,0) direction is impossible
         dir_from_angle = pygame.Vector2(math.sin(angle_in_rad), math.cos(angle_in_rad)).normalize()
         return dir_from_angle
 
     @property
+    def rotation_angle_read_only(self):
+        return self.__rotation_angle
+
+    @property
     def screen_position_read_only(self):
-        return self._screen_position.copy()
+        return self.__screen_position.copy()
 
     @property
     def world_position_read_only(self):
-        return self._world_position.copy()
+        return self.__world_position.copy()
 
     @property
     def is_center_point_appearing_on_screen_read_only(self):
-        return self._is_center_point_appearing_on_screen
+        return self.__is_center_point_appearing_on_screen
 
     # ------------------------------------------------------------------------------------------------------------------
 
     def set_rotation(self, new_angle):
-        self._rotation_angle = new_angle
+        self.__rotation_angle = new_angle
         self.__keep_rotation_angle_inside_0_to_360()
 
     def __keep_rotation_angle_inside_0_to_360(self):
         # it's not really necessary, it works with a 7232º, but I prefer keeping it in the ]0º, 360º] for visualization
-        if self._rotation_angle > 360:
-            self._rotation_angle = self._rotation_angle = 0 + (self._rotation_angle - 360)   # 0 + what passed from 360
-        elif self._rotation_angle < 0:
-            self._rotation_angle = self._rotation_angle = 360 - (self._rotation_angle * -1)  # 360 - what passed from 0
+        if self.__rotation_angle > 360:
+            self.__rotation_angle = self.__rotation_angle = 0 + (self.__rotation_angle - 360)   # 0 + what passed from 360
+        elif self.__rotation_angle < 0:
+            self.__rotation_angle = self.__rotation_angle = 360 - (self.__rotation_angle * -1)  # 360 - what passed from 0
 
     # ------------------------------------------------------------------------------------------------------------------
 
     def translate_world_position(self, direction: pygame.Vector2):
-        new_pos = pygame.Vector2(self._world_position.x + direction.x, self._world_position.y + direction.y)
+        new_pos = pygame.Vector2(self.__world_position.x + direction.x, self.__world_position.y + direction.y)
         self.move_world_position(new_pos)
 
     def move_world_position(self, new_position):
-        self._world_position = new_position
+        self.__world_position = new_position
 
     def move_world_position_with_collisions_calculations(self, new_position):
 
         # doesn't make the calculation if the new position is the same of the current position,
         # A.K.A. GameObject didn't move
-        if new_position.x == self._world_position.x and new_position.y == self._world_position.y:
+        if new_position.x == self.__world_position.x and new_position.y == self.__world_position.y:
             return
 
         # if the object meant to be4 moved has no colliders, then it is simply moved with no calculations
         if not self.game_object_owner.has_collider:
-            self._world_position = new_position
+            self.__world_position = new_position
             return
 
         # moves it if the new position is diff from the current position
@@ -119,12 +123,12 @@ class TransformComponent(Component):
                             is_next_position_colliding = True
 
         if not is_next_position_colliding:
-            self._world_position = new_position
+            self.__world_position = new_position
 
     # ------------------------------------------------------------------------------------------------------------------
 
     def get_inspector_debugging_status(self) -> str:
         return f"COMPONENT(TransformComponent)\n" \
-               f"world position:  {self._world_position}\n" \
-               f"screen position: {self._screen_position}\n" \
-               f"rotation angle:  {self._rotation_angle}ª"
+               f"world position:  {self.__world_position}\n" \
+               f"screen position: {self.__screen_position}\n" \
+               f"rotation angle:  {self.__rotation_angle}ª"

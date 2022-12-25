@@ -9,7 +9,7 @@ class SceneCamera:
     def __init__(self, *rendering_layers):
 
         self.rendering_layers_list = rendering_layers
-        self._followed_game_object = None
+        self.__followed_game_object = None
 
         # - The movement off-set base on the followed game object
         # - Basically is how much the camera has to move every non-fixed on-screen GameObject
@@ -25,10 +25,10 @@ class SceneCamera:
                 return r_layer
 
     def follow_game_object(self, game_object):
-        self._followed_game_object = game_object
+        self.__followed_game_object = game_object
 
     def stop_following_current_set_game_object(self):
-        self._followed_game_object = None
+        self.__followed_game_object = None
 
     @property
     def world_position_read_only(self) -> pygame.Vector2:
@@ -53,12 +53,12 @@ class SceneCamera:
         #   no more followed GameObject
         # - By default it's set to render at position 0,0, so if a camera has never followed a game object,
         #   it will  ber rendering the position 0,0
-        if self._followed_game_object is not None:
+        if self.__followed_game_object is not None:
 
             # essential for moving, it´´s the difference of the followed game obj position in relation to the screen,
             # in other words, how much should every other game object should move on screen (not on world)
-            self.followed_object_offset.x = self._followed_game_object.transform.world_position_read_only.x - GameScreen.HalfDummyScreenWidth
-            self.followed_object_offset.y = self._followed_game_object.transform.world_position_read_only.y - GameScreen.HalfDummyScreenHeight
+            self.followed_object_offset.x = self.__followed_game_object.transform.world_position_read_only.x - GameScreen.HalfDummyScreenWidth
+            self.followed_object_offset.y = self.__followed_game_object.transform.world_position_read_only.y - GameScreen.HalfDummyScreenHeight
 
         for r_layer in self.rendering_layers_list:
             for game_obj in r_layer.game_objects_to_render_read_only:
@@ -68,7 +68,7 @@ class SceneCamera:
                 game_obj.image_rect = game_obj.image.get_rect(center=game_obj.transform.world_position_read_only)
 
                 # the followed game object must be treated in a different way
-                if game_obj != self._followed_game_object:
+                if game_obj != self.__followed_game_object:
 
                     # fixed on screen game objects are simply rendered at their fixed position on screen
                     # by setting their image_ret to that fixed position
@@ -84,7 +84,7 @@ class SceneCamera:
                 # it's different from the orders because it's always n the center
                 else:
                     screen_center = (GameScreen.HalfDummyScreenWidth, GameScreen.HalfDummyScreenHeight)
-                    self._followed_game_object.image_rect = self._followed_game_object.image.get_rect(center=screen_center)
+                    self.__followed_game_object.image_rect = self.__followed_game_object.image.get_rect(center=screen_center)
 
                 # render the game object on screen according to its screen position (not world position) a.k.a. image_rect position
                 if game_obj.should_be_rendered:
@@ -104,8 +104,8 @@ class SceneCamera:
 
     def get_inspector_debugging_status(self) -> str:
         text = "CAMERA SYSTEM\n"
-        if self._followed_game_object is not None:
-            text += f"following: {self._followed_game_object.name}\n"
+        if self.__followed_game_object is not None:
+            text += f"following: {self.__followed_game_object.name}\n"
 
         else:
             text += f"following GameObject: None\n"

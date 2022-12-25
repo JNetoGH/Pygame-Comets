@@ -27,19 +27,19 @@ class Button(GameObject):
 
         self.func = func
 
-        self._is_active = True
+        self.__is_active = True
 
     def deactivate(self):
-        self._is_active = False
+        self.__is_active = False
         self.stop_rendering_this_game_object()
 
     def activate(self):
-        self._is_active = True
+        self.__is_active = True
         self.start_rendering_this_game_object()
 
     def game_object_update(self) -> None:
 
-        if not self._is_active:
+        if not self.__is_active:
             return
 
         if self.rect_trigger.is_there_overlap_with_point(pygame.Vector2(pygame.mouse.get_pos())):

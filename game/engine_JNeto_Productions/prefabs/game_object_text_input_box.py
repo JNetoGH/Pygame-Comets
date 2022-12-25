@@ -13,8 +13,8 @@ class TextInputBox(GameObject):
         self.remove_default_rect_image()
 
         path_to_font = 'engine_JNeto_Productions/_engine_resources/fonts/JetBrainsMono-Medium.ttf'
-        self._FONT_SIZE = 15
-        self._font = pygame.font.Font(path_to_font, self._FONT_SIZE)
+        self.__FONT_SIZE = 15
+        self.__font = pygame.font.Font(path_to_font, self.__FONT_SIZE)
 
         self.transform.move_world_position(pygame.Vector2(GameScreen.HalfDummyScreenWidth, GameScreen.HalfDummyScreenHeight))
         self.fix_game_object_on_screen(pygame.Vector2(x, y))
@@ -22,7 +22,7 @@ class TextInputBox(GameObject):
         self.color = (255, 255, 255)
         self.backcolor = None
         self.width = width
-        self._is_active = True
+        self.__is_active = True
         self.text = ""
         self.render_text()
         self.rect_trigger = RectTriggerComponent(0, 0, self.width, 40, self)
@@ -44,7 +44,7 @@ class TextInputBox(GameObject):
         ]
 
     def game_object_update(self):
-        if not self._is_active:
+        if not self.__is_active:
             return
         for i in range(len(self.keys)):
             if self.keys[i][1].has_key_been_fired_at_this_frame_read_only:
@@ -55,7 +55,7 @@ class TextInputBox(GameObject):
                 self.render_text()
 
     def render_text(self):
-        t_surf = self._font.render(self.text, True, self.color, self.backcolor)
+        t_surf = self.__font.render(self.text, True, self.color, self.backcolor)
         self.image = pygame.Surface((max(self.width, t_surf.get_width()+10), t_surf.get_height()+20), pygame.SRCALPHA)
         if self.backcolor:
             self.image.fill(self.backcolor)
@@ -63,9 +63,9 @@ class TextInputBox(GameObject):
         pygame.draw.rect(self.image, self.color, self.image.get_rect().inflate(-2, -2), 2)
 
     def deactivate(self):
-        self._is_active = False
+        self.__is_active = False
         self.stop_rendering_this_game_object()
 
     def activate(self):
-        self._is_active = True
+        self.__is_active = True
         self.start_rendering_this_game_object()

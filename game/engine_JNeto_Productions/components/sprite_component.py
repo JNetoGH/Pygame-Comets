@@ -8,12 +8,12 @@ class SpriteComponent(Component):
         super().__init__(game_object_owner)
 
         # simply stores the path to the img file
-        self._img_path: str = img_path
+        self.__img_path: str = img_path
 
-        # - Pygame does not _rotate_sprite correctly, with each rotation the image loses a little detail, so it is
-        #   necessary to store the original, in order to always _rotate_sprite based on it, as details are not lost.
+        # - Pygame does not __rotate_sprite correctly, with each rotation the image loses a little detail, so it is
+        #   necessary to store the original, in order to always __rotate_sprite based on it, as details are not lost.
         # - For scaling is the same
-        self.original_image = pygame.image.load(self._img_path).convert_alpha()
+        self.original_image = pygame.image.load(self.__img_path).convert_alpha()
         self.game_object_owner.image = self.original_image.copy()
         self.image_copy_for_scaling = self.original_image.copy()
         self.image_copy_for_rotation = self.original_image.copy()
@@ -26,20 +26,20 @@ class SpriteComponent(Component):
     # syncs the rotation with the transform rotation angle
     def component_update(self):
         # used for performance assurance, only rotates when the angle changes
-        current_angle = self.game_object_owner.transform._rotation_angle
+        current_angle = self.game_object_owner.transform.rotation_angle_read_only
         if self._last_angle == current_angle:
             return
         self._last_angle = current_angle
-        self._rotate_sprite(self._last_angle)
+        self.__rotate_sprite(self._last_angle)
 
     # ------------------------------------------------------------------------------------------------------------------
 
     def get_img_path(self) -> str:
-        return self._img_path
+        return self.__img_path
 
     def change_image(self, new_img_path) -> None:
-        self._img_path = new_img_path
-        self.original_image = pygame.image.load(self._img_path).convert_alpha()
+        self.__img_path = new_img_path
+        self.original_image = pygame.image.load(self.__img_path).convert_alpha()
         self.game_object_owner.image = self.original_image
         self.image_copy_for_scaling = self.original_image.copy()
         self.image_copy_for_rotation = self.original_image.copy()
@@ -51,10 +51,11 @@ class SpriteComponent(Component):
 
     # ------------------------------------------------------------------------------------------------------------------
 
-    # USED ONLY BY THE TRANSFORM_COMPONENT
-    # rotation occurs based on the image_copy_for_scaling, in order to keep proportions while rotation,
-    # otherwise, it would shrink back to the originals proportions
-    def _rotate_sprite(self, angle) -> None:
+    # USED ONLY INTERNALLY:
+    # - It's done whenever the transform rotation changes
+    # - The rotation occurs based on the image_copy_for_scaling, in order to keep proportions while rotation,
+    #   otherwise, it would shrink back to the originals proportions
+    def __rotate_sprite(self, angle) -> None:
         self.image_copy_for_rotation = SpriteComponent.return_rotated_image_surface(self.image_copy_for_scaling, angle)
         self.game_object_owner.image = self.image_copy_for_rotation
 
@@ -70,4 +71,4 @@ class SpriteComponent(Component):
 
     def get_inspector_debugging_status(self) -> str:
         return f"COMPONENT(SpriteComponent)\n" \
-               f"path: {self._img_path}\n"
+               f"path: {self.__img_path}\n"

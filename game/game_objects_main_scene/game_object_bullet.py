@@ -29,7 +29,7 @@ class Bullet(GameObject):
         self.BULLET_SPEED = 400
 
         # rotation
-        self.transform._rotation_angle = rotation_angle
+        self.transform.set_rotation(rotation_angle)
 
         Bullet.In_Scene_Bullets.append(self)
 

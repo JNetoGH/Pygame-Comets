@@ -8,13 +8,13 @@ class TextRenderComponent(Component):
     def __init__(self, text: str, font_size, color: pygame.Color, offset_from_game_object_x, offset_from_game_object_y, game_object_owner):
         super().__init__(game_object_owner)
 
-        self._text = text
-        self._color: pygame.Color = color
+        self.__text = text
+        self.__color: pygame.Color = color
 
-        self._font = Font('engine_JNeto_Productions/_engine_resources/fonts/JetBrainsMono-Medium.ttf', font_size)
+        self.__font = Font('engine_JNeto_Productions/_engine_resources/fonts/JetBrainsMono-Medium.ttf', font_size)
 
         # create a text surface object, on which text is drawn on it by the camera.
-        self.text_surface = self._font.render(self._text, True, color)
+        self.text_surface = self.__font.render(self.__text, True, color)
 
         self.offset_from_game_object_x = offset_from_game_object_x
         self.offset_from_game_object_y = offset_from_game_object_y
@@ -27,17 +27,17 @@ class TextRenderComponent(Component):
         self.should_be_rendered = True
 
     def set_font_size(self, font_size):
-        self._font = Font('engine_JNeto_Productions/_engine_resources/fonts/JetBrainsMono-Medium.ttf', font_size)
+        self.__font = Font('engine_JNeto_Productions/_engine_resources/fonts/JetBrainsMono-Medium.ttf', font_size)
         # updates the text surface object, on which text is drawn on it by the camera.
-        self.text_surface = self._font.render(self._text, True, self._color)
+        self.text_surface = self.__font.render(self.__text, True, self.__color)
 
     def set_color(self, color: pygame.Color):
-        self._color = color
-        self.text_surface = self._font.render(self._text, True, self._color)
+        self.__color = color
+        self.text_surface = self.__font.render(self.__text, True, self.__color)
 
     def set_text(self, text: str):
-        self._text = text
-        self.text_surface = self._font.render(self._text, True, self._color)
+        self.__text = text
+        self.text_surface = self.__font.render(self.__text, True, self.__color)
 
     def set_off_set_from_game_object(self, offset_from_game_object_x, offset_from_game_object_y):
         self.offset_from_game_object_x = offset_from_game_object_x
@@ -49,6 +49,7 @@ class TextRenderComponent(Component):
     def start_rendering_text(self):
         self.should_be_rendered = True
 
+    # called by camara
     def _update_position(self):
         # UPDATES THE TEXT POSITION ON SCREEN
         self.position_on_screen = pygame.Vector2(
@@ -71,10 +72,7 @@ class TextRenderComponent(Component):
 
     # ==================================================================================================================
 
-    def component_update(self):
-        self._update_position()
-
     def get_inspector_debugging_status(self) -> str:
         return f"COMPONENT(Text Render)\n" \
-               f"text: \"{self._text}\"\n" \
+               f"text: \"{self.__text}\"\n" \
                f"screen position: {self.position_on_screen}"

@@ -4,6 +4,7 @@ import pygame.transform
 from engine_JNeto_Productions.components.key_tracker_component import KeyTrackerComponent
 from engine_JNeto_Productions.components.rect_collider_component import ColliderComponent
 from engine_JNeto_Productions.components.sprite_component import SpriteComponent
+from engine_JNeto_Productions.components.text_render_component import TextRenderComponent
 from engine_JNeto_Productions.components.timer_component import TimerComponent
 from engine_JNeto_Productions.game_object_base_class import GameObject
 from engine_JNeto_Productions.systems.game_time_system import GameTime
@@ -88,7 +89,8 @@ class Player(GameObject):
         RightShootUi.TotWaitTime = self.bullet_instantiation_timer.duration_in_ms_read_only
 
     def _instantiate_bullet(self):
-        Bullet(self.transform.world_position_read_only, self.transform.forward_direction, self.transform._rotation_angle, self.scene)
+        Bullet(self.transform.world_position_read_only, self.transform.forward_direction,
+               self.transform.rotation_angle_read_only, self.scene)
 
     # ------------------------------------------------------------------------------------------------------------------
 
@@ -114,9 +116,9 @@ class Player(GameObject):
     # ROTATION
     def _rotate_player(self):
         # increments(A)/decrements(D) the angle according to angular speed
-        new_rotation = self.transform._rotation_angle
+        new_rotation = self.transform.rotation_angle_read_only
         if InputManager.Horizontal_Axis == -1:
-            new_rotation = self.transform._rotation_angle + self.angular_velocity * GameTime.DeltaTime
+            new_rotation = self.transform.rotation_angle_read_only + self.angular_velocity * GameTime.DeltaTime
         if InputManager.Horizontal_Axis == 1:
-            new_rotation = self.transform._rotation_angle - self.angular_velocity * GameTime.DeltaTime
+            new_rotation = self.transform.rotation_angle_read_only- self.angular_velocity * GameTime.DeltaTime
         self.transform.set_rotation(new_rotation)

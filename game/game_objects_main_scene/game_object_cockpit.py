@@ -27,7 +27,7 @@ class Cockpit(GameObject):
     def game_object_update(self) -> None:
 
         # angle
-        self.angle_text_render.set_text(f"{self.player.transform._rotation_angle:.1f}º")
+        self.angle_text_render.set_text(f"{self.player.transform.rotation_angle_read_only:.1f}º")
 
         # speed text itself
         self.speed_text_render.set_text(f"{self.player.current_speed:.0f}u/s")

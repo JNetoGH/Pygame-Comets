@@ -65,36 +65,36 @@ class GameScreen:
         GameScreen.TargetResolutionForUpScaling = up_scaling_target_resolution
 
         # must be the last one called because it takes in consideration the set resolutions
-        GameScreen._generate_current_operation()
+        GameScreen.__generate_current_operation()
 
     @staticmethod
     def render_final_scaled_result():
         # only up/down scales if it needs to, because it cost a lot in performance
         if GameScreen._CurrentOperation == OPERATION.DISPLAY_NATIVE:
             native_surface = GameScreen.GameScreenDummySurface
-            native_surface_rect = GameScreen._get_centralized_surface_in_real_screen_rect(native_surface)
+            native_surface_rect = GameScreen.__get_centralized_surface_in_real_screen_rect(native_surface)
             GameScreen.GameScreenRealSurface.blit(native_surface, native_surface_rect)
         else:
-            scaled_surface = GameScreen._get_up_scaled_surface_to_target_resolution(GameScreen.GameScreenDummySurface)
-            scaled_surface_centralized_rect = GameScreen._get_centralized_surface_in_real_screen_rect(scaled_surface)
+            scaled_surface = GameScreen.__get_scaled_surface_to_target_resolution(GameScreen.GameScreenDummySurface)
+            scaled_surface_centralized_rect = GameScreen.__get_centralized_surface_in_real_screen_rect(scaled_surface)
             GameScreen.GameScreenRealSurface.blit(scaled_surface, scaled_surface_centralized_rect)
         pygame.display.flip()
 
     @staticmethod
-    def _get_centralized_surface_in_real_screen_rect(surface):
+    def __get_centralized_surface_in_real_screen_rect(surface):
         centralized_frame_rect = surface.get_rect()
         centralized_frame_rect.x = (GameScreen.GameScreenRealSurface.get_width() - GameScreen.TargetResolutionForUpScaling[0]) // 2
         centralized_frame_rect.y = (GameScreen.GameScreenRealSurface.get_height() - GameScreen.TargetResolutionForUpScaling[1]) // 2
         return centralized_frame_rect
 
     @staticmethod
-    def _get_up_scaled_surface_to_target_resolution(surface):
+    def __get_scaled_surface_to_target_resolution(surface):
         # the dummy frame after scaling
         scaled_frame = pygame.transform.scale(surface, GameScreen.TargetResolutionForUpScaling)
         return scaled_frame
 
     @staticmethod
-    def _generate_current_operation() -> None:
+    def __generate_current_operation() -> None:
         if GameScreen.DummyScreenWidth == GameScreen.TargetResolutionForUpScaling[0] and GameScreen.DummyScreenHeight == GameScreen.TargetResolutionForUpScaling[1]:
             GameScreen._CurrentOperation = OPERATION.DISPLAY_NATIVE
         elif GameScreen.DummyScreenWidth < GameScreen.TargetResolutionForUpScaling[0] and GameScreen.DummyScreenHeight < GameScreen.TargetResolutionForUpScaling[1]:

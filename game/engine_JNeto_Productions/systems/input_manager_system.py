@@ -9,18 +9,18 @@ class InputManager:
 
     @staticmethod
     def update() -> None:
-        InputManager._treat_exit()
-        InputManager._treat_axis()
+        InputManager.__treat_exit()
+        InputManager.__treat_axis()
 
     @staticmethod
-    def _treat_exit() -> None:
+    def __treat_exit() -> None:
         for event in pygame.event.get():
             if event.type == pygame.QUIT or pygame.key.get_pressed()[pygame.K_ESCAPE]:
                 pygame.quit()
                 sys.exit()
 
     @staticmethod
-    def _treat_axis() -> None:
+    def __treat_axis() -> None:
         keys = pygame.key.get_pressed()
 
         # HORIZONTAL RELEASE
