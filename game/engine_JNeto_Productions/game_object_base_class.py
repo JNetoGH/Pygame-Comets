@@ -35,9 +35,7 @@ class GameObject(pygame.sprite.Sprite):
         self.image.fill("white")
         # - The rectangle that holds the game object's image
         # - The center pos of the image_rect (a.k.a. screen position) is the same of the gm obj pos by default
-        #   therefore, the at the start of the GameObject it's screen position is the same of its world position
-        # - This rect is mostly used to hold the game object screen position (not world position)
-        #   so it's quite essential
+        # - This rect is mostly used to hold the game object screen position (not world position), it's quite used.
         self.image_rect = self.image.get_rect(center=self.transform.world_position_read_only)
 
         # used by the camera to ignore the world position when rendering the GameObject,

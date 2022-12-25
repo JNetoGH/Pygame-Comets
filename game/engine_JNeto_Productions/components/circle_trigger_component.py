@@ -1,7 +1,5 @@
-import math
-
 import pygame
-from engine_JNeto_Productions.components._component_base_class.component_base_class import Component
+from engine_JNeto_Productions.components._component_base_class import Component
 
 
 class CircleTriggerComponent(Component):

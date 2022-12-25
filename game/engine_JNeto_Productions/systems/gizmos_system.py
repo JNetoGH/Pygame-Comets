@@ -1,9 +1,10 @@
 from typing import Union
 import pygame
 
-from engine_JNeto_Productions.components.triggers_and_colliders.circle_trigger_component import CircleTriggerComponent
-from engine_JNeto_Productions.components.triggers_and_colliders.rect_collider_component import ColliderComponent
-from engine_JNeto_Productions.components.triggers_and_colliders.rect_trigger_component import RectTriggerComponent
+from engine_JNeto_Productions.components.circle_trigger_component import CircleTriggerComponent
+from engine_JNeto_Productions.components.rect_collider_component import ColliderComponent
+from engine_JNeto_Productions.components.rect_trigger_component import RectTriggerComponent
+from engine_JNeto_Productions.game_object_base_class import GameObject
 from engine_JNeto_Productions.systems.scalable_game_screen_system import GameScreen
 
 
@@ -54,12 +55,19 @@ class GizmosSystem:
     #                                                  TRANSFORM
     # ==================================================================================================================
 
-    def _render_gizmos_of_game_obj_transform(self, gm_obj, color: pygame.Color) -> None:
+    def _render_gizmos_of_game_obj_transform(self, gm_obj: GameObject, color: pygame.Color) -> None:
 
-        object_screen_pos = gm_obj.transform.screen_position_read_only
+        object_screen_pos = gm_obj.transform.screen_position_read_only  # it's a copy
 
         # render the point
         pygame.draw.circle(GameScreen.GameScreenDummySurface, color, object_screen_pos, 5)
+
+        # forward line
+        length = 30
+        pos_initial = object_screen_pos
+        pos_final = pos_initial.copy()
+        pos_final.y -= length
+        pygame.draw.line(GameScreen.GameScreenDummySurface, color, pos_initial, pos_final, 3)
 
         # render description
         text = f"{gm_obj.name}'s TransformComponent"
@@ -72,7 +80,7 @@ class GizmosSystem:
 
     def _render_gizmos_of_game_obj_image_rect(self, game_obj, color: pygame.Color) -> None:
 
-        object_screen_pos = game_obj.transform.screen_position_read_only
+        object_screen_pos = game_obj.transform.screen_position_read_only  # it's a copy
 
         # render the rect
         pygame.draw.rect(GameScreen.GameScreenDummySurface, color, game_obj.image_rect, 1)
@@ -104,7 +112,7 @@ class GizmosSystem:
 
     def _render_rect_of_rect_based_component(self, component: Union[ColliderComponent, RectTriggerComponent], color: pygame.Color):
 
-        game_obj = component.game_object_owner_read_only
+        game_obj = component.game_object_owner_read_only  # it's a copy
 
         # THE REPRESENTATION OF THE COLLIDER/RECT TRIGGER AT SCREEN POSITION
         # the position of the collider/rect trigger is at world position,

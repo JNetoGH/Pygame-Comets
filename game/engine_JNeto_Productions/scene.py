@@ -1,6 +1,6 @@
 import pygame
 
-from engine_JNeto_Productions.camera_and_rendering_layers.camera import Camera
+from engine_JNeto_Productions.camera.camera import Camera
 from engine_JNeto_Productions.systems.scalable_game_screen_system import GameScreen
 
 

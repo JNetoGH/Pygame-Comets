@@ -1,5 +1,5 @@
 import pygame
-from engine_JNeto_Productions.components.sprite_component import SingleSpriteComponent
+from engine_JNeto_Productions.components.sprite_component import SpriteComponent
 from engine_JNeto_Productions.components.timer_component import TimerComponent
 from engine_JNeto_Productions.game_object_base_class import GameObject
 from engine_JNeto_Productions.systems.game_time_system import GameTime
@@ -21,15 +21,15 @@ class Bullet(GameObject):
         self.timer_to_destruction.activate()
 
         # sprite
-        self.single_sprite = SingleSpriteComponent("game_res/bullet.png", self)
-        self.single_sprite.scale_itself(1.5)
+        self.single_sprite = SpriteComponent("game_res/bullet.png", self)
+        self.single_sprite.scale_sprite(1.5)
 
         # movement
         self.direction = direction
         self.BULLET_SPEED = 400
 
         # rotation
-        self.image = pygame.transform.rotate(self.image, rotation_angle).convert_alpha()
+        self.transform.rotation_angle = rotation_angle
 
         Bullet.In_Scene_Bullets.append(self)
 

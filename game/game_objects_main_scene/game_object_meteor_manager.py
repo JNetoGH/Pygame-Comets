@@ -1,6 +1,6 @@
 import random
 import pygame
-from engine_JNeto_Productions.components.triggers_and_colliders.rect_trigger_component import RectTriggerComponent
+from engine_JNeto_Productions.components.rect_trigger_component import RectTriggerComponent
 from engine_JNeto_Productions.components.text_render_component import TextRenderComponent
 from engine_JNeto_Productions.components.timer_component import TimerComponent
 from engine_JNeto_Productions.game_object_base_class import GameObject

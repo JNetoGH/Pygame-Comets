@@ -1,4 +1,4 @@
-from engine_JNeto_Productions.components.triggers_and_colliders.rect_trigger_component import RectTriggerComponent
+from engine_JNeto_Productions.components.rect_trigger_component import RectTriggerComponent
 
 
 class ColliderComponent(RectTriggerComponent):

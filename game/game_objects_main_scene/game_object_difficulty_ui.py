@@ -1,6 +1,6 @@
 import pygame
 
-from engine_JNeto_Productions.components.sprite_component import SingleSpriteComponent
+from engine_JNeto_Productions.components.sprite_component import SpriteComponent
 from engine_JNeto_Productions.game_object_base_class import GameObject
 from engine_JNeto_Productions.systems.scalable_game_screen_system import GameScreen
 from game_objects_main_scene.game_object_meteor_manager import MeteorManager
@@ -20,8 +20,8 @@ class Emoji(GameObject):
         super().__init__("emoji", scene, scene.camera.get_rendering_layer_by_name("cockpit_layer"))
         self.transform.move_world_position(pygame.Vector2(self.image.get_width() / 2-25, GameScreen.HalfDummyScreenHeight - 63))
         self.fix_game_object_on_screen(pygame.Vector2(self.image.get_width() / 2-27, GameScreen.HalfDummyScreenHeight - 63))
-        self.single_sprite = SingleSpriteComponent("game_res/emojis/smile.png", self)
-        self.single_sprite.scale_itself(0.4)
+        self.single_sprite = SpriteComponent("game_res/emojis/smile.png", self)
+        self.single_sprite.scale_sprite(0.4)
 
 
 class DifficultyUi(GameObject):
@@ -29,8 +29,8 @@ class DifficultyUi(GameObject):
         super().__init__("difficulty_ui", scene, rendering_layer)
 
         # Sprite
-        self.single_sprite = SingleSpriteComponent("game_res/dif_ui.png", self)
-        self.single_sprite.scale_itself(1.5)
+        self.single_sprite = SpriteComponent("game_res/dif_ui.png", self)
+        self.single_sprite.scale_sprite(1.5)
         self.fix_game_object_on_screen(pygame.Vector2(self.image.get_width()/2-3, GameScreen.HalfDummyScreenHeight))
 
         # Emoji
@@ -66,4 +66,4 @@ class DifficultyUi(GameObject):
     def check_if_is_already_using_a_emoji_case_not_change_it(self, path):
         if self.emoji.single_sprite.get_img_path() != path:
             self.emoji.single_sprite.change_image(path)
-            self.emoji.single_sprite.scale_itself(0.4)
+            self.emoji.single_sprite.scale_sprite(0.4)

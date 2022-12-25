@@ -1,6 +1,6 @@
 import pygame
 
-from engine_JNeto_Productions.components.sprite_component import SingleSpriteComponent
+from engine_JNeto_Productions.components.sprite_component import SpriteComponent
 from engine_JNeto_Productions.components.text_render_component import TextRenderComponent
 from engine_JNeto_Productions.game_object_base_class import GameObject
 from engine_JNeto_Productions.systems.input_manager_system import InputManager
@@ -12,8 +12,8 @@ class Cockpit(GameObject):
         super().__init__("cockpit", scene, rendering_layer)
 
         # Sprite
-        self.single_sprite = SingleSpriteComponent("game_res/ui.png", self)
-        self.single_sprite.scale_itself(1.5)
+        self.single_sprite = SpriteComponent("game_res/ui.png", self)
+        self.single_sprite.scale_sprite(1.5)
         self.fix_game_object_on_screen(pygame.Vector2(GameScreen.HalfDummyScreenWidth, GameScreen.DummyScreenHeight - 15 * 1.5))
 
         # Texts
@@ -27,7 +27,7 @@ class Cockpit(GameObject):
     def game_object_update(self) -> None:
 
         # angle
-        self.angle_text_render.set_text(f"{self.player.angle:.1f}º")
+        self.angle_text_render.set_text(f"{self.player.transform.rotation_angle:.1f}º")
 
         # speed text itself
         self.speed_text_render.set_text(f"{self.player.current_speed:.0f}u/s")

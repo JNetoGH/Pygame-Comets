@@ -1,7 +1,7 @@
 import pygame
 
 from engine_JNeto_Productions.components.key_tracker_component import KeyTrackerComponent
-from engine_JNeto_Productions.components.triggers_and_colliders.rect_trigger_component import RectTriggerComponent
+from engine_JNeto_Productions.components.rect_trigger_component import RectTriggerComponent
 from engine_JNeto_Productions.game_object_base_class import GameObject
 from engine_JNeto_Productions.systems.scalable_game_screen_system import GameScreen
 
@@ -28,41 +28,20 @@ class TextInputBox(GameObject):
         self.rect_trigger = RectTriggerComponent(0, 0, self.width, 40, self)
 
         self.keys = [
-            ["a", KeyTrackerComponent(pygame.K_a, self)],
-            ["b", KeyTrackerComponent(pygame.K_b, self)],
-            ["c", KeyTrackerComponent(pygame.K_c, self)],
-            ["d", KeyTrackerComponent(pygame.K_d, self)],
-            ["e", KeyTrackerComponent(pygame.K_e, self)],
-            ["f", KeyTrackerComponent(pygame.K_f, self)],
-            ["g", KeyTrackerComponent(pygame.K_g, self)],
-            ["h", KeyTrackerComponent(pygame.K_h, self)],
-            ["i", KeyTrackerComponent(pygame.K_i, self)],
-            ["j", KeyTrackerComponent(pygame.K_j, self)],
-            ["k", KeyTrackerComponent(pygame.K_k, self)],
-            ["l", KeyTrackerComponent(pygame.K_l, self)],
-            ["m", KeyTrackerComponent(pygame.K_m, self)],
-            ["n", KeyTrackerComponent(pygame.K_n, self)],
-            ["o", KeyTrackerComponent(pygame.K_o, self)],
-            ["p", KeyTrackerComponent(pygame.K_p, self)],
-            ["q", KeyTrackerComponent(pygame.K_q, self)],
-            ["r", KeyTrackerComponent(pygame.K_r, self)],
-            ["s", KeyTrackerComponent(pygame.K_s, self)],
-            ["t", KeyTrackerComponent(pygame.K_t, self)],
-            ["u", KeyTrackerComponent(pygame.K_u, self)],
-            ["v", KeyTrackerComponent(pygame.K_v, self)],
-            ["x", KeyTrackerComponent(pygame.K_x, self)],
-            ["y", KeyTrackerComponent(pygame.K_y, self)],
-            ["z", KeyTrackerComponent(pygame.K_z, self)],
-            ["backspace", KeyTrackerComponent(pygame.K_BACKSPACE, self)]
+            ["a", KeyTrackerComponent(pygame.K_a, self)], ["b", KeyTrackerComponent(pygame.K_b, self)],
+            ["c", KeyTrackerComponent(pygame.K_c, self)], ["d", KeyTrackerComponent(pygame.K_d, self)],
+            ["e", KeyTrackerComponent(pygame.K_e, self)], ["f", KeyTrackerComponent(pygame.K_f, self)],
+            ["g", KeyTrackerComponent(pygame.K_g, self)], ["h", KeyTrackerComponent(pygame.K_h, self)],
+            ["i", KeyTrackerComponent(pygame.K_i, self)], ["j", KeyTrackerComponent(pygame.K_j, self)],
+            ["k", KeyTrackerComponent(pygame.K_k, self)], ["l", KeyTrackerComponent(pygame.K_l, self)],
+            ["m", KeyTrackerComponent(pygame.K_m, self)], ["n", KeyTrackerComponent(pygame.K_n, self)],
+            ["o", KeyTrackerComponent(pygame.K_o, self)], ["p", KeyTrackerComponent(pygame.K_p, self)],
+            ["q", KeyTrackerComponent(pygame.K_q, self)], ["r", KeyTrackerComponent(pygame.K_r, self)],
+            ["s", KeyTrackerComponent(pygame.K_s, self)], ["t", KeyTrackerComponent(pygame.K_t, self)],
+            ["u", KeyTrackerComponent(pygame.K_u, self)], ["v", KeyTrackerComponent(pygame.K_v, self)],
+            ["x", KeyTrackerComponent(pygame.K_x, self)], ["y", KeyTrackerComponent(pygame.K_y, self)],
+            ["z", KeyTrackerComponent(pygame.K_z, self)], ["backspace", KeyTrackerComponent(pygame.K_BACKSPACE, self)]
         ]
-
-    def render_text(self):
-        t_surf = self._font.render(self.text, True, self.color, self.backcolor)
-        self.image = pygame.Surface((max(self.width, t_surf.get_width()+10), t_surf.get_height()+20), pygame.SRCALPHA)
-        if self.backcolor:
-            self.image.fill(self.backcolor)
-        self.image.blit(t_surf, (5, 10))
-        pygame.draw.rect(self.image, self.color, self.image.get_rect().inflate(-2, -2), 2)
 
     def game_object_update(self):
         if not self._is_active:
@@ -75,6 +54,14 @@ class TextInputBox(GameObject):
                     self.text += self.keys[i][0]
                 self.render_text()
 
+    def render_text(self):
+        t_surf = self._font.render(self.text, True, self.color, self.backcolor)
+        self.image = pygame.Surface((max(self.width, t_surf.get_width()+10), t_surf.get_height()+20), pygame.SRCALPHA)
+        if self.backcolor:
+            self.image.fill(self.backcolor)
+        self.image.blit(t_surf, (5, 10))
+        pygame.draw.rect(self.image, self.color, self.image.get_rect().inflate(-2, -2), 2)
+
     def deactivate(self):
         self._is_active = False
         self.stop_rendering_this_game_object()
@@ -82,4 +69,3 @@ class TextInputBox(GameObject):
     def activate(self):
         self._is_active = True
         self.start_rendering_this_game_object()
-

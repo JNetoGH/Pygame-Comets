@@ -1,7 +1,7 @@
 import pygame
 
-from engine_JNeto_Productions.components.triggers_and_colliders.rect_trigger_component import RectTriggerComponent
-from engine_JNeto_Productions.components.sprite_component import SingleSpriteComponent
+from engine_JNeto_Productions.components.rect_trigger_component import RectTriggerComponent
+from engine_JNeto_Productions.components.sprite_component import SpriteComponent
 from engine_JNeto_Productions.game_object_base_class import GameObject
 
 
@@ -18,10 +18,10 @@ class Button(GameObject):
 
         self.path_normal = path_normal
         self.path_active = path_active
-        self.single_sprite = SingleSpriteComponent(self.path_normal, self)
+        self.single_sprite = SpriteComponent(self.path_normal, self)
         self.scale = scale
 
-        self.single_sprite.scale_itself(self.scale)
+        self.single_sprite.scale_sprite(self.scale)
 
         self.rect_trigger = RectTriggerComponent(0, 0, self.image.get_width(), self.image.get_height(), self)
 
@@ -44,11 +44,11 @@ class Button(GameObject):
 
         if self.rect_trigger.is_there_overlap_with_point(pygame.Vector2(pygame.mouse.get_pos())):
             self.single_sprite.change_image(self.path_active)
-            self.single_sprite.scale_itself(self.scale)
+            self.single_sprite.scale_sprite(self.scale)
             if pygame.mouse.get_pressed(3)[0]:
                 self.button_pressing_sound.play()
                 self.func()
         else:
             self.single_sprite.change_image(self.path_normal)
-            self.single_sprite.scale_itself(self.scale)
+            self.single_sprite.scale_sprite(self.scale)
 

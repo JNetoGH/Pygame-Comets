@@ -1,6 +1,6 @@
 import pygame
 
-from engine_JNeto_Productions.components.sprite_component import SingleSpriteComponent
+from engine_JNeto_Productions.components.sprite_component import SpriteComponent
 from engine_JNeto_Productions.components.text_render_component import TextRenderComponent
 from engine_JNeto_Productions.game_object_base_class import GameObject
 from engine_JNeto_Productions.systems.scalable_game_screen_system import GameScreen
@@ -12,9 +12,9 @@ class ScoreUi(GameObject):
         super().__init__("score", scene, scene.camera.get_rendering_layer_by_name("cockpit_layer"))
 
         self.remove_default_rect_image()
-        self.single_sprite = SingleSpriteComponent("game_res/main_game_score.png", self)
+        self.single_sprite = SpriteComponent("game_res/main_game_score.png", self)
         self.fix_game_object_on_screen(pygame.Vector2(GameScreen.HalfDummyScreenWidth, 24))
-        self.single_sprite.scale_itself(1.5)
+        self.single_sprite.scale_sprite(1.5)
 
         self._score_points = 0
         self._score_points_text_render = TextRenderComponent(f"{self._score_points}", 20, pygame.Color("white"), 40, 0, self)

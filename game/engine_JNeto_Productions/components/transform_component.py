@@ -1,8 +1,8 @@
 import pygame
 
-from engine_JNeto_Productions.components.triggers_and_colliders.rect_collider_component import ColliderComponent
+from engine_JNeto_Productions.components.rect_collider_component import ColliderComponent
 from engine_JNeto_Productions.systems.scalable_game_screen_system import GameScreen
-from engine_JNeto_Productions.components._component_base_class.component_base_class import Component
+from engine_JNeto_Productions.components._component_base_class import Component
 
 
 class TransformComponent(Component):
@@ -11,8 +11,8 @@ class TransformComponent(Component):
         super().__init__(game_object_owner)
         self._world_position: pygame.Vector2 = pygame.Vector2(0, 0)
         self._screen_position: pygame.Vector2 = pygame.Vector2()
-        # self._rotation: =
         self._is_center_point_appearing_on_screen = False
+        self.rotation_angle = 0
 
     @property
     def screen_position_read_only(self):
@@ -25,6 +25,13 @@ class TransformComponent(Component):
     @property
     def is_center_point_appearing_on_screen_read_only(self):
         return self._is_center_point_appearing_on_screen
+
+    def rotate_game_object(self, new_angle):
+        # increments(A)/decrements(D) the angle according to angular speed
+        self.rotation_angle = new_angle
+        # it's not really necessary, it works with a 7232º, but I prefer keeping it in the ]0º, 360º] for visualization
+        self.rotation_angle = self.rotation_angle = 0 + (self.rotation_angle - 360) if self.rotation_angle > 360 else self.rotation_angle  # 0 + what passed from 360
+        self.rotation_angle = self.rotation_angle = 360 - (self.rotation_angle * -1) if self.rotation_angle < 0 else self.rotation_angle   # 360 - what passed from 0
 
     def translate_world_position(self, direction: pygame.Vector2):
         new_pos = pygame.Vector2(self._world_position.x + direction.x, self._world_position.y + direction.y)

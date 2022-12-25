@@ -4,8 +4,8 @@ import pygame
 # ENGINE IMPORTS
 from engine_JNeto_Productions.game_loop import GameLoop
 from engine_JNeto_Productions.game_object_base_class import GameObject
-from engine_JNeto_Productions.camera_and_rendering_layers.rendering_layer import RenderingLayer
-from engine_JNeto_Productions.camera_and_rendering_layers.camera import Camera
+from engine_JNeto_Productions.camera.rendering_layer import RenderingLayer
+from engine_JNeto_Productions.camera.camera import Camera
 from engine_JNeto_Productions.scene import Scene
 from engine_JNeto_Productions.systems.scalable_game_screen_system import GameScreen
 from game_object_score_scene.black_filter_game_object import BlackFilter

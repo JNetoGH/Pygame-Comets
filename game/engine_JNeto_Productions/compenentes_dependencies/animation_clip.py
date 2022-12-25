@@ -1,7 +1,7 @@
 from os import walk   # allow us to walk through folders
 import pygame
 
-from engine_JNeto_Productions.components.sprite_component import SingleSpriteComponent
+from engine_JNeto_Productions.components.sprite_component import SpriteComponent
 
 
 # it's basically a list of images
@@ -34,4 +34,4 @@ class AnimationClip:
 
     def scale_all_frames_of_this_animation(self, scale):
         for i in range(0, len(self.images)):
-            self.images[i] = SingleSpriteComponent.return_scaled_image_surface(self.images[i], scale)
+            self.images[i] = SpriteComponent.return_scaled_image_surface(self.images[i], scale)
