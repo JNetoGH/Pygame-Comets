@@ -30,10 +30,24 @@ class TransformComponent(Component):
 
     @property
     def forward_direction(self):
-        # I need to add/sub more 180 because my default orientation for 0 is ↑ sited of 0º aiming ↓ by default
-        angle_in_rad = math.radians(self.__rotation_angle - 180)
-        # makes the direction: normalizing can't throw a division by 0 exception, cuz a (0,0) direction is impossible
-        dir_from_angle = pygame.Vector2(math.sin(angle_in_rad), math.cos(angle_in_rad)).normalize()
+
+        # I need to add 90º because my default orientation for 0 is ->, it's subtracted so 0º aims ↓ by default
+        angle_in_rad = math.radians(self.__rotation_angle+90)
+
+        # In pygame 1 in y goes ↓ instead of ↑, dir_y needs to be inverted
+        dir_x = math.cos(angle_in_rad)
+        dir_y = - math.sin(angle_in_rad)
+        dir_from_angle = pygame.Vector2(dir_x, dir_y)
+
+        # normalizes avoiding division by 0 exception
+        dir_from_angle = dir_from_angle if dir_from_angle.magnitude() == 0 else dir_from_angle.normalize()
+
+        def debug_info():
+            print(f"angle (deg): {self.__rotation_angle}º")
+            print(f"angle (rad): {angle_in_rad}")
+            print(f"direction:   {dir_from_angle}\n")
+        #debug_info()
+
         return dir_from_angle
 
     @property

@@ -120,5 +120,5 @@ class Player(GameObject):
         if InputManager.Horizontal_Axis == -1:
             new_rotation = self.transform.rotation_angle_read_only + self.angular_velocity * GameTime.DeltaTime
         if InputManager.Horizontal_Axis == 1:
-            new_rotation = self.transform.rotation_angle_read_only- self.angular_velocity * GameTime.DeltaTime
+            new_rotation = self.transform.rotation_angle_read_only - self.angular_velocity * GameTime.DeltaTime
         self.transform.set_rotation(new_rotation)

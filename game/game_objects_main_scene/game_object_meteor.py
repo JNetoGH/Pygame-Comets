@@ -58,7 +58,7 @@ class Meteor(GameObject):
         # gets a random available explosion sound and adjusts the volume according to its rank
         paths = ["game_res/audio/explosions/Explosion Small 1.wav", "game_res/audio/explosions/Explosion Small 2.wav",
                  "game_res/audio/explosions/Explosion Small 3.wav",  "game_res/audio/explosions/Explosion Small 4.wav",]
-        chosen_sound = paths[random.randint(0,3)]
+        chosen_sound = paths[random.randint(0, 3)]
         self.explosion_audio = pygame.mixer.Sound(chosen_sound)
         if self.rank == Meteor.MeteorRank.Small:
             self.explosion_audio.set_volume(0.3)

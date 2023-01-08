@@ -82,7 +82,7 @@ class GizmosSystem:
         # os pontos gerados dos desvios
         ponto_desvio1 = pos_initial + dir_desvio1 * length_linhas_desviadas
         ponto_desvio2 = pos_initial + dir_desvio2 * length_linhas_desviadas
-        # desnha com pygame
+        # desenha com pygame
         pygame.draw.line(GameScreen.GameScreenDummySurface, color, pos_final, ponto_desvio2, width)
         pygame.draw.line(GameScreen.GameScreenDummySurface, color, pos_final, ponto_desvio1, width)
 
