@@ -99,7 +99,7 @@ class Player(GameObject):
         # new position with acceleration or deceleration til its stop or on max speed
         new_pos = self.transform.world_position_read_only + self.transform.forward_direction * self.current_speed * GameTime.DeltaTime
         self.transform.move_world_position_with_collisions_calculations(new_pos)
-        # self.transform.move_world_position(new_pos)
+        #self.transform.move_world_position(new_pos)
 
     def _accelerate(self):
         self.current_speed = self.current_speed + (self.ACCELERATION * GameTime.DeltaTime)

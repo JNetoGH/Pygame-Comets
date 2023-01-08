@@ -8,9 +8,9 @@ from rendering_layer import RenderingLayer
 from camera import Camera
 from engine_JNeto_Productions.scene import Scene
 from engine_JNeto_Productions.systems.scalable_game_screen_system import GameScreen
-from game_object_score_scene.black_filter_game_object import BlackFilter
-from game_object_score_scene.score_registration_floating_menu import ScoreRegistrationFloatingMenu
-from game_object_score_scene.text_holder_game_object import TextHolder
+from game_objects_score_scene.black_filter_game_object import BlackFilter
+from game_objects_score_scene.score_registration_floating_menu import ScoreRegistrationFloatingMenu
+from game_objects_score_scene.text_holder_game_object import TextHolder
 from engine_JNeto_Productions.components.text_render_component import TextRenderComponent
 from engine_JNeto_Productions.components.timer_component import TimerComponent
 
@@ -55,8 +55,8 @@ score_layer1 = RenderingLayer("score_layer1")
 score_layer2 = RenderingLayer("score_layer2")
 score_layer3 = RenderingLayer("score_layer3")
 score_layer4 = RenderingLayer("score_layer4")
-score_sence_camara = Camera(RenderingLayer("map_layer"), score_layer1, score_layer2, score_layer3, score_layer4)
-score_scene = Scene(score_sence_camara)
+score_scene_camara = Camera(RenderingLayer("map_layer"), score_layer1, score_layer2, score_layer3, score_layer4)
+score_scene = Scene(score_scene_camara)
 map1 = Map(score_scene)
 black_filter = BlackFilter(score_scene, score_layer1)
 text_holder = TextHolder(score_scene, score_layer1)
