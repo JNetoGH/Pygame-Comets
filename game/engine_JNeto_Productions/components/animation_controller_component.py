@@ -1,6 +1,6 @@
 from engine_JNeto_Productions.systems.game_time_system import GameTime
 from engine_JNeto_Productions.compenentes_dependencies.animation_clip import AnimationClip
-from engine_JNeto_Productions.components._component_base_class import Component
+from engine_JNeto_Productions.components.component_base_class._component_base_class import Component
 from engine_JNeto_Productions.game_object_base_class import GameObject
 
 

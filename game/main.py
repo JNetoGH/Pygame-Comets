@@ -4,9 +4,9 @@ import pygame
 # ENGINE IMPORTS
 from engine_JNeto_Productions.game_loop import GameLoop
 from engine_JNeto_Productions.game_object_base_class import GameObject
-from rendering_layer import RenderingLayer
-from camera import Camera
+from engine_JNeto_Productions.rendering_layer import RenderingLayer
 from engine_JNeto_Productions.scene import Scene
+from engine_JNeto_Productions.scene_camera import SceneCamera
 from engine_JNeto_Productions.systems.scalable_game_screen_system import GameScreen
 from game_objects_score_scene.black_filter_game_object import BlackFilter
 from game_objects_score_scene.score_registration_floating_menu import ScoreRegistrationFloatingMenu
@@ -41,7 +41,7 @@ game_loop = GameLoop()
 # MENU SCENE
 menu_layer1 = RenderingLayer("menu_layer1")
 menu_layer2 = RenderingLayer("menu_layer2")
-camera_menu = Camera(RenderingLayer("map_layer"), menu_layer1, menu_layer2)
+camera_menu = SceneCamera(RenderingLayer("map_layer"), menu_layer1, menu_layer2)
 menu_scene = Scene(camera_menu)
 map0 = Map(menu_scene)
 menu_background = MenuBackground(menu_scene, menu_layer1)
@@ -55,7 +55,7 @@ score_layer1 = RenderingLayer("score_layer1")
 score_layer2 = RenderingLayer("score_layer2")
 score_layer3 = RenderingLayer("score_layer3")
 score_layer4 = RenderingLayer("score_layer4")
-score_scene_camara = Camera(RenderingLayer("map_layer"), score_layer1, score_layer2, score_layer3, score_layer4)
+score_scene_camara = SceneCamera(RenderingLayer("map_layer"), score_layer1, score_layer2, score_layer3, score_layer4)
 score_scene = Scene(score_scene_camara)
 map1 = Map(score_scene)
 black_filter = BlackFilter(score_scene, score_layer1)
@@ -67,7 +67,7 @@ score_registration_menu = ScoreRegistrationFloatingMenu(score_scene, score_layer
 
 # GAME OVER SCENE
 game_over_layer = RenderingLayer("game_over_layer")
-game_over_camera = Camera(game_over_layer)
+game_over_camera = SceneCamera(game_over_layer)
 game_over_scene = Scene(game_over_camera)
 
 
@@ -125,7 +125,7 @@ map_limits_layer = RenderingLayer("map_limits_layer")
 over_player_layer = RenderingLayer("over_player_layer")
 bars_layer = RenderingLayer("bars_layer")
 cockpit_layer = RenderingLayer("cockpit_layer")
-main_camera = Camera(map_rendering_layer, player_rendering_layer, over_player_layer, map_limits_layer, bars_layer,cockpit_layer)
+main_camera = SceneCamera(map_rendering_layer, player_rendering_layer, over_player_layer, map_limits_layer, bars_layer,cockpit_layer)
 
 # MAIN SCENE
 main_scene = Scene(main_camera)

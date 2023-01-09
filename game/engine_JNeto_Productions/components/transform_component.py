@@ -2,7 +2,7 @@ import math
 import pygame
 from engine_JNeto_Productions.components.rect_collider_component import ColliderComponent
 from engine_JNeto_Productions.systems.scalable_game_screen_system import GameScreen
-from engine_JNeto_Productions.components._component_base_class import Component
+from engine_JNeto_Productions.components.component_base_class._component_base_class import Component
 
 
 class TransformComponent(Component):
